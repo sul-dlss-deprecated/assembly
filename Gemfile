@@ -6,7 +6,7 @@ gem "lyber-core"
 group :test do
 	gem "rake"
 	gem "rcov"
-	gem "rspec", "< 2.0"
+	gem "rspec", "~> 2.6"
 end
 
 group :development do

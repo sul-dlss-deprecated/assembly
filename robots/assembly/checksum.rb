@@ -7,9 +7,10 @@ module Assembly
     end
 
     def process_item(work_item)
-      # obj = Dor::AssemblyItem.load(work_item.druid)
-      # obj.checksum
-      puts "hello world"
+      # @ai = Dor::AssemblyItem.load(work_item.druid)
+      @ai = Dor::AssemblyItem.new
+      @ai.checksum
+      return true
     end
 
   end
