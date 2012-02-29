@@ -1,0 +1,9 @@
+checksum:
+    prerequisite: start-asssembly
+    batch_limit: 1000
+    error_limit: 10
+
+compare-checksums:
+    prerequisite: checksum
+    batch_limit: 1000
+    error_limit: 10
