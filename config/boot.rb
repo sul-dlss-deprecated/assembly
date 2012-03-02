@@ -35,5 +35,4 @@ Dir["#{ROBOT_ROOT}/robots/*"].select { |f| File.directory?(f) }.each do |dir|
 end
 
 env_file = File.expand_path(File.dirname(__FILE__) + "/./environments/#{environment}")
-puts "Loading config from #{env_file}"
 require env_file
