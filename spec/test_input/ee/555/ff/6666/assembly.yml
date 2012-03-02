@@ -1,0 +1,21 @@
+--- 
+:contentMetadata: 
+  :objectId: ee555ff6666
+  :resource: 
+  - :provider_attr: 
+      :prod_notes: ""
+      :label: Avus 1937
+      :has_more_metadata: ""
+      :sourceid: foo-1.0
+      :format: BW film
+      :year: "1937"
+      :inst_notes: ""
+      :filename: image1.tif
+    :sequence: "1"
+    :label: Image 1
+    :file: 
+      id: image1.tif
+      :preserve: "yes"
+      :publish: "no"
+      :shelve: "no"
+    :id: ee555ff6666_1
