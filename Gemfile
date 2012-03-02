@@ -2,6 +2,7 @@ source :rubygems
 source "http://sulair-rails-dev.stanford.edu"
 
 gem "lyber-core"
+gem "checksum-tools"
 
 group :test do
 	gem "rake"

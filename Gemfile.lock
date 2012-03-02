@@ -42,6 +42,11 @@ GEM
     bagit (0.2.0)
       validatable (~> 1.6)
     builder (3.0.0)
+    checksum-tools (1.0.6)
+      net-sftp
+      net-ssh
+      net-ssh-kerberos
+      progressbar
     columnize (0.3.6)
     confstruct (0.2.1)
     daemons (1.1.8)
@@ -96,6 +101,11 @@ GEM
     mime-types (1.17.2)
     multi_json (1.1.0)
     multipart-post (1.1.2)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.3.0)
+    net-ssh-kerberos (0.2.7)
+      net-ssh (>= 2.0)
     nokogiri (1.4.3.1)
     nori (1.1.0)
     om (1.5.3)
@@ -173,6 +183,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  checksum-tools
   lyber-core
   rake
   rcov
