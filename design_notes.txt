@@ -1,0 +1,105 @@
+Notes on assembly robots:
+
+    - These robots do not interact with DOR except for the workflow changes
+      provided by robot framework. Instead, all of the work occurs directly
+      in the file system (in the objects druid tree directory).
+
+    - Typically, a robot does some work and then adds more information to
+      one of the *_metadata.yml files sitting in the druid tree directory.
+
+Robots:
+
+    - Compute checksums for TIFs.
+
+    - Compare actual checksums against expected checksums for TIFs.
+
+    - Compute image attributes for TIF: exif and related info (including cropped).
+
+    - Create JP2
+
+    - Compute image attributes for JP2: exif and related info.
+
+    - Compute checksums for JP2.
+
+    - Generate descriptive metadata from one of the source listed below. This approach
+      relieves common-accessioning of using outside sources for content metadata.
+        - descriptive_metadata.yml
+        - mdtoolkit
+        - symphony
+
+    - Generate content_metadata.xml from content_metadata.yml.
+
+    - Make REST calls to dor-services to initiate common-accessioning.
+        - See chimera/REST+mappings+for+dor-services+gem
+            initialize_workspace
+            initiate_apo_workflow
+
+
+Notes based on planning meeting:
+
+    - Maybe use Jove validation during common-assembly to compute checksums and
+      image info (height, width, etc).
+
+    - Use Gould Book as a test case to guide the common-assembly development
+      work.
+
+    - Ask Michael O. about idiosyncracies in content metadata and related
+      items.
+
+    - Implement this functionality in a way that will allow them to be used as
+      services in the future.
+
+
+Running robots:
+
+    cd ROBOT_ROOT
+    ROBOT_ENVIRONMENT=development bin/run_robot start assemblyWF:create-jp2 \
+                                                      assemblyWF:foo-bar   
+
+
+Misc notes on the pre-assembly code that will be moved into this project (lib/images.rb):
+
+    Required parameters
+        tiff file name
+
+    Image attributes: computed, or supplied optionally (*)
+        exif information
+        jp2 file name (*)
+        allow overwrite (*)
+        output profile (*)
+        input profile
+
+    temp tiff file name
+        pixdem
+        layers
+
+        publish (*)
+        preserve (*)
+        shelve (*)
+        content label (*)
+        file size
+        md5 checksum
+        sha1 checksum
+        format
+
+    Sanity checks
+        tiff file exists
+        mimetype == tiff
+        jp2 file does not exist (unless overwrite requested)
+        output profile file exists
+
+        image exists
+
+    Constants
+        output profile file name
+        input profile file name
+
+        content type description
+        cropped
+
+    System calls
+        should check return values
+        need a mechanism by bypassing/mocking
+        is the generic rescue block needed or useful?
+        See the systemu gem.
+
