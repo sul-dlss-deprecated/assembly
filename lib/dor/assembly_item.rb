@@ -4,18 +4,25 @@ module Dor
 
     include Dor::Checksumable
 
-    attr_accessor :druid, :root_dir, :path
+    attr_accessor :druid, :root_dir, :path, :checksums
 
     def initialize(params = {})
-      @druid    = params[:druid]
-      @root_dir = params[:root_dir] || ''
-      @path     = ''
+      @druid     = params[:druid]
+      @root_dir  = params[:root_dir] || 'spec/test_input'
       setup
+      load_assembly_yml
     end
 
     def setup
-      @druid = Druid.new(@druid) unless @druid.class == Druid
-      @path  = File.join @root_dir, @druid.tree
+      @druid      = Druid.new(@druid) unless @druid.class == Druid
+      @path       = File.join @root_dir, @druid.tree
+      @ainfo_file = File.join @path, 'assembly.yml'
+      @checksums  = {:md5 => nil, :sha1 => nil}
+      @ainfo      = nil
+    end
+
+    def load_assembly_yml
+      @ainfo = File.read(@ainfo_file)
     end
 
   end

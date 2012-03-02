@@ -7,9 +7,12 @@ module Assembly
     end
 
     def process_item(work_item)
-      # TODO: how will the work_item know root directory? ROBOT_ROOT???
-      @ai = Dor::AssemblyItem.new :druid => 'aa111bb2222'
-      @ai.checksum
+      @ai = Dor::AssemblyItem.new(
+        :druid    =>  work_item.druid,
+        :root_dir => Dor::AssemblyItem::ASSEMBLY_ROOT
+      )
+      # TODO : process_item() : uncomment call to compute_checksums().
+      # @ai.compute_checksums
       return true
     end
 
