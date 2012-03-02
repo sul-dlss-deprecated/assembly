@@ -2,7 +2,7 @@ Notes on assembly robots:
 
     - These robots do not interact with DOR except for the workflow changes
       provided by robot framework. Instead, all of the work occurs directly
-      in the file system (in the objects druid tree directory).
+      in the file system (in the object's druid tree directory).
 
     - Typically, a robot does some work and then adds more information to
       the assenbly.yml file sitting in the druid tree directory.
@@ -21,31 +21,11 @@ Robots:
 
     - Compute image attributes(JP2). # Ditto
 
-    - Generate descriptive metadata.xml from assembly.yml (speculative: and
-      maybe from other sources like mdtoolkit and symphony).
-
     - Generate content_metadata.xml from assembly.yml.
 
-    - Make REST calls to dor-services to initiate common-accessioning.
-        - See chimera/REST+mappings+for+dor-services+gem
-            initialize_workspace
-            initiate_apo_workflow
-
-
-Notes based on planning meeting:
-
-    - Maybe use Jove validation during common-assembly to compute checksums and
-      image info (height, width, etc).
-
-    - Use Gould Book as a test case to guide the common-assembly development
-      work.
-
-    - Ask Michael O. about idiosyncracies in content metadata and related
-      items.
-
-    - Implement this functionality in a way that will allow them to be used as
-      services in the future.
-
+    - Make REST calls to dor-services to initiate common-accessioning:
+      initialize_workspace() and initiate_apo_workflow(). See this Consul page:
+      chimera/REST+mappings+for+dor-services+gem.
 
 Running robots:
 
