@@ -7,7 +7,7 @@ module Assembly
     end
 
     def process_item(work_item)
-      # @ai = Dor::AssemblyItem.load(work_item.druid)
+      # TODO: how will the work_item know root directory? ROBOT_ROOT???
       @ai = Dor::AssemblyItem.new :druid => 'aa111bb2222'
       @ai.checksum
       return true

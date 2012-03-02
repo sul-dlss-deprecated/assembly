@@ -8,7 +8,7 @@ module Dor
 
     def initialize(params = {})
       @druid    = params[:druid]
-      @root_dir = params[:root_dir]
+      @root_dir = params[:root_dir] || ''
       @path     = ''
       setup
     end
