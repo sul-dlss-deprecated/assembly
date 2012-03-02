@@ -8,7 +8,7 @@ module Assembly
 
     def process_item(work_item)
       # @ai = Dor::AssemblyItem.load(work_item.druid)
-      @ai = Dor::AssemblyItem.new
+      @ai = Dor::AssemblyItem.new :druid => 'aa111bb2222'
       @ai.checksum
       return true
     end
