@@ -5,29 +5,26 @@ Notes on assembly robots:
       in the file system (in the objects druid tree directory).
 
     - Typically, a robot does some work and then adds more information to
-      one of the *_metadata.yml files sitting in the druid tree directory.
+      the assenbly.yml file sitting in the druid tree directory.
 
 Robots:
 
-    - Compute checksums for TIFs.
+    - Compute checksums(TIF).
 
-    - Compare actual checksums against expected checksums for TIFs.
+    - Compare checksums -- expected vs. actual.
 
-    - Compute image attributes for TIF: exif and related info (including cropped).
+    - Compute image attributes(TIF).
 
-    - Create JP2
+    - Create JP2.
 
-    - Compute image attributes for JP2: exif and related info.
+    - Compute checksums(JP2).        # Not a new robot, just a different file type.
 
-    - Compute checksums for JP2.
+    - Compute image attributes(JP2). # Ditto
 
-    - Generate descriptive metadata from one of the source listed below. This approach
-      relieves common-accessioning of using outside sources for content metadata.
-        - descriptive_metadata.yml
-        - mdtoolkit
-        - symphony
+    - Generate descriptive metadata.xml from assembly.yml (speculative: and
+      maybe from other sources like mdtoolkit and symphony).
 
-    - Generate content_metadata.xml from content_metadata.yml.
+    - Generate content_metadata.xml from assembly.yml.
 
     - Make REST calls to dor-services to initiate common-accessioning.
         - See chimera/REST+mappings+for+dor-services+gem
