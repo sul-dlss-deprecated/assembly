@@ -41,13 +41,12 @@ describe Dor::AssemblyItem do
   describe "computing checksums" do
 
     it "can get a Checksum::Tools object" do
-      # TODO: write spec to prove that compute_checksums() is working.
-      # @ai.checksums.should == { :md5 => nil, :sha1 => nil }
-      # @ai.compute_checksums
-      # @ai.checksums.should == {
-      #   :md5  => 'c7a6c9e44794b23adc0e9ce4a350ce63',
-      #   :sha1 => '1fd32b6caa7cefaaca478bfdc3b77cb8bad8ccac',
-      # }
+      @ai.checksums.should == nil
+      @ai.compute_checksums
+      @ai.checksums.should == [{
+        :md5  => '7e40beb08d646044529b9138a5f1c796',
+        :sha1 => 'ffed9bddf353e7a6445bdec9ae3ab8525a3ee690',
+      }]
     end
   end
 

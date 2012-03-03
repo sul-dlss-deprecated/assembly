@@ -21,11 +21,12 @@ module Dor
     end
 
     def setup
-      @druid      = Druid.new(@druid) unless @druid.class == Druid
-      @path       = File.join @root_dir, @druid.tree
-      @ainfo_file = File.join @path, 'assembly.yml'
-      @checksums  = {:md5 => nil, :sha1 => nil}
-      @ainfo      = nil
+      @druid          = Druid.new(@druid) unless @druid.class == Druid
+      @path           = File.join @root_dir, @druid.tree
+      @ainfo_file     = File.join @path, 'assembly.yml'
+      @checksums      = nil
+      @ainfo          = nil
+      @checksum_types = [:md5, :sha1]
     end
 
     def load_assembly_yml
