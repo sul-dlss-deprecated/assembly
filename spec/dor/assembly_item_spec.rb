@@ -1,10 +1,12 @@
 describe Dor::AssemblyItem do
   
   before :each do
-    @dru      = 'aa111bb2222'
-    @druid    = Druid.new @dru
-    @root_dir = 'spec/test_input'
-    @ai       = new_item @druid
+    # TODO: test_input: need a test object with more than one image.
+    @dru       = 'aa111bb2222'
+    @druid     = Druid.new @dru
+    @root_dir  = 'spec/test_input'
+    @ai        = new_item @druid
+    @exp_files = [File.join @ai.path, 'image2.tif']
   end
 
   def new_item(druid)
@@ -30,8 +32,8 @@ describe Dor::AssemblyItem do
       @ai.path.should == File.join(@root_dir, @druid.tree)
     end
 
-    it "can load assembly.yml" do
-      #
+    it "can get names of files to be processed from assembly.yml" do
+      @ai.files.should == @exp_files
     end
 
   end

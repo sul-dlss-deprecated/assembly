@@ -4,7 +4,14 @@ module Dor
 
     include Dor::Checksumable
 
-    attr_accessor :druid, :root_dir, :path, :checksums
+    attr_accessor(
+      :druid, 
+      :root_dir, 
+      :path, 
+      :checksums,
+      :ainfo,
+      :files
+    )
 
     def initialize(params = {})
       @druid     = params[:druid]
@@ -22,7 +29,9 @@ module Dor
     end
 
     def load_assembly_yml
-      @ainfo = File.read(@ainfo_file)
+      @ainfo = YAML.load_file @ainfo_file
+      @files = @ainfo[:contentMetadata][:resource].map { |r| r[:file][:id] }
+      @files = @files.map { |f| File.join @path, f }
     end
 
   end

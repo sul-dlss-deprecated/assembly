@@ -14,7 +14,7 @@
     :sequence: "1"
     :label: Image 1
     :file: 
-      id: image2.tif
+      :id: image2.tif
       :preserve: "yes"
       :publish: "no"
       :shelve: "no"
