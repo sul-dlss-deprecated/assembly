@@ -9,11 +9,4 @@ describe Assembly::Checksum do
     @acs.should be_a_kind_of LyberCore::Robots::Robot 
   end
   
-  it "should be able to call process_item() and get true return" do
-    @acs = Assembly::Checksum.new
-    rv   = false
-    lambda { rv = @acs.process_item(@druid) }.should_not raise_error
-    rv.should == true
-  end
-  
 end

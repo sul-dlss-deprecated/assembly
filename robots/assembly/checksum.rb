@@ -12,7 +12,6 @@ module Assembly
         :root_dir => Dor::AssemblyItem::ASSEMBLY_ROOT
       )
       @ai.compute_checksums
-      return true
     end
 
   end
