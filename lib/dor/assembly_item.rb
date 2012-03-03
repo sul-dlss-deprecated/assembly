@@ -14,10 +14,11 @@ module Dor
     )
 
     def initialize(params = {})
-      @druid     = params[:druid]
-      @root_dir  = params[:root_dir] || 'spec/test_input'
+      @druid    = params[:druid]
+      @root_dir = params[:root_dir] || 'spec/test_input'
+      @persist  = params[:persist]
       setup
-      load_assembly_yml
+      load_assembly_info
     end
 
     def setup
@@ -29,10 +30,15 @@ module Dor
       @checksum_types = [:md5, :sha1]
     end
 
-    def load_assembly_yml
+    def load_assembly_info
       @ainfo = YAML.load_file @ainfo_file
       @files = @ainfo[:contentMetadata][:resource].map { |r| r[:file][:id] }
       @files = @files.map { |f| File.join @path, f }
+    end
+
+    def persist_assembly_info(ai_type)
+      # TODO: persist_assembly_info: persist checksums.
+      #
     end
 
   end

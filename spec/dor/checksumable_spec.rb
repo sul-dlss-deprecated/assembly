@@ -4,9 +4,6 @@ end
 
 describe Dor::Checksumable do
   
-  # before(:all) { stub_config   }
-  # after(:all)  { unstub_config }
-  
   before :each do
     @item = ChecksumableItem.new
   end

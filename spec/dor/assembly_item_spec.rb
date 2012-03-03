@@ -43,10 +43,12 @@ describe Dor::AssemblyItem do
     it "can get a Checksum::Tools object" do
       @ai.checksums.should == nil
       @ai.compute_checksums
-      @ai.checksums.should == [{
-        :md5  => '7e40beb08d646044529b9138a5f1c796',
-        :sha1 => 'ffed9bddf353e7a6445bdec9ae3ab8525a3ee690',
-      }]
+      @ai.checksums.should == {
+        @exp_files[0] => {
+          :md5  => '7e40beb08d646044529b9138a5f1c796',
+          :sha1 => 'ffed9bddf353e7a6445bdec9ae3ab8525a3ee690',
+        }
+      }
     end
   end
 

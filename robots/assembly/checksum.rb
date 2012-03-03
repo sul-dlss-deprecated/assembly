@@ -11,7 +11,7 @@ module Assembly
         :druid    =>  work_item.druid,
         :root_dir => Dor::AssemblyItem::ASSEMBLY_ROOT
       )
-      @ai.compute_checksums
+      @ai.compute_checksums :persist => true
     end
 
   end
