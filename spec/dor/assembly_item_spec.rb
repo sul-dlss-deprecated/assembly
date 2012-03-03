@@ -1,6 +1,7 @@
 describe Dor::AssemblyItem do
   
   before :each do
+    # TODO: test_input: need a copy of test_input than can be modified.
     # TODO: test_input: need a test object with more than one image.
     @dru       = 'aa111bb2222'
     @druid     = Druid.new @dru
@@ -41,7 +42,7 @@ describe Dor::AssemblyItem do
   describe "computing checksums" do
 
     it "can get a Checksum::Tools object" do
-      @ai.checksums.should == nil
+      @ai.checksums.should == {}
       @ai.compute_checksums
       @ai.checksums.should == {
         @exp_files[0] => {

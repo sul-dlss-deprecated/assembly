@@ -7,27 +7,33 @@ module Dor
     attr_accessor(
       :druid, 
       :root_dir, 
-      :path, 
-      :checksums,
+      :persist,
+      :path,
+      :ainfo_file,
       :ainfo,
+      :checksums,
+      :checksum_types,
       :files
     )
 
     def initialize(params = {})
       @druid    = params[:druid]
-      @root_dir = params[:root_dir] || 'spec/test_input'
+      @root_dir = params[:root_dir]
       @persist  = params[:persist]
       setup
       load_assembly_info
     end
 
     def setup
+      # TODO: setup(): remove hard-coded spec/test_input.
       @druid          = Druid.new(@druid) unless @druid.class == Druid
+      @root_dir       = @root_dir || 'spec/test_input'
       @path           = File.join @root_dir, @druid.tree
       @ainfo_file     = File.join @path, 'assembly.yml'
-      @checksums      = nil
       @ainfo          = nil
+      @checksums      = {}
       @checksum_types = [:md5, :sha1]
+      @files          = []
     end
 
     def load_assembly_info
@@ -37,8 +43,7 @@ module Dor
     end
 
     def persist_assembly_info(ai_type)
-      # TODO: persist_assembly_info: persist checksums.
-      #
+      # TODO: persist_assembly_info(): implement.
     end
 
   end
