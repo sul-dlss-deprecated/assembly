@@ -17,17 +17,15 @@ module Dor
     )
 
     def initialize(params = {})
-      @druid    = params[:druid]
       @root_dir = params[:root_dir]
       @persist  = params[:persist]
+      @druid    = params[:druid]
       setup
       load_assembly_info
     end
 
     def setup
-      # TODO: setup(): remove hard-coded spec/test_input.
       @druid          = Druid.new(@druid) unless @druid.class == Druid
-      @root_dir       = @root_dir || 'spec/test_input'
       @path           = File.join @root_dir, @druid.tree
       @ainfo_file     = File.join @path, 'assembly.yml'
       @ainfo          = nil
