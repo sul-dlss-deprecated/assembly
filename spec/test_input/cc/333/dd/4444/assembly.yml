@@ -6,15 +6,15 @@
       :prod_notes: ""
       :label: Avus 1938, 1956
       :has_more_metadata: ""
-      :sourceid: foo-2.2
+      :sourceid: foo-2.0
       :format: BW film
       :year: 1938, 1956
       :inst_notes: strip 2 is duplicate; don't scan
-      :filename: image3.tif
+      :filename: image222.tif
     :sequence: "1"
     :label: Image 1
     :file: 
-      :id: image3.tif
+      :id: image222.tif
       :preserve: "yes"
       :publish: "no"
       :shelve: "no"

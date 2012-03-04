@@ -6,16 +6,33 @@
       :prod_notes: ""
       :label: Avus 1938
       :has_more_metadata: X
-      :sourceid: foo-2.1
+      :sourceid: foo-1.1
       :format: BW film
       :year: 1938-1939
-      :inst_notes: frames 6,7,8 glass slide broken
-      :filename: image2.tif
+      :inst_notes: "frames 6,7,8 glass slide broken"
+      :filename: image111.tif
     :sequence: "1"
     :label: Image 1
     :file: 
-      :id: image2.tif
+      :id: image111.tif
       :preserve: "yes"
       :publish: "no"
       :shelve: "no"
     :id: aa111bb2222_1
+  - :provider_attr: 
+      :prod_notes: ""
+      :label: Avus 1938
+      :has_more_metadata: X
+      :sourceid: foo-1.2
+      :format: BW film
+      :year: 1938-1939
+      :inst_notes: "all frames OK"
+      :filename: image112.tif
+    :sequence: "2"
+    :label: Image 2
+    :file: 
+      :id: image112.tif
+      :preserve: "yes"
+      :publish: "no"
+      :shelve: "no"
+    :id: aa111bb2222_2
