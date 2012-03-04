@@ -2,12 +2,20 @@ describe Dor::AssemblyItem do
   
   before :each do
     # TODO: test_input: need a copy of test_input than can be modified.
-    # TODO: before: define expected checksums.
-    @dru       = 'aa111bb2222'
-    @druid     = Druid.new @dru
-    @root_dir  = 'spec/test_input'
-    @ai        = new_item @druid
-    @exp_files = ['111', '112'].map { |n| File.join @ai.path, "image#{n}.tif" }
+    @dru           = 'aa111bb2222'
+    @druid         = Druid.new @dru
+    @root_dir      = 'spec/test_input'
+    @ai            = new_item @druid
+    @exp_checksums = {
+      File.join(@ai.path, "image111.tif") => {
+        :md5  => '7e40beb08d646044529b9138a5f1c796',
+        :sha1 => 'ffed9bddf353e7a6445bdec9ae3ab8525a3ee690',
+      },
+      File.join(@ai.path, "image112.tif") => {
+        :md5  => '4e3cd24dd79f3ec91622d9f8e5ab5afa',
+        :sha1 => '84e124b7ef4ec38d853c45e7b373b57201e28431',
+      },
+    }
   end
 
   def new_item(druid)
@@ -34,7 +42,7 @@ describe Dor::AssemblyItem do
     end
 
     it "can get names of files to be processed from assembly.yml" do
-      @ai.files.should == @exp_files
+      @ai.files.should == @exp_checksums.keys.sort
     end
 
   end
@@ -44,16 +52,7 @@ describe Dor::AssemblyItem do
     it "compute the correct checksums" do
       @ai.checksums.should == {}
       @ai.compute_checksums
-      @ai.checksums.should == {
-        @exp_files[0] => {
-          :md5  => '7e40beb08d646044529b9138a5f1c796',
-          :sha1 => 'ffed9bddf353e7a6445bdec9ae3ab8525a3ee690',
-        },
-        @exp_files[1] => {
-          :md5  => '4e3cd24dd79f3ec91622d9f8e5ab5afa',
-          :sha1 => '84e124b7ef4ec38d853c45e7b373b57201e28431',
-        }
-      }
+      @ai.checksums.should == @exp_checksums
     end
   end
 
