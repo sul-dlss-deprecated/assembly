@@ -34,10 +34,6 @@ module Dor::Assembly
 
     # TODO: Dor::Assembly::Item: methods below need specs.
 
-    def load_content_metadata
-      @cm = Nokogiri.XML(File.open @cm_file_name) { |conf| conf.default_xml.noblanks }
-    end
-
     def new_node(node_name)
       Nokogiri::XML::Node.new node_name, @cm
     end
@@ -52,11 +48,6 @@ module Dor::Assembly
 
     def all_file_paths
       file_nodes.map { |n| file_path_of_node n }
-    end
-
-    def persist_content_metadata
-      @cm_handle ||= File.open(@cm_file_name, 'w')
-      @cm_handle.puts @cm.to_xml
     end
 
   end
