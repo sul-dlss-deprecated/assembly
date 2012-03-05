@@ -80,3 +80,56 @@ Misc notes on the pre-assembly code that will be moved into this project (lib/im
         is the generic rescue block needed or useful?
         See the systemu gem.
 
+
+New design based on code review with Willy:
+
+    module Dor
+      module CMable
+        attr_accessor :cm
+        
+        def persist_content_md
+          ...
+        end
+      end
+    end  
+      
+    module Dor
+      module Checksumable
+        include CMable
+        
+        def compute_checksums_new
+          @cm 
+          file_nodes = content_metadata.xpath(......)
+          file_nodes.each||
+        end
+        
+      end
+    end
+      
+
+    module Dor
+      class AssemblyItem
+        include Dor::CMable
+        include Dor::Checksumable
+      end
+    end
+        
+    # in spec/dor/checksumable_spec.rb      
+    # Not need to instantiate an AssemblyItem during testing.
+    class ChecksumItem
+      include Dor::Checksumable
+    end
+
+    describe Checksumable
+
+      desc '#compute_checksums'
+      
+        it 'computes new checksums'
+          item = ChecksumItem.new
+          item.cm = Nokogiri::Xml('<contentMetadata .....>')
+          item.compute_checksum
+        end
+
+      end
+
+    end

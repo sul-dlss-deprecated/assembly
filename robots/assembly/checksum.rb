@@ -7,10 +7,7 @@ module Assembly
     end
 
     def process_item(work_item)
-      @ai = Dor::AssemblyItem.new(
-        :druid    =>  work_item.druid,
-        :root_dir => Dor::AssemblyItem::ASSEMBLY_ROOT
-      )
+      @ai = Dor::AssemblyItem.new :druid => work_item.druid
       @ai.compute_checksums
     end
 

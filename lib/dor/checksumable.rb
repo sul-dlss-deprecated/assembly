@@ -1,7 +1,8 @@
 module Dor
   module Checksumable
     
-    # TODO: AssemblyItem: methods below need specs.
+    # TODO: Checksmable: methods below need specs.
+    # TODO: Checksmable: need to handle TIF vs JP2.
 
     def compute_checksums
       cs_tool = Checksum::Tools.new({}, *@checksum_types)

@@ -3,7 +3,7 @@ describe Dor::AssemblyItem do
   before :each do
     @dru           = 'aa111bb2222'
     @druid         = Druid.new @dru
-    @root_dir      = 'spec/test_input'
+    @root_dir      = Dor::Config.assembly.root
     @ai            = new_assembly_item @druid
     @exp_checksums = {
       File.join(@ai.path, "image111.tif") => {
@@ -21,7 +21,6 @@ describe Dor::AssemblyItem do
     # TODO: new_assembly_item: use a StringIO for cm_handle.
     @ai = Dor::AssemblyItem.new(
       :druid     => druid,
-      :root_dir  => @root_dir,
       :cm_handle => File.open('tmp/temp_out.xml', 'a')
     )
   end
@@ -56,6 +55,7 @@ describe Dor::AssemblyItem do
 
     it "compute the correct checksums" do
       # TODO: assertions for expected checksums.
+      # TODO: move to checksmable_spec.rb, along with exp_checksums.
       @ai.compute_checksums
     end
 

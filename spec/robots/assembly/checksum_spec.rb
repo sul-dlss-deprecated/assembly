@@ -9,4 +9,6 @@ describe Assembly::Checksum do
     @acs.should be_a_kind_of LyberCore::Robots::Robot 
   end
   
+  # TODO: add a spec that invokes process_item.
+
 end

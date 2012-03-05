@@ -16,13 +16,13 @@ module Dor
     )
 
     def initialize(params = {})
-      @root_dir  = params[:root_dir]
       @cm_handle = params[:cm_handle]
       @druid     = params[:druid]
       setup
     end
 
     def setup
+      @root_dir       = Dor::Config.assembly.root
       @druid          = Druid.new(@druid) unless @druid.class == Druid
       @path           = File.join @root_dir, @druid.tree
       @cm_file_name   = File.join @path, 'content_metadata.xml'
@@ -34,7 +34,7 @@ module Dor
     # TODO: AssemblyItem: methods below need specs.
 
     def load_content_metadata
-      doc = Nokogiri.XML(File.open @cm_file_name) { |conf| conf.default_xml.noblanks }
+      @cm = Nokogiri.XML(File.open @cm_file_name) { |conf| conf.default_xml.noblanks }
     end
 
     def new_node(node_name)
@@ -42,7 +42,7 @@ module Dor
     end
 
     def file_nodes
-      @cm.css 'resource file'
+      @cm.xpath '//resource/file'
     end
 
     def file_path_of_node(node)
@@ -54,7 +54,7 @@ module Dor
     end
 
     def persist_content_metadata
-      @cm_handle ||= File.open @cm_file_name, 'w'
+      @cm_handle ||= File.open(@cm_file_name, 'w')
       @cm_handle.puts @cm.to_xml
     end
 
