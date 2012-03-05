@@ -18,11 +18,11 @@ describe Dor::AssemblyItem do
   end
 
   def new_assembly_item(druid)
-    # TODO: new_assembly_item: use a StringIO for ainfo_file_h
+    # TODO: new_assembly_item: use a StringIO for cm_handle
     @ai = Dor::AssemblyItem.new(
-      :druid        => druid,
-      :root_dir     => @root_dir,
-      :ainfo_file_h => STDOUT  # File.open('_ai.yml', 'w')
+      :druid     => druid,
+      :root_dir  => @root_dir,
+      :cm_handle => STDOUT
     )
   end
  
@@ -42,8 +42,12 @@ describe Dor::AssemblyItem do
       @ai.path.should == File.join(@root_dir, @druid.tree)
     end
 
-    it "can get names of files to be processed from assembly.yml" do
-      @ai.files.should == @exp_checksums.keys.sort
+  end
+
+  describe "content metadata interface" do
+
+    it "can get paths of files to be processed" do
+      @ai.all_file_paths.should == @exp_checksums.keys.sort
     end
 
   end
@@ -51,14 +55,8 @@ describe Dor::AssemblyItem do
   describe "computing checksums" do
 
     it "compute the correct checksums" do
-      @ai.checksums.should == {}
+      # TODO: assertions for expected checksums.
       @ai.compute_checksums
-      @ai.checksums.should == @exp_checksums
-    end
-
-    it "can persist......." do
-      @ai.compute_checksums
-      @ai.checksums.should == @exp_checksums
     end
 
   end
