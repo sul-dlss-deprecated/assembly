@@ -2,7 +2,7 @@ class ContentMetadataItem
   include Dor::Assembly::ContentMetadata
 end
 
-describe Dor::Assembly::Checksumable do
+describe Dor::Assembly::ContentMetadata do
   
   before(:each) do
     @item              = ContentMetadataItem.new
@@ -11,7 +11,7 @@ describe Dor::Assembly::Checksumable do
  
   describe "#load_content_metadata" do
 
-    it "should put a Nokogiri doc in @cm" do
+    it "should load a Nokogiri doc in @cm" do
       @item.cm = nil
       @item.load_content_metadata
       @item.cm.should be_kind_of Nokogiri::XML::Document
