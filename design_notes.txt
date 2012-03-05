@@ -84,6 +84,7 @@ Misc notes on the pre-assembly code that will be moved into this project (lib/im
 New design based on code review with Willy:
 
     module Dor
+    module Assembly
       module CMable
         attr_accessor :cm
         
@@ -91,27 +92,31 @@ New design based on code review with Willy:
           ...
         end
       end
+    end
     end  
       
     module Dor
+    module Assembly
       module Checksumable
-        include CMable
+        include ContentMetadatify  # Stringify
         
         def compute_checksums_new
           @cm 
           file_nodes = content_metadata.xpath(......)
           file_nodes.each||
         end
-        
       end
+    end
     end
       
 
     module Dor
+    module Assembly
       class AssemblyItem
         include Dor::CMable
         include Dor::Checksumable
       end
+    end
     end
         
     # in spec/dor/checksumable_spec.rb      
