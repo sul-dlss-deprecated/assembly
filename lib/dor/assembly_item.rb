@@ -37,6 +37,7 @@ module Dor
     def load_assembly_info
       # TODO: load_assembly_info: store the resources as AssemblyItemResource.
       # TODO: convert YAML file to XML.
+      # TODO: NEXT = experiment with Nokigiri.
       @ainfo = YAML.load_file @ainfo_file_name
       @files = @ainfo[:contentMetadata][:resource].map { |r| r[:file][:id] }
       @files = @files.map { |f| File.join @path, f }

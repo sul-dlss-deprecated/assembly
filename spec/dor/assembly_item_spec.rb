@@ -22,7 +22,7 @@ describe Dor::AssemblyItem do
     @ai = Dor::AssemblyItem.new(
       :druid        => druid,
       :root_dir     => @root_dir,
-      :ainfo_file_h => File.open('_ai.yml', 'w')
+      :ainfo_file_h => STDOUT  # File.open('_ai.yml', 'w')
     )
   end
  
