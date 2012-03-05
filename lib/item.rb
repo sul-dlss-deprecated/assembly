@@ -3,6 +3,7 @@ module Dor::Assembly
   class Item
 
     include Dor::Assembly::Checksumable
+    include Dor::Assembly::ContentMetadata
 
     attr_accessor(
       :root_dir, 

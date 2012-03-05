@@ -1,6 +1,8 @@
 module Dor::Assembly
   module Checksumable
     
+    include Dor::Assembly::ContentMetadata
+
     # TODO: Checksmable: methods below need specs.
     # TODO: Checksmable: need to handle TIF vs JP2.
 
