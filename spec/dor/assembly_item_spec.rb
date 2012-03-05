@@ -1,11 +1,10 @@
 describe Dor::AssemblyItem do
   
   before :each do
-    # TODO: test_input: need a copy of test_input than can be modified.
     @dru           = 'aa111bb2222'
     @druid         = Druid.new @dru
     @root_dir      = 'spec/test_input'
-    @ai            = new_item @druid
+    @ai            = new_assembly_item @druid
     @exp_checksums = {
       File.join(@ai.path, "image111.tif") => {
         :md5  => '7e40beb08d646044529b9138a5f1c796',
@@ -18,10 +17,12 @@ describe Dor::AssemblyItem do
     }
   end
 
-  def new_item(druid)
+  def new_assembly_item(druid)
+    # TODO: new_assembly_item: use a StringIO for ainfo_file_h
     @ai = Dor::AssemblyItem.new(
-      :druid    => druid,
-      :root_dir => @root_dir
+      :druid        => druid,
+      :root_dir     => @root_dir,
+      :ainfo_file_h => File.open('_ai.yml', 'w')
     )
   end
  
@@ -33,7 +34,7 @@ describe Dor::AssemblyItem do
     
     it "knows its druid, whether passed a string druid or a Druid object" do
       @ai.druid.should == @druid
-      @ai = new_item @dru
+      @ai = new_assembly_item @dru
       @ai.druid.druid.should == @dru
     end
 
@@ -54,6 +55,12 @@ describe Dor::AssemblyItem do
       @ai.compute_checksums
       @ai.checksums.should == @exp_checksums
     end
+
+    it "can persist......." do
+      @ai.compute_checksums
+      @ai.checksums.should == @exp_checksums
+    end
+
   end
 
 end
