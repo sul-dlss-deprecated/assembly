@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <contentMetadata objectId="ee555ff6666">
-  <resource sequence="1" id="ee555ff66661_1">
-    <label>Image 1</label>
-    <file preserve="yes" publish="no" shelve="no" id="image333.tif">
-    </file>
-  </resource>
+    <resource sequence="1" id="ee555ff66661_1">
+        <label>Image 1</label>
+        <file preserve="yes" publish="no" shelve="no" id="image333.tif"/>
+    </resource>
 </contentMetadata>
