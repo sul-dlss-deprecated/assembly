@@ -18,11 +18,11 @@ describe Dor::AssemblyItem do
   end
 
   def new_assembly_item(druid)
-    # TODO: new_assembly_item: use a StringIO for cm_handle
+    # TODO: new_assembly_item: use a StringIO for cm_handle.
     @ai = Dor::AssemblyItem.new(
       :druid     => druid,
       :root_dir  => @root_dir,
-      :cm_handle => STDOUT
+      :cm_handle => File.open('tmp/temp_out.xml', 'a')
     )
   end
  

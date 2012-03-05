@@ -1,21 +1,28 @@
 module Dor
   module Checksumable
     
+    # TODO: AssemblyItem: methods below need specs.
+
     def compute_checksums
       cs_tool = Checksum::Tools.new({}, *@checksum_types)
       file_nodes.each do |n|
+        remove_checksum_child_nodes n
         checksums = cs_tool.digest_file(file_path_of_node n)
-        add_checksums_to_node n, checksums
+        add_checksum_child_nodes n, checksums
       end
       persist_content_metadata
     end
 
-    def add_checksums_to_node(node, checksums)
-      checksums.each do |csum_type, csum_val|
+    def remove_checksum_child_nodes(parent_node)
+      parent_node.css('checksum').each { |cn| cn.remove }
+    end
+
+    def add_checksum_child_nodes(parent_node, checksums)
+      checksums.each do |typ, val|
         cn         = new_node 'checksum'
-        cn.content = csum_val
-        cn['type'] = csum_type.to_s
-        node.add_child cn
+        cn.content = val
+        cn['type'] = typ.to_s
+        parent_node.add_child cn
       end
     end
 

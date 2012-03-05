@@ -31,10 +31,10 @@ module Dor
       @checksum_types = [:md5, :sha1]
     end
 
-    # TODO: AssemblyItem: several new methods need specs.
+    # TODO: AssemblyItem: methods below need specs.
 
     def load_content_metadata
-      Nokogiri::XML(File.open @cm_file_name)
+      doc = Nokogiri.XML(File.open @cm_file_name) { |conf| conf.default_xml.noblanks }
     end
 
     def new_node(node_name)
@@ -54,9 +54,8 @@ module Dor
     end
 
     def persist_content_metadata
-      # TODO: persist_content_metadata(): in test_input, remove whitespace from XML.
       @cm_handle ||= File.open @cm_file_name, 'w'
-      @cm_handle.puts @cm
+      @cm_handle.puts @cm.to_xml
     end
 
   end
