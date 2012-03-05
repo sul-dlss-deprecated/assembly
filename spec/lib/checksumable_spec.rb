@@ -1,8 +1,8 @@
 class ChecksumableItem
-  include Dor::Checksumable
+  include Dor::Assembly::Checksumable
 end
 
-describe Dor::Checksumable do
+describe Dor::Assembly::Checksumable do
   
   before :each do
     @item = ChecksumableItem.new

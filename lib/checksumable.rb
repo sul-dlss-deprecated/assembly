@@ -1,4 +1,4 @@
-module Dor
+module Dor::Assembly
   module Checksumable
     
     # TODO: Checksmable: methods below need specs.

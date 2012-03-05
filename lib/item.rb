@@ -1,8 +1,8 @@
-module Dor
+module Dor::Assembly
 
-  class AssemblyItem
+  class Item
 
-    include Dor::Checksumable
+    include Dor::Assembly::Checksumable
 
     attr_accessor(
       :root_dir, 
@@ -31,7 +31,7 @@ module Dor
       @checksum_types = [:md5, :sha1]
     end
 
-    # TODO: AssemblyItem: methods below need specs.
+    # TODO: Dor::Assembly::Item: methods below need specs.
 
     def load_content_metadata
       @cm = Nokogiri.XML(File.open @cm_file_name) { |conf| conf.default_xml.noblanks }

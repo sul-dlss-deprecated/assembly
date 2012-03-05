@@ -1,2 +1,2 @@
-require 'dor/checksumable'
-require 'dor/assembly_item'
+require 'checksumable'
+require 'item'

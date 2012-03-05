@@ -1,4 +1,4 @@
-describe Dor::AssemblyItem do
+describe Dor::Assembly::Item do
   
   before :each do
     @dru           = 'aa111bb2222'
@@ -19,7 +19,7 @@ describe Dor::AssemblyItem do
 
   def new_assembly_item(druid)
     # TODO: new_assembly_item: use a StringIO for cm_handle.
-    @ai = Dor::AssemblyItem.new(
+    @ai = Dor::Assembly::Item.new(
       :druid     => druid,
       :cm_handle => File.open('tmp/temp_out.xml', 'a')
     )
@@ -28,7 +28,7 @@ describe Dor::AssemblyItem do
   describe "initialization" do
     
     it "can be instantiated" do
-      @ai.should be_kind_of Dor::AssemblyItem
+      @ai.should be_kind_of Dor::Assembly::Item
     end
     
     it "knows its druid, whether passed a string druid or a Druid object" do
