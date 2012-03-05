@@ -6,33 +6,31 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     attr_accessor(
-      :root_dir, 
-      :cm_handle,
       :druid, 
+      :root_dir, 
       :path,
       :cm_file_name,
-      :cm,
       :checksums,
       :checksum_types
     )
 
     def initialize(params = {})
-      @cm_handle = params[:cm_handle]
-      @druid     = params[:druid]
+      @druid = params[:druid]
       setup
+      load_content_metadata
     end
 
     def setup
-      @root_dir       = Dor::Config.assembly.root
+      # TODO: setup(): should @cm_file_name be set in ContentMetadta.
       @druid          = Druid.new(@druid) unless @druid.class == Druid
+      @root_dir       = Dor::Config.assembly.root
       @path           = File.join @root_dir, @druid.tree
       @cm_file_name   = File.join @path, 'content_metadata.xml'
-      @cm             = load_content_metadata
       @checksums      = {}
       @checksum_types = [:md5, :sha1]
     end
 
-    # TODO: Dor::Assembly::Item: methods below need specs.
+    # TODO: Dor::Assembly::Item: methods below need to be deleted or tested.
 
     def new_node(node_name)
       Nokogiri::XML::Node.new node_name, @cm

@@ -56,7 +56,7 @@ describe Dor::Assembly::Item do
     it "compute the correct checksums" do
       # TODO: assertions for expected checksums.
       # TODO: move to checksmable_spec.rb, along with exp_checksums.
-      @ai.compute_checksums
+      # @ai.compute_checksums
     end
 
   end
