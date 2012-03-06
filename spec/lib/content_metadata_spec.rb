@@ -48,16 +48,19 @@ describe Dor::Assembly::ContentMetadata do
 
   end
   
-  describe "#new_node_in_cm" do
+  describe "Misc methods" do
 
-    before(:each) do
+    it "#new_node_in_cm should return the expected Nokogiri node" do
       @item.load_content_metadata
-    end
-
-    it "should return the expected Nokogiri node" do
       n = @item.new_node_in_cm 'foo'
       n.to_s.should == '<foo/>'
       n.should be_kind_of Nokogiri::XML::Element
+    end
+
+    it "#druid_tree_path should return the expected string" do
+      @item.root_dir = 'foo/bar'
+      @item.druid = Druid.new 'xx999yy8888'
+      @item.druid_tree_path.should == 'foo/bar/xx/999/yy/8888'
     end
 
   end

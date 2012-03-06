@@ -27,7 +27,6 @@ module Dor::Assembly
     end
 
     def druid_tree_path
-      # TODO: spec.
       File.join @root_dir, @druid.path
     end
 
