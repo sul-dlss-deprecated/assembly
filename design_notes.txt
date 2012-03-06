@@ -5,7 +5,7 @@ Notes on assembly robots:
       in the file system (in the object's druid tree directory).
 
     - Typically, a robot does some work and then adds more information to
-      the assenbly.yml file sitting in the druid tree directory.
+      the content_metadata.xml file sitting in the druid tree directory.
 
 Robots:
 
