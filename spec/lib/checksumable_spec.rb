@@ -38,6 +38,13 @@ describe Dor::Assembly::Checksumable do
 
   describe '#compute_checksums' do
   
+    before(:each) do
+      # Set cm_handle so that the call to compute_checksums does not
+      # modify our content_metadata.xml file in spec/test_input.
+      @tmpfile = Tempfile.new 'persist_content_metadata_', 'tmp'
+      @item.cm_handle = @tmpfile
+    end
+
     it 'should update the content metadata correctly' do
       @item.load_content_metadata
       all_cs_nodes.size.should == 3

@@ -4,8 +4,7 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def compute_checksums
-      # TODO: compute_checksums(): need to handle TIF vs JP2.
-      # TODO: compute_checksums(): activate persist_content_metadata.
+      # TODO: compute_checksums(): need to be able to handle TIF vs JP2.
       cs_types = [:md5, :sha1]
       cs_tool  = Checksum::Tools.new({}, *cs_types)
       file_nodes.each do |fn|
@@ -13,7 +12,8 @@ module Dor::Assembly
         f = File.join druid_tree_path, fn['id']
         add_checksum_nodes fn, cs_tool.digest_file(f)
       end
-      # persist_content_metadata
+
+      persist_content_metadata
     end
 
     def remove_checksum_nodes(parent_node)
