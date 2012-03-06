@@ -17,7 +17,7 @@ module Dor::Assembly
       xml = @cm.to_xml
       if @cm_handle
         @cm_handle.puts xml
-      elsif
+      else
         File.open(@cm_file_name, 'w') { |f| f.puts xml }
       end
     end

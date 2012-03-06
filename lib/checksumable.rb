@@ -2,7 +2,6 @@ module Dor::Assembly
   module Checksumable
     
     include Dor::Assembly::ContentMetadata
-    include Dor::Assembly::Helper
 
     def compute_checksums
       # TODO: compute_checksums(): need to handle TIF vs JP2.

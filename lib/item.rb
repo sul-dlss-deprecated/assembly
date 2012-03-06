@@ -4,7 +4,6 @@ module Dor::Assembly
 
     include Dor::Assembly::Checksumable
     include Dor::Assembly::ContentMetadata
-    include Dor::Assembly::Helper
 
     attr_accessor :druid, :root_dir, :cm_file_name
 
