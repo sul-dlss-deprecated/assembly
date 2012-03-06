@@ -4,13 +4,12 @@ module Dor::Assembly
 
     include Dor::Assembly::Checksumable
     include Dor::Assembly::ContentMetadata
+    include Dor::Assembly::Helper
 
     attr_accessor(
       :druid, 
       :root_dir, 
-      :path,
       :cm_file_name,
-      :checksums,
       :checksum_types
     )
 
@@ -21,12 +20,11 @@ module Dor::Assembly
     end
 
     def setup
-      # TODO: setup(): should @cm_file_name be set in ContentMetadta.
+      # TODO: setup(): @cm_file_type does not belong here.
+      # TODO: setup(): @checksum_types does not belong here.
       @druid          = Druid.new(@druid) unless @druid.class == Druid
       @root_dir       = Dor::Config.assembly.root
-      @path           = File.join @root_dir, @druid.tree
-      @cm_file_name   = File.join @path, 'content_metadata.xml'
-      @checksums      = {}
+      @cm_file_name   = File.join druid_tree_path, 'content_metadata.xml'
       @checksum_types = [:md5, :sha1]
     end
 
@@ -36,12 +34,8 @@ module Dor::Assembly
       Nokogiri::XML::Node.new node_name, @cm
     end
 
-    def file_nodes
-      @cm.xpath '//resource/file'
-    end
-
     def file_path_of_node(node)
-      File.join @path, node['id']
+      File.join druid_tree_path, node['id']
     end
 
     def all_file_paths
