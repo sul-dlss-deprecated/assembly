@@ -48,4 +48,18 @@ describe Dor::Assembly::ContentMetadata do
 
   end
   
+  describe "#new_node_in_cm" do
+
+    before(:each) do
+      @item.load_content_metadata
+    end
+
+    it "should return the expected Nokogiri node" do
+      n = @item.new_node_in_cm 'foo'
+      n.to_s.should == '<foo/>'
+      n.should be_kind_of Nokogiri::XML::Element
+    end
+
+  end
+
 end
