@@ -16,6 +16,10 @@ module Dor::Assembly
       end
     end
 
+    def new_node_in_cm(node_name)
+      Nokogiri::XML::Node.new node_name, @cm
+    end
+
   end
 end
 

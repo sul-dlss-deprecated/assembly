@@ -30,10 +30,6 @@ module Dor::Assembly
 
     # TODO: Dor::Assembly::Item: methods below need to be deleted or tested.
 
-    def new_node(node_name)
-      Nokogiri::XML::Node.new node_name, @cm
-    end
-
     def file_path_of_node(node)
       File.join druid_tree_path, node['id']
     end
