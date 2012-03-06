@@ -6,24 +6,50 @@ end
 describe Dor::Assembly::Checksumable do
   
   before :each do
-    dummy_xml         = '<contentMetadata><file></file></contentMetadata>'
-    @item             = ChecksumableItem.new
-    @item.cm          = Nokogiri::XML dummy_xml
-    @checksums        = { :md5 => "a123", :sha1 => "567c" }
-    @parent_file_node = @item.cm.xpath('//file').first
+    dummy_xml = '<contentMetadata><file></file></contentMetadata>'
+    root_dir  = 'spec/test_input'
+    dru       = 'aa111bb2222'
+    cm_file   = 'content_metadata.xml'
+
+    @item              = ChecksumableItem.new
+    @item.druid        = Druid.new dru
+    @item.root_dir     = root_dir
+    @item.cm           = Nokogiri::XML dummy_xml
+    @item.cm_file_name = File.join root_dir, @item.druid.path, cm_file
+
+    @checksums         = { :md5 => "a123", :sha1 => "567c" }
+    @parent_file_node  = @item.cm.xpath('//file').first
+
+    @exp_checksums = {
+      "image111.tif" => {
+        "md5"  => '7e40beb08d646044529b9138a5f1c796',
+        "sha1" => 'ffed9bddf353e7a6445bdec9ae3ab8525a3ee690',
+      },
+      "image112.tif" => {
+        "md5"  => '4e3cd24dd79f3ec91622d9f8e5ab5afa',
+        "sha1" => '84e124b7ef4ec38d853c45e7b373b57201e28431',
+      },
+    }
   end
  
-  def cs_nodes
+  def all_cs_nodes
     @item.cm.xpath '//file/checksum'
   end
 
-  it "can be instantiated" do
-    @item.should be_kind_of ChecksumableItem
-  end
-  
   describe '#compute_checksums' do
   
-    it 'BLAHHHHHHHHH' do
+    it 'should update the content metadata correctly' do
+      @item.load_content_metadata
+      all_cs_nodes.size.should == 3
+      @item.compute_checksums
+      all_cs_nodes.size.should == 4
+
+      @item.file_nodes.each do |fnode|
+        file_name = fnode['id']
+        cnodes    = fnode.xpath './checksum'
+        checksums = Hash[ cnodes.map { |cn| [cn['type'], cn.content] } ]
+        checksums.should == @exp_checksums[file_name]
+      end
     end
 
   end
@@ -31,9 +57,9 @@ describe Dor::Assembly::Checksumable do
   describe "#add_checksum_nodes" do
     
     it "should correctly add checksum nodes as children of the parent_node" do
-      cs_nodes.size.should == 0
+      all_cs_nodes.size.should == 0
       @item.add_checksum_nodes @parent_file_node, @checksums
-      h = Hash[ cs_nodes.map { |n| [ n['type'].to_sym, n.content ] } ]
+      h = Hash[ all_cs_nodes.map { |n| [ n['type'].to_sym, n.content ] } ]
       h.should == @checksums
     end
 
@@ -43,9 +69,9 @@ describe Dor::Assembly::Checksumable do
     
     it "should remove all checksum child nodes from the parent_node" do
       @item.add_checksum_nodes @parent_file_node, @checksums
-      cs_nodes.size.should == @checksums.size
+      all_cs_nodes.size.should == @checksums.size
       @item.remove_checksum_nodes @parent_file_node
-      cs_nodes.size.should == 0
+      all_cs_nodes.size.should == 0
     end
 
   end

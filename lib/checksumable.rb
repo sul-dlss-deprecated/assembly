@@ -5,16 +5,15 @@ module Dor::Assembly
     include Dor::Assembly::Helper
 
     def compute_checksums
-      # TODO: compute_checksums: spec.
-      # TODO: compute_checksums: need to handle TIF vs JP2.
-      # TODO: compute_checksums: activate persist_content_metadata.
-      cs_tool = Checksum::Tools.new({}, *@checksum_types)
+      # TODO: compute_checksums(): need to handle TIF vs JP2.
+      # TODO: compute_checksums(): activate persist_content_metadata.
+      cs_types = [:md5, :sha1]
+      cs_tool  = Checksum::Tools.new({}, *cs_types)
       file_nodes.each do |fn|
         remove_checksum_nodes fn
-        checksums = cs_tool.digest_file(file_path_of_node fn)
-        add_checksum_nodes fn, checksums
+        f = File.join druid_tree_path, fn['id']
+        add_checksum_nodes fn, cs_tool.digest_file(f)
       end
-      puts @cm
       # persist_content_metadata
     end
 
