@@ -14,4 +14,14 @@ describe Dor::Assembly::Checksumable do
     @item.should be_kind_of ChecksumableItem
   end
   
+  describe '#compute_checksums' do
+  
+    # it 'computes new checksums'
+    #   item = ChecksumItem.new
+    #   item.cm = Nokogiri::Xml('<contentMetadata .....>')
+    #   item.compute_checksum
+    # end
+
+  end
+
 end

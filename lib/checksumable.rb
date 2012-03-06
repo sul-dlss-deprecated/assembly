@@ -7,6 +7,7 @@ module Dor::Assembly
     # TODO: Checksmable: need to handle TIF vs JP2.
 
     def compute_checksums
+      file_nodes = @cm.xpath '//resource/file'
       cs_tool = Checksum::Tools.new({}, *@checksum_types)
       file_nodes.each do |n|
         remove_checksum_child_nodes n
