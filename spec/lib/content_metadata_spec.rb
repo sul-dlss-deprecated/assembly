@@ -50,7 +50,7 @@ describe Dor::Assembly::ContentMetadata do
   
   describe "Misc methods" do
 
-    it "#new_node_in_cm should return the expected Nokogiri node" do
+    it "#new_node_in_cm should return the expected Nokogiri element" do
       @item.load_content_metadata
       n = @item.new_node_in_cm 'foo'
       n.to_s.should == '<foo/>'
@@ -61,6 +61,13 @@ describe Dor::Assembly::ContentMetadata do
       @item.root_dir = 'foo/bar'
       @item.druid = Druid.new 'xx999yy8888'
       @item.druid_tree_path.should == 'foo/bar/xx/999/yy/8888'
+    end
+
+    it "#file_nodes should return the expected N of Nokogiri elements" do
+      @item.load_content_metadata
+      fns = @item.file_nodes
+      fns.size.should == 2
+      fns.each { |fn| fn.should be_kind_of Nokogiri::XML::Element }
     end
 
   end

@@ -31,7 +31,6 @@ module Dor::Assembly
     end
 
     def file_nodes
-      # TODO: spec.
       @cm.xpath '//resource/file'
     end
 
