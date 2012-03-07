@@ -18,7 +18,7 @@ describe Dor::Assembly::Item do
 
     it "item should know the path to the content metadata file" do
       @item = Dor::Assembly::Item.new :druid => @druid
-      exp_cm_file = 'spec/test_input/aa/111/bb/2222/content_metadata.xml'
+      exp_cm_file = 'spec/test_input/aa/111/bb/2222/' + Dor::Config.assembly.content_metadata_file_name
       @item.cm_file_name.should == exp_cm_file
     end
 

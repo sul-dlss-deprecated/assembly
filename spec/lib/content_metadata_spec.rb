@@ -6,7 +6,7 @@ describe Dor::Assembly::ContentMetadata do
   
   before(:each) do
     @item              = ContentMetadataItem.new
-    @item.cm_file_name = 'spec/test_input/aa/111/bb/2222/content_metadata.xml'
+    @item.cm_file_name = 'spec/test_input/aa/111/bb/2222/' + Dor::Config.assembly.content_metadata_file_name
   end
  
   describe "#load_content_metadata" do

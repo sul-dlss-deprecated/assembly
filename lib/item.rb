@@ -14,7 +14,7 @@ module Dor::Assembly
     def setup
       @druid        = Druid.new(@druid) unless @druid.class == Druid
       @root_dir     = Dor::Config.assembly.root
-      @cm_file_name = File.join druid_tree_path, 'content_metadata.xml'
+      @cm_file_name = File.join druid_tree_path, Dor::Config.assembly.content_metadata_file_name
     end
 
   end

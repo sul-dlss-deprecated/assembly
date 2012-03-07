@@ -9,7 +9,7 @@ describe Dor::Assembly::Checksumable do
     dummy_xml = '<contentMetadata><file></file></contentMetadata>'
     root_dir  = 'spec/test_input'
     dru       = 'aa111bb2222'
-    cm_file   = 'content_metadata.xml'
+    cm_file   = Dor::Config.assembly.content_metadata_file_name
 
     @item              = ChecksumableItem.new
     @item.druid        = Druid.new dru
