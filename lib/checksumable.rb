@@ -4,7 +4,6 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def compute_checksums
-      # TODO: compute_checksums(): need to be able to handle TIF vs JP2.
       cs_types = [:md5, :sha1]
       cs_tool  = Checksum::Tools.new({}, *cs_types)
       file_nodes.each do |fn|

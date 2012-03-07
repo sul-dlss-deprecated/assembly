@@ -9,17 +9,13 @@ Notes on assembly robots:
 
 Robots:
 
-    - Compute checksums(TIF).
+    - Compute image attributes.
+
+    - Create JP2 and compute image attributes.
+
+    - Compute checksums.
 
     - Compare checksums -- expected vs. actual.
-
-    - Compute image attributes(TIF).
-
-    - Create JP2.
-
-    - Compute checksums(JP2).        # Not a new robot, just a different file type.
-
-    - Compute image attributes(JP2). # Ditto
 
     - Generate content_metadata.xml from assembly.yml.
 
