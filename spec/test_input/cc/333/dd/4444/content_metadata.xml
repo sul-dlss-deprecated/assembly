@@ -2,6 +2,8 @@
 <contentMetadata objectId="cc333dd4444">
     <resource sequence="1" id="cc333dd4444_1">
         <label>Image 1</label>
-        <file preserve="yes" publish="no" shelve="no" id="image222.tif"/>
+        <file preserve="yes" publish="no" shelve="no" id="image222.tif">
+            <provider_checksum type="md5">e5263af3ebb27d4ab44f70317cb249c1</provider_checksum>
+        </file>
     </resource>
 </contentMetadata>
