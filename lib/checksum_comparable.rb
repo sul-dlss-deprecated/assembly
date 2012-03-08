@@ -4,26 +4,33 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def compare_checksums
-      n_successes = 0
+      # Compares <provider_checksum> against <checksum>.
+      # Raises an exception if they disagree.
+      # Returns the N of comparisons that matched.
+      n_matches = 0
 
       file_nodes.each do |fn|
-        fn.xpath('./provider_checksum').each { |provider_cs|
+        fn.xpath('./provider_checksum').each do |provider_cs|
+
+          # Get calculated checksum corresponding to the type of the provider checksum.
           cs_type = provider_cs['type']
           calc_cs = fn.xpath("./checksum[@type='#{cs_type}']").first
 
-          # Bail if there is no calculated checksum.
-          next if calc_cs.nil?
+          # Do nothing if there is no calculated checksum.
+          next if calc_cs.nil?  
 
-          unless provider_cs.content == calc_cs.content
-            msg = "Calculated checksum disagrees with provider checksum (type=#{cs_type})."
+          # Tally the match or fail.
+          if provider_cs.content == calc_cs.content
+            n_matches += 1
+          else
+            msg = %Q<Checksums disagree: type="#{cs_type}", file="#{fn['id']}".>
             raise StandardError, msg
           end
 
-          n_successes += 1
-        }
+        end
       end
 
-      return n_successes
+      return n_matches
     end
 
   end

@@ -44,7 +44,8 @@ describe Dor::Assembly::ChecksumComparable do
 
     it "should raise error if checksums disagree" do
       setup 'ee555ff6666'
-      lambda { @item.compare_checksums }.should raise_error
+      p = lambda { @item.compare_checksums }
+      p.should raise_error StandardError, /^Checksums disagree/
     end
 
   end
