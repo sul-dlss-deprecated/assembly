@@ -2,8 +2,9 @@ module Dor::Assembly
 
   class Item
 
-    include Dor::Assembly::Checksumable
     include Dor::Assembly::ContentMetadata
+    include Dor::Assembly::Checksumable
+    include Dor::Assembly::ChecksumComparable
 
     def initialize(params = {})
       @druid = params[:druid]
