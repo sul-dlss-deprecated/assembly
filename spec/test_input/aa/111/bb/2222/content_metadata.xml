@@ -3,16 +3,19 @@
     <resource sequence="1" id="aa111bb2222_1">
         <label>Image 1</label>
         <file preserve="yes" publish="no" shelve="no" id="image111.tif">
+            <checksum type="md5">7e40beb08d646044529b9138a5f1c796</checksum>
             <provider_checksum type="md5">7e40beb08d646044529b9138a5f1c796</provider_checksum>
         </file>
     </resource>
     <resource sequence="2" id="aa111bb2222_2">
         <label>Image 2</label>
         <file preserve="yes" publish="no" shelve="no" id="image112.tif">
-            <checksum type="md5">A pre-existing checksum</checksum>
-            <checksum type="sha1">A pre-existing checksum</checksum>
-            <checksum type="foo">BAR</checksum>
+            <checksum type="md5">4e3cd24dd79f3ec91622d9f8e5ab5afa</checksum>
+            <checksum type="sha1">84e124b7ef4ec38d853c45e7b373b57201e28431</checksum>
+            <checksum type="foo">FOO</checksum>
+            <checksum type="bar">BAR</checksum>
             <provider_checksum type="md5">4e3cd24dd79f3ec91622d9f8e5ab5afa</provider_checksum>
+            <provider_checksum type="sha1">84e124b7ef4ec38d853c45e7b373b57201e28431</provider_checksum>
         </file>
     </resource>
 </contentMetadata>

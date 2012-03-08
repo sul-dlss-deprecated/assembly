@@ -47,7 +47,7 @@ describe Dor::Assembly::Checksumable do
 
     it 'should update the content metadata correctly' do
       @item.load_content_metadata
-      all_cs_nodes.size.should == 3
+      all_cs_nodes.size.should == 5
       @item.compute_checksums
       all_cs_nodes.size.should == 4
 
