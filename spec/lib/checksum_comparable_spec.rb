@@ -6,12 +6,14 @@ end
 describe Dor::Assembly::ChecksumComparable do
   
   def setup(dru)
-    root_dir           = 'spec/test_input'
-    cm_file            = Dor::Config.assembly.content_metadata_file_name
+    root_dir           = Dor::Config.assembly.root_dir
+    cm_file_name       = Dor::Config.assembly.cm_file_name
+
     @item              = ChecksumComparableItem.new
     @item.druid        = Druid.new dru
     @item.root_dir     = root_dir
-    @item.cm_file_name = File.join root_dir, @item.druid.path, cm_file
+    @item.cm_file_name = File.join root_dir, @item.druid.path, cm_file_name
+
     @item.load_content_metadata
   end
 

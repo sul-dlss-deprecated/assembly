@@ -1,9 +1,11 @@
 describe Dor::Assembly::Item do
   
   before :each do
-    @dru      = 'aa111bb2222'
-    @druid    = Druid.new @dru
-    @root_dir = 'spec/test_input'
+    cmf          = Dor::Config.assembly.cm_file_name
+    root_dir     = Dor::Config.assembly.root_dir
+    @dru         = 'aa111bb2222'
+    @druid       = Druid.new @dru
+    @exp_cm_file = "#{root_dir}/aa/111/bb/2222/#{cmf}"
   end
 
   describe "initialization" do
@@ -18,8 +20,7 @@ describe Dor::Assembly::Item do
 
     it "item should know the path to the content metadata file" do
       @item = Dor::Assembly::Item.new :druid => @druid
-      exp_cm_file = 'spec/test_input/aa/111/bb/2222/' + Dor::Config.assembly.content_metadata_file_name
-      @item.cm_file_name.should == exp_cm_file
+      @item.cm_file_name.should == @exp_cm_file
     end
 
   end

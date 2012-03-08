@@ -5,8 +5,10 @@ end
 describe Dor::Assembly::ContentMetadata do
   
   before(:each) do
+    cmf                = Dor::Config.assembly.cm_file_name
+    root_dir           = Dor::Config.assembly.root_dir
     @item              = ContentMetadataItem.new
-    @item.cm_file_name = 'spec/test_input/aa/111/bb/2222/' + Dor::Config.assembly.content_metadata_file_name
+    @item.cm_file_name = "#{root_dir}/aa/111/bb/2222/#{cmf}"
   end
  
   describe "#load_content_metadata" do

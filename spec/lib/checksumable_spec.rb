@@ -6,16 +6,16 @@ end
 describe Dor::Assembly::Checksumable do
   
   before :each do
-    dummy_xml = '<contentMetadata><file></file></contentMetadata>'
-    root_dir  = 'spec/test_input'
-    dru       = 'aa111bb2222'
-    cm_file   = Dor::Config.assembly.content_metadata_file_name
+    dru          = 'aa111bb2222'
+    dummy_xml    = '<contentMetadata><file></file></contentMetadata>'
+    root_dir     = Dor::Config.assembly.root_dir
+    cm_file_name = Dor::Config.assembly.cm_file_name
 
     @item              = ChecksumableItem.new
     @item.druid        = Druid.new dru
     @item.root_dir     = root_dir
     @item.cm           = Nokogiri::XML dummy_xml
-    @item.cm_file_name = File.join root_dir, @item.druid.path, cm_file
+    @item.cm_file_name = File.join root_dir, @item.druid.path, cm_file_name
 
     @fake_checksum_data = { :md5 => "a123", :sha1 => "567c" }
     @parent_file_node   = @item.cm.xpath('//file').first
@@ -40,7 +40,7 @@ describe Dor::Assembly::Checksumable do
   
     before(:each) do
       # Set cm_handle so that the call to compute_checksums does not
-      # modify our content_metadata.xml file in spec/test_input.
+      # modify our testing inputs.
       @tmpfile = Tempfile.new 'persist_content_metadata_', 'tmp'
       @item.cm_handle = @tmpfile
     end
