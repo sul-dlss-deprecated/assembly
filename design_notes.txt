@@ -7,21 +7,27 @@ Notes on assembly robots:
     - Typically, a robot does some work and then adds more information to
       the content_metadata.xml file sitting in the druid tree directory.
 
+
 Robots:
 
     - Compute image attributes.
 
     - Create JP2 and compute image attributes.
 
-    - Compute checksums.
+    + Compute checksums.
 
-    - Compare checksums -- expected vs. actual.
+    + Compare checksums -- expected vs. actual.
 
-    - Generate content_metadata.xml from assembly.yml.
+    - Make REST calls to dor-services to initiate common-accessioning.
 
-    - Make REST calls to dor-services to initiate common-accessioning:
-      initialize_workspace() and initiate_apo_workflow(). See this Consul page:
-      chimera/REST+mappings+for+dor-services+gem.
+
+REST calls to initiate common accessioning.
+
+      See Consul: chimera/REST+mappings+for+dor-services+gem.
+
+      initialize_workspace()
+      initiate_apo_workflow()
+
 
 Running robots:
 
