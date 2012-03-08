@@ -36,6 +36,14 @@ describe Dor::Assembly::Checksumable do
     @item.cm.xpath '//file/checksum'
   end
 
+  describe "#ChecksumableItem" do
+
+    it "should be able to initialize our testing object" do
+      @item.should be_a_kind_of ChecksumableItem
+    end
+    
+  end
+
   describe '#compute_checksums' do
   
     before(:each) do

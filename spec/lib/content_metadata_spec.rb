@@ -50,7 +50,7 @@ describe Dor::Assembly::ContentMetadata do
 
   end
   
-  describe "Misc methods" do
+  describe "Helper methods" do
 
     it "#new_node_in_cm should return the expected Nokogiri element" do
       @item.load_content_metadata

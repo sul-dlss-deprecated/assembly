@@ -8,9 +8,9 @@ describe Dor::Assembly::Item do
     @exp_cm_file = "#{root_dir}/aa/111/bb/2222/#{cmf}"
   end
 
-  describe "initialization" do
+  describe "Initialization" do
     
-    it "item should know its druid, whether passed a string druid or a Druid object" do
+    it "should know its druid, whether passed a string druid or a Druid object" do
       @item = Dor::Assembly::Item.new :druid => @druid
       @item.druid.should == @druid
 
@@ -18,7 +18,7 @@ describe Dor::Assembly::Item do
       @item.druid.druid.should == @dru
     end
 
-    it "item should know the path to the content metadata file" do
+    it "should know the path to the content metadata file" do
       @item = Dor::Assembly::Item.new :druid => @druid
       @item.cm_file_name.should == @exp_cm_file
     end

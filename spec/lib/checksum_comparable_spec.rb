@@ -17,12 +17,16 @@ describe Dor::Assembly::ChecksumComparable do
     @item.load_content_metadata
   end
 
-  it "initialize" do
-    setup 'aa111bb2222'
-    @item.should be_a_kind_of ChecksumComparableItem
+  describe "#ChecksumComparableItem" do
+
+    it "should be able to initialize our testing object" do
+      setup 'aa111bb2222'
+      @item.should be_a_kind_of ChecksumComparableItem
+    end
+    
   end
 
-  describe "successful comparisons" do
+  describe "#compare_checksums: successful comparisons" do
 
     it "should succeed if checksums agree, with the correct N of successes" do
       setup 'aa111bb2222'
@@ -36,7 +40,7 @@ describe Dor::Assembly::ChecksumComparable do
 
   end
 
-  describe "checksum disagreements" do
+  describe "#compare_checksums: checksum disagreements" do
 
     it "should raise error if checksums disagree" do
       setup 'ee555ff6666'
