@@ -1,5 +1,5 @@
 checksum:
-    prerequisite: start-asssembly
+    prerequisite: start-assembly
     batch_limit:  1000
     error_limit:  10
 
