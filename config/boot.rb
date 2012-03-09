@@ -1,39 +1,55 @@
-$:.unshift File.expand_path(File.join(File.dirname(__FILE__), "..", "lib"))
-$:.unshift File.expand_path(File.join(File.dirname(__FILE__), "..", "robots"))
-
 require 'rubygems'
 require 'bundler/setup'
-require 'logger'
 
-# Load the environment file based on Environment.  Default to development
+# Environment and robot root directory.
 environment = ENV['ROBOT_ENVIRONMENT'] ||= 'development'
-ROBOT_ROOT = File.expand_path(File.dirname(__FILE__) + "/..")
-ROBOT_LOG = Logger.new(File.join(ROBOT_ROOT, "log/#{environment}.log"))
+ROBOT_ROOT  = File.expand_path(File.dirname(__FILE__) + "/..")
+
+# Add subdirs to the load path.
+%w(lib robots).each do |d|
+  $LOAD_PATH.unshift File.join(ROBOT_ROOT, d)
+end
+
+# Set up the robot logger.
+require 'logger'
+ROBOT_LOG       = Logger.new(File.join(ROBOT_ROOT, "log/#{environment}.log"))
 ROBOT_LOG.level = Logger::SEV_LABEL.index(ENV['ROBOT_LOG_LEVEL']) || Logger::INFO
 
-# Override Solrizer's logger before it gets a chance to load and pollute STDERR.
+# Override the Solrizer logger before it loads and pollutes STDERR.
 begin
   require 'solrizer'
   Solrizer.logger = ROBOT_LOG
 rescue LoadError, NameError, NoMethodError
 end
 
+# Require general DLSS infrastructure.
 require 'dor-services'
 require 'lyber_core'
 require 'checksum-tools'
 
+# Require the project and environment.
+env_file = File.expand_path(File.dirname(__FILE__) + "/./environments/#{environment}")
 require 'assembly'
+require env_file
 
-# Dir["#{ROBOT_ROOT}/lib/**/*.rb"].each { |f| require f }
-Dir["#{ROBOT_ROOT}/robots/*"].select { |f| File.directory?(f) }.each do |dir|
-  module_name = File.basename(dir).split(/_/).map {|s| s.capitalize}.join('')
-  mod = Module.new
-  Dir["#{dir}/*.rb"].each do |robot_file|
-    robot_name = File.basename(robot_file,'.rb').split(/_/).collect { |p| p.capitalize }.join('')
-    mod.autoload robot_name.to_sym, robot_file
-  end
-  Object.const_set(module_name.to_sym, mod)
+# Define modules, with autoload behavior, needed by the robot framework.
+def camel_case(s)
+  s.split(/_/).map { |part| part.capitalize }.join('')
 end
 
-env_file = File.expand_path(File.dirname(__FILE__) + "/./environments/#{environment}")
-require env_file
+workflow_dirs = Dir["#{ROBOT_ROOT}/robots/*"].select { |f| File.directory?(f) }
+workflow_dirs.each do |wfdir|
+  # For each workflow (eg, assembly), create a module (Assembly).
+  module_name = camel_case File.basename(wfdir)
+  mod         = Module.new
+
+  robot_files = Dir["#{wfdir}/*.rb"]
+  robot_files.each do |rf|
+    # For each robot step in that workflow (eg, checksum.rb), 
+    # set up an autoload: eg, Assembly.autoload(:Checksum, 'checksum').
+    robot_name = camel_case File.basename(rf, '.rb')
+    mod.autoload(robot_name.to_sym, rf)
+  end
+
+  Object.const_set(module_name.to_sym, mod)
+end
