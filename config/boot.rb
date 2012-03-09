@@ -22,7 +22,9 @@ require 'dor-services'
 require 'lyber_core'
 require 'checksum-tools'
 
-Dir["#{ROBOT_ROOT}/lib/**/*.rb"].each { |f| require f }
+require 'assembly'
+
+# Dir["#{ROBOT_ROOT}/lib/**/*.rb"].each { |f| require f }
 Dir["#{ROBOT_ROOT}/robots/*"].select { |f| File.directory?(f) }.each do |dir|
   module_name = File.basename(dir).split(/_/).map {|s| s.capitalize}.join('')
   mod = Module.new
