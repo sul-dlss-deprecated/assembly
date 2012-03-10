@@ -26,6 +26,7 @@ end
 require 'dor-services'
 require 'lyber_core'
 require 'checksum-tools'
+require 'assembly-image'
 
 # Require the project and environment.
 env_file = File.expand_path(File.dirname(__FILE__) + "/./environments/#{environment}")
