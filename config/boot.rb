@@ -23,15 +23,10 @@ rescue LoadError, NameError, NoMethodError
 end
 
 # Require general DLSS infrastructure.
+# Some of these requires must occur before we load the environment file. 
 require 'dor-services'
 require 'lyber_core'
 require 'checksum-tools'
-require 'assembly-image'
-
-# Require the project and environment.
-env_file = File.expand_path(File.dirname(__FILE__) + "/./environments/#{environment}")
-require 'assembly'
-require env_file
 
 # Define modules, with autoload behavior, needed by the robot framework.
 def camel_case(s)
@@ -54,3 +49,11 @@ workflow_dirs.each do |wfdir|
 
   Object.const_set(module_name.to_sym, mod)
 end
+
+# Require the project and environment.
+# These requires need to come after the autoload code; otherwise, you
+# get a warning about an already-initialized constant.
+env_file = File.expand_path(File.dirname(__FILE__) + "/./environments/#{environment}")
+require 'assembly'
+require 'assembly-image'
+require env_file
