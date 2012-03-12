@@ -1,9 +1,12 @@
-# TODO: exif robot.
 # TODO: jp2 robot.
+# TODO: modify robot ordering in workflow config.
+# TODO: exif robot.
+# TODO: REST-call robot.
 
 # TODO: discuss run_robot script: usage, options, etc.
 # TODO: stray objects are ending up with workflows.
 # TODO: ask how the robots found work if pre-assembly called fedora.client[pid].delete
+# TODO: why am I getting nothing from Dor::WorkflowService.get_objects_for_workstep
 # TODO: how do we control the robot sleep_time during development/integration-testing.
 # TODO: ask about spurious ERROR messages from robot framework (message below).
 # TODO: ask about the pid subdirectory that is created by robots.
@@ -15,6 +18,44 @@
 # TODO: consider whether any logging would be useful
 # TODO: consider whether it would help to write out information about druids processed.
 # TODO: rdoc and README.
+
+
+New robot ordering:
+
+    jp2-create
+        - add new file node
+
+    checksum
+        - add checksum nodes
+
+    checksum-compare
+        - raise
+
+    exif
+        - add image info
+
+            <contentMetadata type="image">
+              <resource type="image">
+                <file mimetype="image/tiff">
+                  <imageData width="100" height="100"/>
+                  <attr name="representation">uncropped</attr>
+                </file>
+                <file mimetype="image/jp2">
+                  <imageData width="100" height="100"/>
+                  <attr name="representation">uncropped</attr>
+                </file>
+              </resource>
+              <resource type="image">
+                <file mimetype="image/tiff">
+                  <imageData width="100" height="100"/>
+                  <attr name="representation">uncropped</attr>
+                </file>
+                <file mimetype="image/jp2">
+                  <imageData width="100" height="100"/>
+                  <attr name="representation">uncropped</attr>
+                </file>
+              </resource>
+            </contentMetadata>
 
 
 Notes on assembly robots:
@@ -29,13 +70,13 @@ Notes on assembly robots:
 
 Robots:
 
-    - Compute image attributes.
-
-    - Create JP2 and compute image attributes.
+    - Create JP2.
 
     + Compute checksums.
 
     + Compare checksums -- expected vs. actual.
+
+    - Compute image attributes.
 
     - Make REST calls to dor-services to initiate common-accessioning.
 
