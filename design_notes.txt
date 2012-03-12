@@ -23,20 +23,8 @@
 New robot ordering:
 
     jp2-create
-        - new files
-
-            process-config.yaml
-
-             lib/jp2able.rb   # create_jp2s()
-        spec/lib/jp2able.rb
-
-             robots/assembly/jp2_create.rb
-        spec/robots/assembly/jp2_create_spec.rb
-
         - add new file node
 
-            <file preserve="yes" publish="no" shelve="no" id="image111.tif" />
-        
     checksum
         - add checksum nodes
 
