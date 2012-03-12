@@ -1,12 +1,15 @@
 # TODO: exif robot.
 # TODO: jp2 robot.
 
-# TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
-# TODO: deployment cap task.
+# TODO: discuss run_robot script: usage, options, etc.
+# TODO: stray objects are ending up with workflows.
+# TODO: ask how the robots found work if pre-assembly called fedora.client[pid].delete
 # TODO: how do we control the robot sleep_time during development/integration-testing.
 # TODO: ask about spurious ERROR messages from robot framework (message below).
 # TODO: ask about the pid subdirectory that is created by robots.
-# TODO: ask how the robots found work if pre-assembly called fedora.client[pid].delete
+
+# TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
+# TODO: deployment cap task.
 
 # TODO: consider whether any logging would be useful
 # TODO: consider whether it would help to write out information about druids processed.
