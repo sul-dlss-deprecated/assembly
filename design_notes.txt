@@ -11,6 +11,7 @@
 # TODO: ask about spurious ERROR messages from robot framework (message below).
 # TODO: ask about the pid subdirectory that is created by robots.
 
+# TODO: add_jp2_file_node(): decided how to handle preserve-publish-shelve?
 # TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
 # TODO: deployment cap task.
 

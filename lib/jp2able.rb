@@ -14,18 +14,14 @@ module Dor::Assembly
       # persist_content_metadata
     end
 
-    def add_jp2_file_node(parent_node, params)
-      p parent_node
-      # <file preserve="yes" publish="no" shelve="no" id="image111.tif" />
-      #
-
-      # checksums.each do |typ, val|
-      #   cn         = new_node_in_cm 'checksum'
-      #   cn.content = val
-      #   cn['type'] = typ.to_s
-      #   parent_node.add_child cn
-      # end
-
+    def add_jp2_file_node(parent_node, file_name)
+      # Adds a file node representing the new jp2 file.
+      fn            = new_node_in_cm 'file'
+      fn[:preserve] = 'yes'
+      fn[:publish]  = 'no'
+      fn[:shelve]   = 'no'
+      fn[:id]       = file_name
+      parent_node.add_child fn
     end
 
   end

@@ -7,30 +7,16 @@ describe Dor::Assembly::Jp2able do
   
   before :each do
 
-    # dru          = 'aa111bb2222'
-    # dummy_xml    = '<contentMetadata><file></file></contentMetadata>'
-    # root_dir     = Dor::Config.assembly.root_dir
-    # cm_file_name = Dor::Config.assembly.cm_file_name
+    dru          = 'aa111bb2222'
+    root_dir     = Dor::Config.assembly.root_dir
+    cm_file_name = Dor::Config.assembly.cm_file_name
 
     @item              = Jp2ableItem.new
-    # @item.druid        = Druid.new dru
-    # @item.root_dir     = root_dir
-    # @item.cm           = Nokogiri::XML dummy_xml
-    # @item.cm_file_name = File.join root_dir, @item.druid.path, cm_file_name
+    @item.druid        = Druid.new dru
+    @item.root_dir     = root_dir
+    @item.cm_file_name = File.join root_dir, @item.druid.path, cm_file_name
 
-    # @fake_checksum_data = { :md5 => "a123", :sha1 => "567c" }
-    # @parent_file_node   = @item.cm.xpath('//file').first
-
-    # @exp_checksums = {
-    #   "image111.tif" => {
-    #     "md5"  => '7e40beb08d646044529b9138a5f1c796',
-    #     "sha1" => 'ffed9bddf353e7a6445bdec9ae3ab8525a3ee690',
-    #   },
-    #   "image112.tif" => {
-    #     "md5"  => '4e3cd24dd79f3ec91622d9f8e5ab5afa',
-    #     "sha1" => '84e124b7ef4ec38d853c45e7b373b57201e28431',
-    #   },
-    # }
+    @dummy_xml            = '<contentMetadata><resource></resource></contentMetadata>'
   end
  
   describe '#Jp2ableItem' do
@@ -68,11 +54,22 @@ describe Dor::Assembly::Jp2able do
 
   describe '#add_jp2_file_node' do
     
-    it 'should ...' do
-      # all_cs_nodes.size.should == 0
-      # @item.add_checksum_nodes @parent_file_node, @fake_checksum_data
-      # h = Hash[ all_cs_nodes.map { |n| [ n['type'].to_sym, n.content ] } ]
-      # h.should == @fake_checksum_data
+    it 'should add the expected file node to the XML' do
+      exp_xml = <<-END.gsub(/^ {8}/, '')
+        <?xml version="1.0"?>
+        <contentMetadata>
+          <resource>
+            <file preserve="yes" publish="no" shelve="no" id="foo.tif"/>
+          </resource>
+        </contentMetadata>
+      END
+      exp_xml = noko_doc exp_xml
+
+      @item.cm = noko_doc @dummy_xml
+      resource_node = @item.cm.xpath('//resource').first
+
+      @item.add_jp2_file_node resource_node, 'foo.tif'
+      @item.cm.should be_equivalent_to exp_xml
     end
 
   end
