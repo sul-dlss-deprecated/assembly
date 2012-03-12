@@ -1,5 +1,10 @@
-checksum:
+jp2-create:
     prerequisite: start-assembly
+    batch_limit:  1000
+    error_limit:  10
+
+checksum:
+    prerequisite: jp2-create
     batch_limit:  1000
     error_limit:  10
 

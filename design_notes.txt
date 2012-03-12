@@ -23,15 +23,19 @@
 New robot ordering:
 
     jp2-create
-        - add new file node
+        - new files
 
-            <file preserve="yes" publish="no" shelve="no" id="image111.tif" />
+            process-config.yaml
 
              lib/jp2able.rb   # create_jp2s()
         spec/lib/jp2able.rb
 
              robots/assembly/jp2_create.rb
         spec/robots/assembly/jp2_create_spec.rb
+
+        - add new file node
+
+            <file preserve="yes" publish="no" shelve="no" id="image111.tif" />
         
     checksum
         - add checksum nodes
@@ -40,6 +44,16 @@ New robot ordering:
         - raise
 
     exif
+        - new files
+
+            process-config.yaml
+
+                 lib/exifable.rb   # collect_exif_info()
+            spec/lib/exifable.rb
+
+                 robots/assembly/collect_exif.rb
+            spec/robots/assembly/collect_exif_spec.rb
+
         - add image info
 
             <contentMetadata type="image">
