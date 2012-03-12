@@ -25,6 +25,14 @@ New robot ordering:
     jp2-create
         - add new file node
 
+            <file preserve="yes" publish="no" shelve="no" id="image111.tif" />
+
+             lib/jp2able.rb   # create_jp2s()
+        spec/lib/jp2able.rb
+
+             robots/assembly/jp2_create.rb
+        spec/robots/assembly/jp2_create_spec.rb
+        
     checksum
         - add checksum nodes
 
