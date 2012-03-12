@@ -1,16 +1,15 @@
-# TODO: does assembly run correctly if the caller's working dir is not the project root?
-# TODO: create a environments/local_dev.rb
-# TODO: consider whether any logging would be useful
-# TODO: consider whether it would help to write out information about druids processed.
 # TODO: exif robot.
 # TODO: jp2 robot.
 
+# TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
 # TODO: deployment cap task.
 # TODO: how do we control the robot sleep_time during development/integration-testing.
 # TODO: ask about spurious ERROR messages from robot framework (message below).
 # TODO: ask about the pid subdirectory that is created by robots.
 # TODO: ask how the robots found work if pre-assembly called fedora.client[pid].delete
-# TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
+
+# TODO: consider whether any logging would be useful
+# TODO: consider whether it would help to write out information about druids processed.
 # TODO: rdoc and README.
 
 
