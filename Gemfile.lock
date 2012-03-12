@@ -187,6 +187,7 @@ PLATFORMS
 DEPENDENCIES
   assembly-image
   checksum-tools
+  equivalent-xml
   lyber-core
   rake
   rcov

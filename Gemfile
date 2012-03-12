@@ -9,6 +9,7 @@ group :test do
   gem "rake"
   gem "rcov"
   gem "rspec", "~> 2.6"
+  gem 'equivalent-xml'
 end
 
 group :development do
