@@ -7,6 +7,8 @@ module Dor::Assembly
     include Dor::Assembly::ChecksumComparable
 
     def initialize(params = {})
+      # Takes a druid, either as a string or as a Druid object.
+      # Always converts @druid to a Druid object.
       @druid = params[:druid]
       setup
       load_content_metadata
