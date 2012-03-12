@@ -11,6 +11,7 @@
 # TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
 # TODO: deployment cap task.
 
+# TODO: improved front-end to invoke robots and get info about pending jobs.
 # TODO: consider whether any logging would be useful
 # TODO: consider whether it would help to write out information about druids processed.
 # TODO: rdoc and README.
