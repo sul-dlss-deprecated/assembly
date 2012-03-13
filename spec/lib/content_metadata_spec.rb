@@ -105,11 +105,19 @@ describe Dor::Assembly::ContentMetadata do
       imgs.size.should == 2
     end
 
+    it "#relevant_fnode_image_tuples should raise error if passed unsupported image type" do
+      basic_setup 'aa111bb2222'
+      exp_raise = raise_error /^Invalid image type/
+      lambda { @item.relevant_fnode_image_tuples(:foo) }.should exp_raise
+    end
+
     it "#relevant_fnode_image_tuples should filter out non-approved file types" do
       basic_setup 'cc333dd4444'
       @item.load_content_metadata
-      imgs = @item.relevant_fnode_image_tuples
+      imgs = @item.relevant_fnode_image_tuples(:tif)  # Filter out .txt file.
       imgs.size.should == 1
+      imgs = @item.relevant_fnode_image_tuples(:jp2)  # There are no jp2 files.
+      imgs.size.should == 0
     end
 
   end

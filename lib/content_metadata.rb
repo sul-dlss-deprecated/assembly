@@ -8,7 +8,13 @@ module Dor::Assembly
       :druid,
       :root_dir
     )
-    
+
+    IMAGE_TYPES = {
+      :tif => 'image/tiff',
+      :jpg => 'image/jpeg',
+      :jp2 => 'image/jp2',
+    }
+
     def load_content_metadata
       # Loads content metadata XML into a Nokogiri document.
       @cm = Nokogiri.XML(File.open @cm_file_name) { |conf| conf.default_xml.noblanks }
@@ -49,10 +55,15 @@ module Dor::Assembly
       file_nodes.map { |fn| [ fn, Assembly::Image.new(path_to_file fn['id']) ] }
     end
 
-    def relevant_fnode_image_tuples
-      # Returns a list of node-Image pairs,  after filtering out unsupported types.
-      approved = ['image/tiff', 'image/jpeg']
-      fnode_image_tuples.select { |fn, img| approved.include? img.exif.mimeType }
+    def relevant_fnode_image_tuples(*wanted)
+      # Returns a list of node-Image pairs,  after filtering out unwanted types.
+      # Caller supplies a list of ke
+      relevant = wanted.map { |t| 
+        mime_type = IMAGE_TYPES[t]
+        raise ArgumentError, "Invalid image type: #{t}." if mime_type.nil?
+        mime_type
+      }
+      fnode_image_tuples.select { |fn, img| relevant.include? img.exif.mimeType }
     end
 
   end
