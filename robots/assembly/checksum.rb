@@ -1,9 +1,9 @@
 module Assembly
   
-  class Checksum < LyberCore::Robots::Robot
+  class ChecksumCompute < LyberCore::Robots::Robot
 
     def initialize(opts = {})
-      super('assemblyWF', 'checksum', opts)
+      super('assemblyWF', 'checksum-compute', opts)
     end
 
     def process_item(work_item)
