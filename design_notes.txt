@@ -20,9 +20,6 @@ Behavior of the exif robot:
 
     - new files
 
-        process-config.yaml
-        Capfile
-
              lib/exifable.rb   # collect_exif_info()
         spec/lib/exifable.rb
 

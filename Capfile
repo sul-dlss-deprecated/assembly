@@ -52,5 +52,5 @@ set :deploy_via, :copy
 set :shared_config_certs_dir, true
 
 # Robots run as background daemons. They are restarted at deploy time.
-set :robots, %w(jp2-create checksum-compute checksum-compare exif-get)
+set :robots, %w(jp2-create checksum-compute checksum-compare exif-collect)
 set :workflow, 'assemblyWF'
