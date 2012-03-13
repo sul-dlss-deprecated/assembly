@@ -39,7 +39,9 @@ describe Dor::Assembly::Jp2able do
     end
 
     it 'should ...' do
+      basic_setup 'aa111bb2222'
       @item.load_content_metadata
+      @item.create_jp2s
 
       # @item.file_nodes.each do |fnode|
       #   file_name = fnode['id']
