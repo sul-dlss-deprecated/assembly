@@ -71,33 +71,6 @@ describe Dor::Assembly::Jp2able do
 
   end
 
-  describe "Filters" do
-    
-    it "#all_images should load the correct N of Node-Image pairs" do
-      basic_setup 'aa111bb2222'
-      @item.load_content_metadata
-      imgs = @item.all_images
-      imgs.size.should == 2
-      imgs.each { |file_node, img|
-        file_node.should be_instance_of Nokogiri::XML::Element
-        img.should be_instance_of Assembly::Image
-      }
-
-      basic_setup 'cc333dd4444'
-      @item.load_content_metadata
-      imgs = @item.all_images
-      imgs.size.should == 2
-    end
-
-    it "#relevant_images should filter out non-approved file types" do
-      basic_setup 'cc333dd4444'
-      @item.load_content_metadata
-      imgs = @item.relevant_images
-      imgs.size.should == 1
-    end
-
-  end
-
   describe '#add_jp2_file_node' do
     
     it 'should add the expected <file> node to XML' do

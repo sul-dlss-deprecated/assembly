@@ -35,13 +35,24 @@ module Dor::Assembly
       File.join @root_dir, @druid.path
     end
 
+    def path_to_file(file_name)
+      File.join druid_tree_path, file_name
+    end
+
     def file_nodes
       # Returns all Nokogiri <file> nodes from content metadata.
       @cm.xpath '//resource/file'
     end
 
-    def path_to_file(file_name)
-      File.join druid_tree_path, file_name
+    def fnode_image_tuples
+      # Returns a list of filenode-Image pairs.
+      file_nodes.map { |fn| [ fn, Assembly::Image.new(path_to_file fn['id']) ] }
+    end
+
+    def relevant_fnode_image_tuples
+      # Returns a list of node-Image pairs,  after filtering out unsupported types.
+      approved = ['image/tiff', 'image/jpeg']
+      fnode_image_tuples.select { |fn, img| approved.include? img.exif.mimeType }
     end
 
   end

@@ -4,6 +4,12 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def collect_exif_info
+
+      # for fn,img in node-images
+      #   next unless [fn,img] is relevant (tiff, jpeg, jp2)
+      #   e = img.exif
+      #   modify_cm(fn,e) 
+
       # For each supported image type, generate a jp2 derivative
       # and modify content metadata XML to reflect the new file.
       # relevant_images.each do |fn, img|

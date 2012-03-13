@@ -5,10 +5,17 @@ end
 describe Dor::Assembly::ContentMetadata do
   
   before(:each) do
+    basic_setup 'aa111bb2222'
+  end
+ 
+  def basic_setup(dru, root_dir = nil)
+    root_dir           = root_dir || Dor::Config.assembly.root_dir
     cmf                = Dor::Config.assembly.cm_file_name
-    root_dir           = Dor::Config.assembly.root_dir
     @item              = ContentMetadataItem.new
-    @item.cm_file_name = "#{root_dir}/aa/111/bb/2222/#{cmf}"
+    @item.druid        = Druid.new dru
+    @item.root_dir     = root_dir
+    @item.cm_file_name = File.join root_dir, @item.druid.path, cmf
+    @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
   end
  
   describe "#load_content_metadata" do
@@ -65,6 +72,16 @@ describe Dor::Assembly::ContentMetadata do
       @item.druid_tree_path.should == 'foo/bar/xx/999/yy/8888'
     end
 
+    it "#path_to_file should return expected string" do
+      @item.root_dir = 'foo/bar'
+      @item.druid = Druid.new 'xx999yy8888'
+      @item.path_to_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/foo.doc'
+    end
+
+  end
+
+  describe "Methods returning <file> nodes and filenode-Image tuples" do
+    
     it "#file_nodes should return the expected N of Nokogiri elements" do
       @item.load_content_metadata
       fns = @item.file_nodes
@@ -72,10 +89,27 @@ describe Dor::Assembly::ContentMetadata do
       fns.each { |fn| fn.should be_kind_of Nokogiri::XML::Element }
     end
 
-    it "#path_to_file should return expected string" do
-      @item.root_dir = 'foo/bar'
-      @item.druid = Druid.new 'xx999yy8888'
-      @item.path_to_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/foo.doc'
+    it "#fnode_image_tuples should load the correct N of Node-Image pairs" do
+      basic_setup 'aa111bb2222'
+      @item.load_content_metadata
+      imgs = @item.fnode_image_tuples
+      imgs.size.should == 2
+      imgs.each { |file_node, img|
+        file_node.should be_instance_of Nokogiri::XML::Element
+        img.should be_instance_of Assembly::Image
+      }
+
+      basic_setup 'cc333dd4444'
+      @item.load_content_metadata
+      imgs = @item.fnode_image_tuples
+      imgs.size.should == 2
+    end
+
+    it "#relevant_fnode_image_tuples should filter out non-approved file types" do
+      basic_setup 'cc333dd4444'
+      @item.load_content_metadata
+      imgs = @item.relevant_fnode_image_tuples
+      imgs.size.should == 1
     end
 
   end
