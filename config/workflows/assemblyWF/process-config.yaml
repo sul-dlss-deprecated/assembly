@@ -3,13 +3,18 @@ jp2-create:
     batch_limit:  1000
     error_limit:  10
 
-checksum:
+checksum-compute:
     prerequisite: jp2-create
     batch_limit:  1000
     error_limit:  10
 
 checksum-compare:
-    prerequisite: checksum
+    prerequisite: checksum-compute
+    batch_limit:  1000
+    error_limit:  10
+
+exif-get:
+    prerequisite: checksum-compare
     batch_limit:  1000
     error_limit:  10
 
