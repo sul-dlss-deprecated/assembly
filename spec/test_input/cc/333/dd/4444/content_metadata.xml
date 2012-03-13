@@ -5,5 +5,8 @@
         <file preserve="yes" publish="no" shelve="no" id="image222.tif">
             <provider_checksum type="md5">e5263af3ebb27d4ab44f70317cb249c1</provider_checksum>
         </file>
+        <file preserve="yes" publish="no" shelve="no" id="image222.txt">
+            <provider_checksum type="md5">0929b8b53d900da1ddd1603ec7f29c36</provider_checksum>
+        </file>
     </resource>
 </contentMetadata>

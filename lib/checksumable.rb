@@ -11,8 +11,7 @@ module Dor::Assembly
       # Process each <file> node in the content metadata.
       file_nodes.each do |fn|
         # Compute checksums.
-        file_path = File.join druid_tree_path, fn['id']
-        checksums = cs_tool.digest_file(file_path)
+        checksums = cs_tool.digest_file(path_to_file fn['id'])
 
         # Modify the content metadata XML.
         remove_checksum_nodes fn

@@ -72,6 +72,12 @@ describe Dor::Assembly::ContentMetadata do
       fns.each { |fn| fn.should be_kind_of Nokogiri::XML::Element }
     end
 
+    it "#path_to_file should return expected string" do
+      @item.root_dir = 'foo/bar'
+      @item.druid = Druid.new 'xx999yy8888'
+      @item.path_to_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/foo.doc'
+    end
+
   end
 
 end

@@ -40,6 +40,10 @@ module Dor::Assembly
       @cm.xpath '//resource/file'
     end
 
+    def path_to_file(file_name)
+      File.join druid_tree_path, file_name
+    end
+
   end
 end
 

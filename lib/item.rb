@@ -18,7 +18,7 @@ module Dor::Assembly
       @druid        = Druid.new(@druid) unless @druid.class == Druid
       @root_dir     = Dor::Config.assembly.root_dir
       cmf           = Dor::Config.assembly.cm_file_name 
-      @cm_file_name = File.join druid_tree_path, cmf
+      @cm_file_name = path_to_file cmf
     end
 
   end
