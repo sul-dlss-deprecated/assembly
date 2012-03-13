@@ -18,5 +18,6 @@ group :development do
   end
   gem "ruby-debug"
   gem "capistrano", "2.9.0"
+  gem "lyberteam-devel"
 end
 
