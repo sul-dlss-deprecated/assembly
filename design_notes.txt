@@ -1,6 +1,7 @@
 # TODO: jp2 robot.
 # TODO: exif robot.
 
+# TODO: upgrade assembly-image after it is modified.
 # TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
 # TODO: REST-call robot.
 

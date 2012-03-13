@@ -5,9 +5,6 @@ module Dor::Assembly
 
     def create_jp2s(params = {})
       relevant_images.each do |img|
-        # puts img.path
-        # puts img.exif.mimeType
-        # next
         jp2 = img.create_jp2
         add_jp2_file_node fn, jp2.path
       end
