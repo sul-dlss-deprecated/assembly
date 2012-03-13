@@ -37,10 +37,7 @@ describe Dor::Assembly::Jp2able do
     end
 
     it 'should ...' do
-      # @item.load_content_metadata
-      # all_cs_nodes.size.should == 5
-      # @item.compute_checksums
-      # all_cs_nodes.size.should == 4
+      @item.load_content_metadata
 
       # @item.file_nodes.each do |fnode|
       #   file_name = fnode['id']
