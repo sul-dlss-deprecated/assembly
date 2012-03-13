@@ -1,8 +1,5 @@
-# TODO: exif robot.
-
-# TODO: upgrade assembly-image after it is modified.
-# TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
 # TODO: REST-call robot.
+# TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
 
 # TODO: try to control robot sleep_time in run_robot
 # TODO: experiment with run_robot script (see lyber-core robot, esp line 264).

@@ -47,23 +47,34 @@ describe Dor::Assembly::Exifable do
 
   describe '#collect_exif_info' do
   
-    # before(:each) do
-    #   # Use rsync to create a copy of the test_input directory that we can modify.
-    #   @tmp_root_dir = "tmp/test_input"
-    #   root_dir = Dor::Config.assembly.root_dir
-    #   system "rsync -rqOlt --delete #{root_dir}/ #{@tmp_root_dir}/"
-    # end
+    before(:each) do
+      # Use rsync to create a copy of the test_input directory that we can modify.
+      @tmp_root_dir = "tmp/test_input"
+      root_dir = Dor::Config.assembly.root_dir
+      system "rsync -rqOlt --delete #{root_dir}/ #{@tmp_root_dir}/"
+    end
 
-    # it 'should persist the expected changes to content metadata XML file' do
-    #   basic_setup 'aa111bb2222', @tmp_root_dir
-    #   @item.load_content_metadata
-    #   @item.collect_exif_info
+    it 'should persist the expected changes to content metadata XML file' do
+      basic_setup 'aa111bb2222', @tmp_root_dir
 
-    #   # Read the XML file and check a few things.
-    #   xml = Nokogiri::XML File.read(@item.cm_file_name)
-    #   file_nodes = xml.xpath "//resource/file"
-    #   file_nodes.map { |fn| fn['id'] }
-    # end
+      # Content metadata before.
+      @item.load_content_metadata
+      bef = noko_doc @item.cm.to_xml
+
+      # Content metadata after (as read from the modified file).
+      @item.collect_exif_info
+      aft = Nokogiri::XML File.read(@item.cm_file_name)
+
+      # Check a few things.
+      bef.root['type'].should == nil
+      aft.root['type'].should == 'image'
+
+      bef.xpath('//file/imageData').size.should == 0
+      aft.xpath('//file/imageData').size.should == 2
+
+      bef.xpath('//file/attr').size.should == 0
+      aft.xpath('//file/attr').size.should == 2
+    end
 
   end
 

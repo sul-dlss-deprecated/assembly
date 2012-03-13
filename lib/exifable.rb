@@ -14,7 +14,7 @@ module Dor::Assembly
       set_node_type_as_image @cm.root
 
       # Save the modified XML.
-      # persist_content_metadata
+      persist_content_metadata
     end
 
     def set_node_type_as_image(node)
