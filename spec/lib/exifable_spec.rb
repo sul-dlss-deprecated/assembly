@@ -48,10 +48,8 @@ describe Dor::Assembly::Exifable do
   describe '#collect_exif_info' do
   
     before(:each) do
-      # Use rsync to create a copy of the test_input directory that we can modify.
       @tmp_root_dir = "tmp/test_input"
-      root_dir = Dor::Config.assembly.root_dir
-      system "rsync -rqOlt --delete #{root_dir}/ #{@tmp_root_dir}/"
+      clone_test_input @tmp_root_dir
     end
 
     it 'should persist the expected changes to content metadata XML file' do

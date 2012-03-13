@@ -28,10 +28,8 @@ describe Dor::Assembly::Jp2able do
   describe '#create_jp2s' do
   
     before(:each) do
-      # Use rsync to create a copy of the test_input directory that we can modify.
       @tmp_root_dir = "tmp/test_input"
-      root_dir = Dor::Config.assembly.root_dir
-      system "rsync -rqOlt --delete #{root_dir}/ #{@tmp_root_dir}/"
+      clone_test_input @tmp_root_dir
     end
 
     it 'should create the expected jp2 files' do
