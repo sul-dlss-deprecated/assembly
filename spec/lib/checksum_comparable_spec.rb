@@ -26,7 +26,7 @@ describe Dor::Assembly::ChecksumComparable do
     
   end
 
-  describe "#compare_checksums: successful comparisons" do
+  describe "###compare_checksums: successful comparisons" do
 
     it "should succeed if checksums agree, with the correct N of successes" do
       setup 'aa111bb2222'

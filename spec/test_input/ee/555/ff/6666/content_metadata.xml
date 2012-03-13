@@ -4,7 +4,7 @@
         <label>Image 1</label>
         <file preserve="yes" publish="no" shelve="no" id="image333.tif">
             <checksum type="md5">00000000000000000000000000000000</provider_checksum>
-            <provider_checksum type="md5">4e3cd24dd79f3ec91622d9f8e5ab5afa</provider_checksum>
+            <provider_checksum type="md5">71bc826126b1c824a17dae555f77fe9b</provider_checksum>
         </file>
     </resource>
 </contentMetadata>

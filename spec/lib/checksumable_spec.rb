@@ -22,12 +22,12 @@ describe Dor::Assembly::Checksumable do
 
     @exp_checksums = {
       "image111.tif" => {
-        "md5"  => '7e40beb08d646044529b9138a5f1c796',
-        "sha1" => 'ffed9bddf353e7a6445bdec9ae3ab8525a3ee690',
+        "md5"  => '42616f9e6c1b7e7b7a71b4fa0c5ef794',
+        "sha1" => '77795223379bdb0ded2bd5b8a63adc07fb1c3484',
       },
       "image112.tif" => {
-        "md5"  => '4e3cd24dd79f3ec91622d9f8e5ab5afa',
-        "sha1" => '84e124b7ef4ec38d853c45e7b373b57201e28431',
+        "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
+        "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
       },
     }
   end
