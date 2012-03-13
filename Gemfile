@@ -3,7 +3,7 @@ source "http://sulair-rails-dev.stanford.edu"
 
 gem "lyber-core"
 gem "checksum-tools"
-gem "assembly-image", "0.0.2"
+gem "assembly-image"
 
 group :test do
   gem "rake"
