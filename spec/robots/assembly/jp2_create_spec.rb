@@ -1,4 +1,4 @@
-describe Assembly::Checksum do
+describe Assembly::Jp2Create do
   
   it "should be a LyberCore::Robots::Robot" do
     r = Assembly::Jp2Create.new
