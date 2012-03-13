@@ -46,6 +46,21 @@ REST calls to initiate common accessioning.
       initialize_workspace()
       initiate_apo_workflow()
 
+      Set up a hash similar to this:
+        params = {
+          :object_type => 'item', 
+          :content_model => 'googleScannedBook', 
+          :admin_policy => 'druid:fg890hi1234', 
+          :label => 'Google : Scanned Book 12345', 
+          :agreement_id => 'druid:apu999blr', 
+          :source_id => { :barcode => 9191919191 }, 
+          :other_ids => { :catkey => '000', :uuid => '111' }, 
+          :tags => ['Google : Google Tag!','Google : Other Google Tag!']
+        }      
+
+      Then run something like this:
+         RestClient.post 'http://lyberservices-dev/path/to/api' params
+
 
 Spurious error message from robot framework:
 
