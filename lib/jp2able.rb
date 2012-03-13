@@ -3,22 +3,28 @@ module Dor::Assembly
     
     include Dor::Assembly::ContentMetadata
 
-    def create_jp2s(params = {})
-      relevant_images.each do |img|
-        jp2 = img.create_jp2
-        add_jp2_file_node fn, jp2.path
+    def create_jp2s
+      # For each supported image type, generate a jp2 derivative
+      # and modify content metadata XML to reflect the new file.
+      relevant_images.each do |fn, img|
+        jp2       = img.create_jp2
+        file_name = File.basename jp2.path
+        add_jp2_file_node fn.parent, file_name
       end
-      # TODO: uncomment the persist call.
-      # persist_content_metadata
+
+      # Save the modified XML.
+      persist_content_metadata
     end
 
     def all_images
-      file_nodes.map { |fn| Assembly::Image.new(path_to_file fn['id']) }
+      # Returns a list of node-Image pairs.
+      file_nodes.map { |fn| [ fn, Assembly::Image.new(path_to_file fn['id']) ] }
     end
 
     def relevant_images
+      # Returns a list of node-Image pairs,  after filtering out unsupported types.
       approved = ['image/tiff', 'image/jpeg']
-      all_images.select { |img| approved.include? img.exif.mimeType }
+      all_images.select { |fn, img| approved.include? img.exif.mimeType }
     end
 
     def add_jp2_file_node(parent_node, file_name)
@@ -29,4 +35,3 @@ module Dor::Assembly
 
   end
 end
-

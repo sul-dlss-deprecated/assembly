@@ -1,4 +1,3 @@
-# TODO: jp2 robot.
 # TODO: exif robot.
 
 # TODO: upgrade assembly-image after it is modified.
@@ -17,52 +16,42 @@
 # TODO: ask about spurious ERROR messages from robot framework (message below).
 
 
-New robot ordering:
+Behavior of the exif robot:
 
-    jp2-create
-        - add new file node
+    - new files
 
-    checksum
-        - add checksum nodes
+        process-config.yaml
 
-    checksum-compare
-        - raise
+             lib/exifable.rb   # collect_exif_info()
+        spec/lib/exifable.rb
 
-    exif
-        - new files
+             robots/assembly/collect_exif.rb
+        spec/robots/assembly/collect_exif_spec.rb
 
-            process-config.yaml
+    - add image info
 
-                 lib/exifable.rb   # collect_exif_info()
-            spec/lib/exifable.rb
-
-                 robots/assembly/collect_exif.rb
-            spec/robots/assembly/collect_exif_spec.rb
-
-        - add image info
-
-            <contentMetadata type="image">
-              <resource type="image">
-                <file mimetype="image/tiff">
-                  <imageData width="100" height="100"/>
-                  <attr name="representation">uncropped</attr>
-                </file>
-                <file mimetype="image/jp2">
-                  <imageData width="100" height="100"/>
-                  <attr name="representation">uncropped</attr>
-                </file>
-              </resource>
-              <resource type="image">
-                <file mimetype="image/tiff">
-                  <imageData width="100" height="100"/>
-                  <attr name="representation">uncropped</attr>
-                </file>
-                <file mimetype="image/jp2">
-                  <imageData width="100" height="100"/>
-                  <attr name="representation">uncropped</attr>
-                </file>
-              </resource>
-            </contentMetadata>
+        <contentMetadata type="image">
+          <resource type="image">
+            <file mimetype="image/tiff">
+              <imageData width="100" height="100"/>
+              <attr name="representation">uncropped</attr>
+            </file>
+            <file mimetype="image/jp2">
+              <imageData width="100" height="100"/>
+              <attr name="representation">uncropped</attr>
+            </file>
+          </resource>
+          <resource type="image">
+            <file mimetype="image/tiff">
+              <imageData width="100" height="100"/>
+              <attr name="representation">uncropped</attr>
+            </file>
+            <file mimetype="image/jp2">
+              <imageData width="100" height="100"/>
+              <attr name="representation">uncropped</attr>
+            </file>
+          </resource>
+        </contentMetadata>
 
 
 Notes on assembly robots:
@@ -79,9 +68,9 @@ Robots:
 
     - Create JP2.
 
-    + Compute checksums.
+    - Compute checksums.
 
-    + Compare checksums -- expected vs. actual.
+    - Compare checksums -- expected vs. actual.
 
     - Compute image attributes.
 
@@ -94,81 +83,6 @@ REST calls to initiate common accessioning.
 
       initialize_workspace()
       initiate_apo_workflow()
-
-
-Running robots:
-
-    cd ROBOT_ROOT
-
-    git pull
-    get the updated configs, if they have changed
-    bundle install
-    in boot.rb comment out this line: require assembly-image
-    in development.rb, set root_dir '/dor/assembly_test'
-
-    start robots
-
-
-Misc notes on the pre-assembly code that will be moved into this project (lib/images.rb):
-
-    Required parameters
-        tiff file name
-
-    Image attributes: computed, or supplied optionally (*)
-        exif information
-        jp2 file name (*)
-        allow overwrite (*)
-        output profile (*)
-        input profile
-
-    temp tiff file name
-        pixdem
-        layers
-
-        publish (*)
-        preserve (*)
-        shelve (*)
-        content label (*)
-        file size
-        md5 checksum
-        sha1 checksum
-        format
-
-    Sanity checks
-        tiff file exists
-        mimetype == tiff
-        jp2 file does not exist (unless overwrite requested)
-        output profile file exists
-
-        image exists
-
-    Constants
-        output profile file name
-        input profile file name
-
-        content type description
-        cropped
-
-    System calls
-        should check return values
-        need a mechanism by bypassing/mocking
-        is the generic rescue block needed or useful?
-        See the systemu gem.
-
-
-Stack trace from missing exif pre-reqs on lyberservices-dev:
-
-    $ ROBOT_ENVIRONMENT=development bin/run_robot start assemblyWF:checksum assemblyWF:checksum-compare
-    /home/lyberadmin/.rvm/gems/ruby-1.8.7-p302@assembly/gems/mini_exiftool-1.3.1/lib/mini_exiftool.rb:252:in `exiftool_version': Command 'exiftool' not found (MiniExiftool::Error)
-        from /home/lyberadmin/.rvm/gems/ruby-1.8.7-p302@assembly/gems/mini_exiftool-1.3.1/lib/mini_exiftool.rb:271
-        from /home/lyberadmin/.rvm/gems/ruby-1.8.7-p302@assembly/gems/assembly-image-0.0.2/lib/assembly-image/image.rb:2:in `require'
-        from /home/lyberadmin/.rvm/gems/ruby-1.8.7-p302@assembly/gems/assembly-image-0.0.2/lib/assembly-image/image.rb:2
-        from /home/lyberadmin/.rvm/gems/ruby-1.8.7-p302@assembly/gems/assembly-image-0.0.2/lib/assembly-image.rb:10:in `require'
-        from /home/lyberadmin/.rvm/gems/ruby-1.8.7-p302@assembly/gems/assembly-image-0.0.2/lib/assembly-image.rb:10
-        from /var/opt/home/lyberadmin/assembly/config/boot.rb:29:in `require'
-        from /var/opt/home/lyberadmin/assembly/config/boot.rb:29
-        from bin/run_robot:14:in `require'
-        from bin/run_robot:14
 
 
 Spurious error message from robot framework:
