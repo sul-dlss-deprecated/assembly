@@ -1,24 +1,21 @@
+# TODO: deployment cap task.
+
 # TODO: jp2 robot.
-# TODO: modify robot ordering in workflow config.
 # TODO: exif robot.
+
+# TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
 # TODO: REST-call robot.
 
-# TODO: discuss run_robot script: usage, options, etc.
-# TODO: stray objects are ending up with workflows.
-# TODO: ask how the robots found work if pre-assembly called fedora.client[pid].delete
-# TODO: why am I getting nothing from Dor::WorkflowService.get_objects_for_workstep
-# TODO: how do we control the robot sleep_time during development/integration-testing.
-# TODO: ask about spurious ERROR messages from robot framework (message below).
-# TODO: ask about the pid subdirectory that is created by robots.
+# TODO: try to control robot sleep_time in run_robot
+# TODO: experiment with run_robot script (see lyber-core robot, esp line 264).
 
-# TODO: add_jp2_file_node(): decided how to handle preserve-publish-shelve?
-# TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
-# TODO: deployment cap task.
+# TODO: add_jp2_file_node(): decide how to handle preserve-publish-shelve?
 
 # TODO: improved front-end to invoke robots and get info about pending jobs.
 # TODO: consider whether any logging would be useful
 # TODO: consider whether it would help to write out information about druids processed.
-# TODO: rdoc and README.
+# TODO: YARD documentation.
+# TODO: ask about spurious ERROR messages from robot framework (message below).
 
 
 New robot ordering:
