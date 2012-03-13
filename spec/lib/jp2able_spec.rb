@@ -6,8 +6,10 @@ end
 describe Dor::Assembly::Jp2able do
   
   before :each do
+    basic_setup 'aa111bb2222'
+  end
 
-    dru          = 'aa111bb2222'
+  def basic_setup(dru)
     root_dir     = Dor::Config.assembly.root_dir
     cm_file_name = Dor::Config.assembly.cm_file_name
 
@@ -49,9 +51,33 @@ describe Dor::Assembly::Jp2able do
 
   end
 
+  describe "Filters" do
+    
+    it "#all_images should load the correct N of Assembly::Image objects" do
+      basic_setup 'aa111bb2222'
+      @item.load_content_metadata
+      imgs = @item.all_images
+      imgs.size.should == 2
+      imgs.each { |i| i.should be_instance_of Assembly::Image }
+
+      basic_setup 'cc333dd4444'
+      @item.load_content_metadata
+      imgs = @item.all_images
+      imgs.size.should == 2
+    end
+
+    it "#relevant_images should filter out non-approved file types" do
+      basic_setup 'cc333dd4444'
+      @item.load_content_metadata
+      imgs = @item.relevant_images
+      imgs.size.should == 1
+    end
+
+  end
+
   describe '#add_jp2_file_node' do
     
-    it 'should add the expected file node to the XML' do
+    it 'should add the expected <file> node to XML' do
       exp_xml = <<-END.gsub(/^ {8}/, '')
         <?xml version="1.0"?>
         <contentMetadata>
