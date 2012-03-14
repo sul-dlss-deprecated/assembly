@@ -1,14 +1,38 @@
-==Dependencies
-Check dependencies for jp2 creation in assembly-image gem
+== Dependencies
 
-==Deployment
+Check dependencies for jp2 creation in the assembly-image gem.
 
-See the capfile
 
-==Running tests
-For local testing, you need to run with ROBOT_ENVIRONMENT = local
+== Running tests
 
-e.g. add this to your bash profile:
+For local testing, add this to your bash profile:
 
-export ROBOT_ENVIRONMENT="local"
+    export ROBOT_ENVIRONMENT="local"
 
+
+== Deployment
+
+See the Capfile.
+
+
+== General notes on the assembly robots
+
+The assembly robots do not interact with DOR, except for the workflow changes
+provided by robot framework. Instead, all of the work occurs directly in the
+file system (in the object's druid tree directory).
+
+Typically, a robot does some work and then adds more information to the
+content_metadata.xml file sitting in the druid tree directory.
+
+
+== Robots
+
+    - Create JP2.
+
+    - Compute checksums.
+
+    - Compare checksums -- computed vs those from data provider.
+
+    - Compute image attributes.
+
+    - Initiate the common-accessioning workflow.

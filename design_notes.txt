@@ -11,30 +11,6 @@
 # TODO: YARD documentation.
 # TODO: ask about spurious ERROR messages from robot framework (message below).
 
-
-Notes on assembly robots:
-
-    - The assembly robots do not interact with DOR except for the workflow
-      changes provided by robot framework. Instead, all of the work occurs
-      directly in the file system (in the object's druid tree directory).
-
-    - Typically, a robot does some work and then adds more information to the
-      content_metadata.xml file sitting in the druid tree directory.
-
-
-Robots:
-
-    - Create JP2.
-
-    - Compute checksums.
-
-    - Compare checksums -- computed vs those from data provider.
-
-    - Compute image attributes.
-
-    - Initiate the common-accessioning workflow.
-
-
 Spurious error message from robot framework:
 
     # development.log
