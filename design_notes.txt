@@ -1,4 +1,3 @@
-# TODO: REST-call robot.
 # TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
 
 # TODO: try to control robot sleep_time in run_robot
@@ -35,14 +34,6 @@ Robots:
 
     - Initiate the common-accessioning workflow.
 
-
-REST calls to initiate common accessioning.
-
-    See Consul: chimera/REST+mappings+for+dor-services+gem.
-
-    obj = Dor::Item.load_instance DRUID
-    obj.initialize_workspace(FULL_PATH_TO_DRUID_TREE)
-    obj.initiate_apo_workflow('accessionWF')
 
 Spurious error message from robot framework:
 
