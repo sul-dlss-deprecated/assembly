@@ -37,8 +37,11 @@ if action == 'run'
     instance.start
   end
 else
-  #  :sleep_time  => 30,  # TODO: remove this.
-  controller = LyberCore::Robots::ServiceController.new(:logger => logger, :working_dir => ROBOT_ROOT, :argv => ARGV.dup)
+  controller = LyberCore::Robots::ServiceController.new(
+    :sleep_time  => 30,  # TODO: remove this.
+    :logger      => logger, 
+    :working_dir => ROBOT_ROOT, 
+    :argv        => ARGV.dup)
   case action
   when 'start'
     robots.each { |robot| controller.start(*robot) }
