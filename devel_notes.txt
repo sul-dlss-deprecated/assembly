@@ -1,5 +1,6 @@
 # TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
 
+# TODO: add responds_to tests for all concerns.
 # TODO: add_jp2_file_node(): decide how to handle preserve-publish-shelve?
 
 # TODO: experiment with run_robot script (see lyber-core robot, esp line 264).
