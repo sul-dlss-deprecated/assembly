@@ -1,1 +1,14 @@
+==Dependencies
 Check dependencies for jp2 creation in assembly-image gem
+
+==Deployment
+
+See the capfile
+
+==Running tests
+For local testing, you need to run with ROBOT_ENVIRONMENT = local
+
+e.g. add this to your bash profile:
+
+export ROBOT_ENVIRONMENT="local"
+
