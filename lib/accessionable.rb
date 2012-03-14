@@ -10,7 +10,7 @@ module Dor::Assembly
     end
 
     def get_dor_object
-      Dor::Item.load_instance @druid
+      Dor::Item.load_instance @druid.druid
     end
 
   end
