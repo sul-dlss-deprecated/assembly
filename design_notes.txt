@@ -1,4 +1,3 @@
-# TODO: REST-call robot.
 # TODO: install assembly-images pre-reqs on lyberservices-dev (stack trace below).
 
 # TODO: try to control robot sleep_time in run_robot
@@ -15,12 +14,12 @@
 
 Notes on assembly robots:
 
-    - These robots do not interact with DOR except for the workflow changes
-      provided by robot framework. Instead, all of the work occurs directly
-      in the file system (in the object's druid tree directory).
+    - The assembly robots do not interact with DOR except for the workflow
+      changes provided by robot framework. Instead, all of the work occurs
+      directly in the file system (in the object's druid tree directory).
 
-    - Typically, a robot does some work and then adds more information to
-      the content_metadata.xml file sitting in the druid tree directory.
+    - Typically, a robot does some work and then adds more information to the
+      content_metadata.xml file sitting in the druid tree directory.
 
 
 Robots:
@@ -29,34 +28,11 @@ Robots:
 
     - Compute checksums.
 
-    - Compare checksums -- expected vs. actual.
+    - Compare checksums -- computed vs those from data provider.
 
     - Compute image attributes.
 
-    - Make REST calls to dor-services to initiate common-accessioning.
-
-
-REST calls to initiate common accessioning.
-
-      See Consul: chimera/REST+mappings+for+dor-services+gem.
-
-      initialize_workspace()
-      initiate_apo_workflow()
-
-      Set up a hash similar to this:
-        params = {
-          :object_type => 'item', 
-          :content_model => 'googleScannedBook', 
-          :admin_policy => 'druid:fg890hi1234', 
-          :label => 'Google : Scanned Book 12345', 
-          :agreement_id => 'druid:apu999blr', 
-          :source_id => { :barcode => 9191919191 }, 
-          :other_ids => { :catkey => '000', :uuid => '111' }, 
-          :tags => ['Google : Google Tag!','Google : Other Google Tag!']
-        }      
-
-      Then run something like this:
-         RestClient.post 'http://lyberservices-dev/path/to/api' params
+    - Initiate the common-accessioning workflow.
 
 
 Spurious error message from robot framework:
