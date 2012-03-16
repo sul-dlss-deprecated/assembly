@@ -9,6 +9,8 @@
 #       - environment-specific configuration to config/environments.  
 #       - certs to config/certs.
 #
+# 3) $ cap dev deploy:update
+#
 # Subsequent deployments:
 #
 #   # Stop robots, deploy code, start robots.
@@ -34,7 +36,8 @@ task :dev do
 end
 
 task :testing do
-  role :app, 'sul-lyberservices-test.stanford.edu'
+  set :rvm_type, :user
+  role :app, 'lyberservices-test.stanford.edu'
   set :deploy_env, 'test'
 end
 
