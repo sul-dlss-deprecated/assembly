@@ -21,10 +21,9 @@ describe Dor::Assembly::Accessionable do
   
     it 'should be runnable using stubs for external calls' do
       conf = Dor::Config.assembly
-      d    = double 'dor_double'
-      d.should_receive(:initialize_workspace ).with conf.root_dir
-      d.should_receive(:initiate_apo_workflow).with conf.next_workflow
-      @item.stub(:get_dor_object).and_return(d)
+      @item.should_receive(:initialize_workspace)
+      @item.should_receive(:initialize_apo_workflow)
+      RestClient.stub(:post) # don't actually make the RestClient calls, just assume they work
       @item.initiate_accessioning
     end
 
