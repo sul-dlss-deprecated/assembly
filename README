@@ -22,7 +22,7 @@ provided by robot framework. Instead, all of the work occurs directly in the
 file system (in the object's druid tree directory).
 
 Typically, a robot does some work and then adds more information to the
-content_metadata.xml file sitting in the druid tree directory.
+contentMetadata.xml file sitting in the druid tree directory.
 
 
 == Robots
