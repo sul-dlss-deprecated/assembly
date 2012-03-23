@@ -76,7 +76,7 @@ describe Dor::Assembly::Jp2able do
         <?xml version="1.0"?>
         <contentMetadata>
           <resource>
-            <file preserve="yes" publish="no" shelve="no" id="foo.tif"/>
+            <file preserve="no" publish="yes" shelve="yes" id="foo.tif"/>
           </resource>
         </contentMetadata>
       END

@@ -18,7 +18,7 @@ module Dor::Assembly
 
     def add_jp2_file_node(parent_node, file_name)
       # Adds a file node representing the new jp2 file.
-      f = %Q(<file preserve="yes" publish="no" shelve="no" id="#{file_name}" />)
+      f = %Q(<file preserve="no" publish="yes" shelve="yes" id="#{file_name}" />)
       parent_node.add_child f
     end
 
