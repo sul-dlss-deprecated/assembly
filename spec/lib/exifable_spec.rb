@@ -63,13 +63,31 @@ describe Dor::Assembly::Exifable do
       @item.collect_exif_info
       aft = Nokogiri::XML File.read(@item.cm_file_name)
 
-      # Check a few things.
+      # check that the resource type is image
       bef.root['type'].should == nil
       aft.root['type'].should == 'image'
 
+      # check that each file node does not start with size, mimetype and format attributes
+      bef_file_nodes=bef.xpath('//file')
+      bef_file_nodes.size.should == 2
+      bef_file_nodes.each do |file_node|
+        file_node.attributes['size'].nil?.should == true
+        file_node.attributes['mimeType'].nil?.should == true
+        file_node.attributes['format'].nil?.should == true
+      end
+
+      # check that each file node now has size, mimetype and format
+      aft_file_nodes=aft.xpath('//file')
+      aft_file_nodes.size.should == 2
+      aft_file_nodes[0].attributes['size'].value.should == '62'
+      aft_file_nodes[1].attributes['size'].value.should == '62'
+      aft_file_nodes.each {|file_node| file_node.attributes['mimeType'].value.should == 'image/tiff' && file_node.attributes['format'].value.should == 'TIFF'}
+      
+      # check for imageData nodes being present for each file node
       bef.xpath('//file/imageData').size.should == 0
       aft.xpath('//file/imageData').size.should == 2
 
+      # check for attr nodes being present for each file node
       bef.xpath('//file/attr').size.should == 0
       aft.xpath('//file/attr').size.should == 2
     end

@@ -3,9 +3,11 @@ module Dor::Assembly
     
     include Dor::Assembly::ContentMetadata
 
+    #TODO can we just take this off?
     ATTR_XML = '<attr name="representation">uncropped</attr>'
 
     def collect_exif_info
+      #TODO this should operate on more than these specific content types, and be configurable to take the correct action based on type
       relevant_fnode_image_tuples(:tif, :jpg, :jp2).each do |fn, img|
         exif=img.exif
         set_node_type_as_image fn.parent
