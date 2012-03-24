@@ -9,10 +9,9 @@ module Dor::Assembly
     def collect_exif_info
       #TODO this should operate on more than these specific content types, and be configurable to take the correct action based on type
       relevant_fnode_image_tuples(:tif, :jpg, :jp2).each do |fn, img|
-        exif=img.exif
         set_node_type_as_image fn.parent
-        add_image_data_to_file_node fn,exif
-        fn.add_child image_data_xml(exif)
+        add_image_data_to_file_node fn,img
+        fn.add_child image_data_xml(img.exif)
         fn.add_child ATTR_XML
       end
       set_node_type_as_image @cm.root
@@ -25,10 +24,10 @@ module Dor::Assembly
       node['type'] = 'image'
     end
 
-    def add_image_data_to_file_node(node,exif)
-      node['mimeType']=exif.mimetype
-      node['format']=FORMATS[exif.mimetype]
-      node['size']=exif.filesize.to_i.to_s
+    def add_image_data_to_file_node(node,img)
+      node['mimeType']=img.exif.mimetype
+      node['format']=FORMATS[img.exif.mimetype]
+      node['size']=img.filesize.to_s
       #TODO this is probably where we should add the preserve/publish/shelve attributes from a config file
     end
     

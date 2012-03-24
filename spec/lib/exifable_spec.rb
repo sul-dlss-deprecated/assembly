@@ -79,8 +79,8 @@ describe Dor::Assembly::Exifable do
       # check that each file node now has size, mimetype and format
       aft_file_nodes=aft.xpath('//file')
       aft_file_nodes.size.should == 2
-      aft_file_nodes[0].attributes['size'].value.should == '62'
-      aft_file_nodes[1].attributes['size'].value.should == '62'
+      aft_file_nodes[0].attributes['size'].value.should == '63468'
+      aft_file_nodes[1].attributes['size'].value.should == '63472'
       aft_file_nodes.each {|file_node| file_node.attributes['mimeType'].value.should == 'image/tiff' && file_node.attributes['format'].value.should == 'TIFF'}
       
       # check for imageData nodes being present for each file node
