@@ -28,7 +28,8 @@ module Dor::Assembly
       node['mimeType']=img.exif.mimetype
       node['format']=FORMATS[img.exif.mimetype]
       node['size']=img.filesize.to_s
-      #TODO this is probably where we should add the preserve/publish/shelve attributes from a config file
+      # TODO if we need to override for a given content type and for a given object, this is probably where we should add/edit the preserve/publish/shelve attributes from a config file, 
+      # right now they are added in jp2able in the 'add_jp2_file_node' method
     end
     
     def image_data_xml(exif)
