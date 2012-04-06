@@ -17,7 +17,7 @@ module Dor::Assembly
     end
     
     def initialize_apo_workflow
-      url = "#{Dor::Config.dor.service_root}/dor/v1/objects/druid:#{@druid.id}/accession"
+      url = "#{Dor::Config.dor.service_root}/dor/v1/objects/druid:#{@druid.id}/apo_workflows/accessionWF"
       RestClient.post url, {}       
     end
     

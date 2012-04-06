@@ -4,6 +4,7 @@ source "http://sulair-rails-dev.stanford.edu"
 gem "lyber-core"
 gem "checksum-tools"
 gem "assembly-image"
+gem "rest-client"
 
 group :test do
   gem "rake"
