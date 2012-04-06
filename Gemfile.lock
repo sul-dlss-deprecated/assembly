@@ -106,8 +106,8 @@ GEM
       nokogiri (>= 1.4.3.1)
       systemu (>= 1.2.0)
       validatable
-    lyberteam-devel (0.6.0)
-      capistrano
+    lyberteam-devel (0.5.3)
+      capistrano (= 2.9.0)
       highline
       net-ssh-kerberos
       pony
@@ -224,8 +224,9 @@ DEPENDENCIES
   checksum-tools
   equivalent-xml
   lyber-core
-  lyberteam-devel
+  lyberteam-devel (= 0.5.3)
   rake
   rcov
+  rest-client
   rspec (~> 2.6)
   ruby-debug
