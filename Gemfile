@@ -1,7 +1,8 @@
 source :rubygems
 source "http://sulair-rails-dev.stanford.edu"
 
-gem "lyber-core", "2.0.1"
+gem "lyber-core", "2.0.4"
+gem "dor-services", "3.3.4"
 gem "checksum-tools"
 gem "assembly-image"
 gem "rest-client"
