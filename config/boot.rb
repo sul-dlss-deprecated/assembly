@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
+require 'active_support/core_ext'
 
 # Environment and robot root directory.
 environment = ENV['ROBOT_ENVIRONMENT'] ||= 'development'
