@@ -89,10 +89,10 @@ describe Dor::Assembly::ContentMetadata do
       fns.each { |fn| fn.should be_kind_of Nokogiri::XML::Element }
     end
 
-    it "#fnode_image_tuples should load the correct N of Node-Image pairs" do
+    it "#fnode_tuples should load the correct N of Node-Image pairs" do
       basic_setup 'aa111bb2222'
       @item.load_content_metadata
-      imgs = @item.fnode_image_tuples
+      imgs = @item.fnode_tuples
       imgs.size.should == 2
       imgs.each { |file_node, img|
         file_node.should be_instance_of Nokogiri::XML::Element
@@ -101,22 +101,22 @@ describe Dor::Assembly::ContentMetadata do
 
       basic_setup 'cc333dd4444'
       @item.load_content_metadata
-      imgs = @item.fnode_image_tuples
+      imgs = @item.fnode_tuples
       imgs.size.should == 2
     end
 
-    it "#relevant_fnode_image_tuples should raise error if passed unsupported image type" do
+    it "#relevant_fnode_tuples should raise error if passed unsupported image type" do
       basic_setup 'aa111bb2222'
-      exp_raise = raise_error /^Invalid image type/
-      lambda { @item.relevant_fnode_image_tuples(:foo) }.should exp_raise
+      exp_raise = raise_error /^Invalid file type/
+      lambda { @item.relevant_fnode_tuples('FOO') }.should exp_raise
     end
 
-    it "#relevant_fnode_image_tuples should filter out non-approved file types" do
+    it "#relevant_fnode_tuples should filter out non-approved file types" do
       basic_setup 'cc333dd4444'
       @item.load_content_metadata
-      imgs = @item.relevant_fnode_image_tuples(:tif)  # Filter out .txt file.
+      imgs = @item.relevant_fnode_tuples('TIFF')  # Filter out .txt file.
       imgs.size.should == 1
-      imgs = @item.relevant_fnode_image_tuples(:jp2)  # There are no jp2 files.
+      imgs = @item.relevant_fnode_tuples('JPEG2000')  # There are no jp2 files.
       imgs.size.should == 0
     end
 

@@ -19,11 +19,7 @@ module Dor::Assembly
       'application/x-tar'=>'TAR','application/octet-stream'=>'BINARY'
         }
         
-    IMAGE_TYPES = {
-      :tif => 'image/tiff',
-      :jpg => 'image/jpeg',
-      :jp2 => 'image/jp2',
-    }
+    FILE_TYPES=FORMATS.invert
 
     def load_content_metadata
       # Loads content metadata XML into a Nokogiri document.
@@ -60,20 +56,20 @@ module Dor::Assembly
       @cm.xpath '//resource/file'
     end
 
-    def fnode_image_tuples
+    def fnode_tuples
       # Returns a list of filenode-Image pairs.
       file_nodes.map { |fn| [ fn, Assembly::Image.new(path_to_file fn['id']) ] }
     end
 
-    def relevant_fnode_image_tuples(*wanted)
+    def relevant_fnode_tuples(*wanted)
       # Returns a list of node-Image pairs,  after filtering out unwanted types.
       # Caller supplies a list of ke
       relevant = wanted.map { |t| 
-        mime_type = IMAGE_TYPES[t]
-        raise ArgumentError, "Invalid image type: #{t}." if mime_type.nil?
+        mime_type = FILE_TYPES[t]
+        raise ArgumentError, "Invalid file type: #{t}." if mime_type.nil?
         mime_type
       }
-      fnode_image_tuples.select { |fn, img| relevant.include? img.exif.mimeType }
+      fnode_tuples.select { |fn, file| relevant.include? file.exif.mimeType }
     end
 
   end

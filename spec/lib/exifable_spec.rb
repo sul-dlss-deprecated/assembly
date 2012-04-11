@@ -31,7 +31,7 @@ describe Dor::Assembly::Exifable do
       @item.cm = noko_doc @dummy_xml
       %w(contentMetadata resource).each do |tag|
           node = @item.cm.xpath("//#{tag}").first
-          @item.set_node_type_as_image node
+          @item.set_node_type node,'image'
       end
       exp = Nokogiri::XML( '<contentMetadata type="image"><resource type="image">' + 
                            '</resource></contentMetadata>')
@@ -63,7 +63,7 @@ describe Dor::Assembly::Exifable do
       @item.collect_exif_info
       aft = Nokogiri::XML File.read(@item.cm_file_name)
 
-      # check that the resource type is image
+      # check that the contentmetadata resource type is image after
       bef.root['type'].should == nil
       aft.root['type'].should == 'image'
 
@@ -76,20 +76,82 @@ describe Dor::Assembly::Exifable do
         file_node.attributes['format'].nil?.should == true
       end
 
+      # check that each resource node starts out without a type
+      bef_res_nodes=bef.xpath('//resource')
+      bef_res_nodes.size.should == 2
+      bef_res_nodes.each do |res_node|
+        res_node.attributes['type'].nil?.should == true
+      end
+
       # check that each file node now has size, mimetype and format
       aft_file_nodes=aft.xpath('//file')
       aft_file_nodes.size.should == 2
       aft_file_nodes[0].attributes['size'].value.should == '63468'
       aft_file_nodes[1].attributes['size'].value.should == '63472'
       aft_file_nodes.each {|file_node| file_node.attributes['mimeType'].value.should == 'image/tiff' && file_node.attributes['format'].value.should == 'TIFF'}
+
+      # check that each resource node ends up as type=image
+      aft_res_nodes=aft.xpath('//resource')
+      aft_res_nodes.size.should == 2
+      aft_res_nodes.each do |res_node|
+        res_node.attributes['type'].value.should == 'image'
+      end
+            
+      # check for imageData nodes being present for each file node
+      bef.xpath('//file/imageData').size.should == 0
+      aft.xpath('//file/imageData').size.should == 2
+
+    end
+
+    it 'should not overwrite existing contentmetadata type and resource types if they exist in incoming content metadata XML file' do
+      basic_setup 'ff222cc3333', @tmp_root_dir
+
+      # Content metadata before.
+      @item.load_content_metadata
+      bef = noko_doc @item.cm.to_xml
+      
+      # Content metadata after (as read from the modified file).
+      @item.collect_exif_info
+      aft = Nokogiri::XML File.read(@item.cm_file_name)
+
+      # check that the content metadata type is preserved as book and not switched to image
+      bef.root['type'].should == 'book'
+      aft.root['type'].should == 'book'
+
+      # check that each resource node starts with a type="page"
+      bef_res_nodes=bef.xpath('//resource')
+      bef_res_nodes.size.should == 2
+      bef_res_nodes.each do |res_node|
+        res_node.attributes['type'].value.should == 'page'
+      end
+            
+      # check that each file node does not start with size, mimetype and format attributes
+      bef_file_nodes=bef.xpath('//file')
+      bef_file_nodes.size.should == 5
+      bef_file_nodes.each do |file_node|
+        file_node.attributes['size'].nil?.should == true
+        file_node.attributes['mimeType'].nil?.should == true
+        file_node.attributes['format'].nil?.should == true
+      end
+
+      # check that each file node now has size, mimetype and format
+      aft_file_nodes=aft.xpath('//file')
+      aft_file_nodes.size.should == 5
+      aft_file_nodes[0].attributes['size'].value.should == '63468'
+      aft_file_nodes[1].attributes['size'].value.should == '63472'
+      aft_file_nodes.each {|file_node| file_node.attributes['mimeType'].value.should == 'image/tiff' && file_node.attributes['format'].value.should == 'TIFF'}
+
+      # check that each resource node starts with a type="page"
+      aft_res_nodes=aft.xpath('//resource')
+      aft_res_nodes.size.should == 2
+      aft_res_nodes.each do |res_node|
+        res_node.attributes['type'].value.should == 'page'
+      end
       
       # check for imageData nodes being present for each file node
       bef.xpath('//file/imageData').size.should == 0
       aft.xpath('//file/imageData').size.should == 2
 
-      # check for attr nodes being present for each file node
-      bef.xpath('//file/attr').size.should == 0
-      aft.xpath('//file/attr').size.should == 2
     end
 
   end
