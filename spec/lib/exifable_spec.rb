@@ -134,21 +134,33 @@ describe Dor::Assembly::Exifable do
         file_node.attributes['format'].nil?.should == true
       end
 
-      # check that each file node now has size, mimetype and format
+      # check that the file nodes now have the correct size, mimetype and format
       aft_file_nodes=aft.xpath('//file')
       aft_file_nodes.size.should == 5
       aft_file_nodes[0].attributes['size'].value.should == '63468'
-      aft_file_nodes[1].attributes['size'].value.should == '63472'
-      aft_file_nodes.each {|file_node| file_node.attributes['mimeType'].value.should == 'image/tiff' && file_node.attributes['format'].value.should == 'TIFF'}
+      aft_file_nodes[0].attributes['mimeType'].value.should == 'image/tiff'
+      aft_file_nodes[0].attributes['format'].value.should == 'TIFF'
+      aft_file_nodes[1].attributes['size'].value.should == '450604'
+      aft_file_nodes[1].attributes['mimeType'].value.should == 'audio/x-wav'
+      aft_file_nodes[1].attributes['format'].value.should == 'WAV'
+      aft_file_nodes[2].attributes['size'].value.should == '3151'
+      aft_file_nodes[2].attributes['mimeType'].value.should == 'application/pdf'
+      aft_file_nodes[2].attributes['format'].value.should == 'PDF'
+      aft_file_nodes[3].attributes['size'].value.should == '63472'
+      aft_file_nodes[3].attributes['mimeType'].value.should == 'image/tiff'
+      aft_file_nodes[3].attributes['format'].value.should == 'TIFF'
+      aft_file_nodes[4].attributes['size'].value.should == '42212'
+      aft_file_nodes[4].attributes['mimeType'].value.should == 'audio/mpeg'
+      aft_file_nodes[4].attributes['format'].value.should == 'MP3'
 
-      # check that each resource node starts with a type="page"
+      # check that each resource node end with a type="page" (i.e. was not changed)
       aft_res_nodes=aft.xpath('//resource')
       aft_res_nodes.size.should == 2
       aft_res_nodes.each do |res_node|
         res_node.attributes['type'].value.should == 'page'
       end
       
-      # check for imageData nodes being present for each file node
+      # check for imageData nodes being present for each file node that is an image
       bef.xpath('//file/imageData').size.should == 0
       aft.xpath('//file/imageData').size.should == 2
 

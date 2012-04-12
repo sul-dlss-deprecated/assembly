@@ -4,16 +4,26 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def collect_exif_info
-      #TODO this should operate on more than these specific content types, and be configurable to take the correct action based on type
-      relevant_fnode_tuples('TIFF', 'JPEG', 'JPEG2000').each do |fn, img|
-        set_node_type fn.parent,'image'
-        add_data_to_file_node fn,img
-        fn.add_child image_data_xml(img.exif)
+      fnode_tuples.each do |fn, obj|
+
+        # always add certain attributes to file node regardless of type
+        add_data_to_file_node fn,obj
+        
+        # now depending on the type of object in the file node (i.e. image vs pdf) add other attributes to content metadata
+        case obj.object_type
+
+          when :image # when the object type is an image
+            set_node_type fn.parent,'image'  # set the resource type to 'image' if it's not currently defined
+            fn.add_child image_data_xml(obj.exif)          
+        end
       end
+      
+      # set the root contentMetadata type to 'image' if it's not currently defined
       set_node_type @cm.root,'image'
 
       # Save the modified XML.
       persist_content_metadata
+      
     end
 
     def set_node_type(node,node_type,overwrite=false)
@@ -21,8 +31,8 @@ module Dor::Assembly
     end
 
     def add_data_to_file_node(node,file)
-      node['mimeType']=file.exif.mimetype
-      node['format']=FORMATS[file.exif.mimetype]
+      node['mimeType']=file.mimetype
+      node['format']=Assembly::FORMATS[file.mimetype] || ''
       node['size']=file.filesize.to_s
       # TODO if we need to override for a given content type and for a given object, this is probably where we should add/edit the preserve/publish/shelve attributes from a config file, 
       # right now they are added in jp2able in the 'add_jp2_file_node' method

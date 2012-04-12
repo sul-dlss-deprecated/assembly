@@ -3,6 +3,7 @@ source "http://sulair-rails-dev.stanford.edu"
 
 gem "lyber-core"
 gem "checksum-tools"
+gem "assembly-objectfile"
 gem "assembly-image"
 gem "rest-client"
 

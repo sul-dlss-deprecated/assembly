@@ -92,32 +92,22 @@ describe Dor::Assembly::ContentMetadata do
     it "#fnode_tuples should load the correct N of Node-Image pairs" do
       basic_setup 'aa111bb2222'
       @item.load_content_metadata
-      imgs = @item.fnode_tuples
-      imgs.size.should == 2
-      imgs.each { |file_node, img|
+      objs = @item.fnode_tuples
+      objs.size.should == 2
+      objs.each { |file_node, obj|
         file_node.should be_instance_of Nokogiri::XML::Element
-        img.should be_instance_of Assembly::Image
+        obj.should be_instance_of Assembly::ObjectFile
+        obj.object_type.should == :image
       }
-
-      basic_setup 'cc333dd4444'
-      @item.load_content_metadata
-      imgs = @item.fnode_tuples
-      imgs.size.should == 2
-    end
-
-    it "#relevant_fnode_tuples should raise error if passed unsupported image type" do
-      basic_setup 'aa111bb2222'
-      exp_raise = raise_error /^Invalid file type/
-      lambda { @item.relevant_fnode_tuples('FOO') }.should exp_raise
     end
 
     it "#relevant_fnode_tuples should filter out non-approved file types" do
       basic_setup 'cc333dd4444'
       @item.load_content_metadata
-      imgs = @item.relevant_fnode_tuples('TIFF')  # Filter out .txt file.
-      imgs.size.should == 1
-      imgs = @item.relevant_fnode_tuples('JPEG2000')  # There are no jp2 files.
-      imgs.size.should == 0
+      objs = @item.fnode_tuples
+      objs.size.should == 2
+      objs[0][1].object_type.should == :image # first file is a tiff
+      objs[1][1].object_type.should == :text  # second file is a txt
     end
 
   end

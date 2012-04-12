@@ -1,3 +1,5 @@
+require 'assembly-objectfile'
+
 module Dor::Assembly
   module ContentMetadata
 
@@ -8,19 +10,7 @@ module Dor::Assembly
       :druid,
       :root_dir
     )
-
-  # used to identify the content type in the content meta-data file, it maps mime/types to format attribute values in the content metadata XML file
-  # see https://consul.stanford.edu/display/chimera/DOR+file+types+and+attribute+values 
-    FORMATS={
-      'image/jp2'=>'JPEG2000','image/jpeg'=>'JPEG','image/tiff'=>'TIFF','image/tiff-fx'=>'TIFF','image/ief'=>'TIFF','image/gif'=>'GIF',
-      'text/plain'=>'TEXT','text/html'=>'HTML','text/csv'=>'CSV','audio/x-aiff'=>'AIFF','audio/x-mpeg'=>'MP3','audio/x-wave'=>'WAV',
-      'video/mpeg'=>'MP2','video/quicktime'=>'QUICKTIME','video/x-msvideo'=>'AVI','application/pdf'=>'PDF','application/zip'=>'ZIP','application/xml'=>'XML',
-      'application/tei+xml'=>'TEI','application/msword'=>'WORD','application/wordperfect'=>'WPD','application/mspowerpoint'=>'PPT','application/msexcel'=>'XLS',
-      'application/x-tar'=>'TAR','application/octet-stream'=>'BINARY'
-        }
         
-    FILE_TYPES=FORMATS.invert
-
     def load_content_metadata
       # Loads content metadata XML into a Nokogiri document.
       @cm = Nokogiri.XML(File.open @cm_file_name) { |conf| conf.default_xml.noblanks }
@@ -57,19 +47,8 @@ module Dor::Assembly
     end
 
     def fnode_tuples
-      # Returns a list of filenode-Image pairs.
-      file_nodes.map { |fn| [ fn, Assembly::Image.new(path_to_file fn['id']) ] }
-    end
-
-    def relevant_fnode_tuples(*wanted)
-      # Returns a list of node-Image pairs,  after filtering out unwanted types.
-      # Caller supplies a list of ke
-      relevant = wanted.map { |t| 
-        mime_type = FILE_TYPES[t]
-        raise ArgumentError, "Invalid file type: #{t}." if mime_type.nil?
-        mime_type
-      }
-      fnode_tuples.select { |fn, file| relevant.include? file.exif.mimeType }
+      # Returns a list of filenode pairs.
+      file_nodes.map { |fn| [ fn, Assembly::ObjectFile.new(path_to_file fn['id']) ] }
     end
 
   end

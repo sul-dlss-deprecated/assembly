@@ -6,10 +6,13 @@ module Dor::Assembly
     def create_jp2s
       # For each supported image type, generate a jp2 derivative
       # and modify content metadata XML to reflect the new file.
-      relevant_fnode_tuples('TIFF', 'JPEG').each do |fn, img|
-        jp2       = img.create_jp2
-        file_name = File.basename jp2.path
-        add_jp2_file_node fn.parent, file_name
+      fnode_tuples.each do |fn, obj|
+        if obj.jp2able?
+          img=Assembly::Image.new(obj.path) # create a new image object from the object file so we can generate a jp2
+          jp2       = img.create_jp2
+          file_name = File.basename jp2.path
+          add_jp2_file_node fn.parent, file_name
+        end
       end
 
       # Save the modified XML.
