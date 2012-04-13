@@ -55,6 +55,7 @@ end
 # These requires need to come after the autoload code; otherwise, you
 # get a warning about an already-initialized constant.
 env_file = File.expand_path(File.dirname(__FILE__) + "/./environments/#{environment}")
+require env_file
+
 require 'assembly'
 require 'assembly-image'
-require env_file

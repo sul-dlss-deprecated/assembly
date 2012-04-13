@@ -67,13 +67,12 @@ describe Dor::Assembly::Exifable do
       bef.root['type'].should == nil
       aft.root['type'].should == 'image'
 
-      # check that each file node does not start with size, mimetype and format attributes
+      # check that each file node does not start with size, mimetype attributes
       bef_file_nodes=bef.xpath('//file')
       bef_file_nodes.size.should == 2
       bef_file_nodes.each do |file_node|
         file_node.attributes['size'].nil?.should == true
-        file_node.attributes['mimeType'].nil?.should == true
-        file_node.attributes['format'].nil?.should == true
+        file_node.attributes['mimetype'].nil?.should == true
       end
 
       # check that each resource node starts out without a type
@@ -83,12 +82,12 @@ describe Dor::Assembly::Exifable do
         res_node.attributes['type'].nil?.should == true
       end
 
-      # check that each file node now has size, mimetype and format
+      # check that each file node now has size, mimetype 
       aft_file_nodes=aft.xpath('//file')
       aft_file_nodes.size.should == 2
       aft_file_nodes[0].attributes['size'].value.should == '63468'
       aft_file_nodes[1].attributes['size'].value.should == '63472'
-      aft_file_nodes.each {|file_node| file_node.attributes['mimeType'].value.should == 'image/tiff' && file_node.attributes['format'].value.should == 'TIFF'}
+      aft_file_nodes.each {|file_node| file_node.attributes['mimetype'].value.should == 'image/tiff'}
 
       # check that each resource node ends up as type=image
       aft_res_nodes=aft.xpath('//resource')
@@ -118,47 +117,73 @@ describe Dor::Assembly::Exifable do
       bef.root['type'].should == 'book'
       aft.root['type'].should == 'book'
 
-      # check that each resource node starts with a type="page"
+      # check that the first resource node starts with a type="page" and the second is blank
       bef_res_nodes=bef.xpath('//resource')
-      bef_res_nodes.size.should == 2
-      bef_res_nodes.each do |res_node|
-        res_node.attributes['type'].value.should == 'page'
-      end
+      bef_res_nodes.size.should == 3
+      bef_res_nodes[0].attributes['type'].value.should == 'page' # first resource type should be set to page
+      bef_res_nodes[1].attributes['type'].nil?.should == true # second resource type should not exist
+      bef_res_nodes[2].attributes['type'].nil?.should == true # second and third resource type should not exist
             
-      # check that each file node does not start with size, mimetype and format attributes
+      # check that each file node does not start with size, mimetype attributes
       bef_file_nodes=bef.xpath('//file')
-      bef_file_nodes.size.should == 5
+      bef_file_nodes.size.should == 6
       bef_file_nodes.each do |file_node|
         file_node.attributes['size'].nil?.should == true
-        file_node.attributes['mimeType'].nil?.should == true
-        file_node.attributes['format'].nil?.should == true
+        file_node.attributes['mimetype'].nil?.should == true
+        # the first file node as the publish/preserve/attributes already set, the others do not
+        expected = (file_node == bef_file_nodes.first)? false : true
+        file_node.attributes['publish'].nil?.should == expected
+        file_node.attributes['preserve'].nil?.should == expected
+        file_node.attributes['shelve'].nil?.should == expected
       end
 
-      # check that the file nodes now have the correct size, mimetype and format
+      # check that the file nodes now have the correct size, mimetype 
       aft_file_nodes=aft.xpath('//file')
-      aft_file_nodes.size.should == 5
+      aft_file_nodes.size.should == 6
       aft_file_nodes[0].attributes['size'].value.should == '63468'
-      aft_file_nodes[0].attributes['mimeType'].value.should == 'image/tiff'
-      aft_file_nodes[0].attributes['format'].value.should == 'TIFF'
-      aft_file_nodes[1].attributes['size'].value.should == '450604'
-      aft_file_nodes[1].attributes['mimeType'].value.should == 'audio/x-wav'
-      aft_file_nodes[1].attributes['format'].value.should == 'WAV'
-      aft_file_nodes[2].attributes['size'].value.should == '3151'
-      aft_file_nodes[2].attributes['mimeType'].value.should == 'application/pdf'
-      aft_file_nodes[2].attributes['format'].value.should == 'PDF'
-      aft_file_nodes[3].attributes['size'].value.should == '63472'
-      aft_file_nodes[3].attributes['mimeType'].value.should == 'image/tiff'
-      aft_file_nodes[3].attributes['format'].value.should == 'TIFF'
-      aft_file_nodes[4].attributes['size'].value.should == '42212'
-      aft_file_nodes[4].attributes['mimeType'].value.should == 'audio/mpeg'
-      aft_file_nodes[4].attributes['format'].value.should == 'MP3'
+      aft_file_nodes[0].attributes['mimetype'].value.should == 'image/tiff'
+      # the first file node should preserve the existing publish/preserve/shelve attributes set in the incoming content metadata and not overwrite them with the default for tiff
+      aft_file_nodes[0].attributes['publish'].value.should == 'yes'
+      aft_file_nodes[0].attributes['preserve'].value.should == 'yes'
+      aft_file_nodes[0].attributes['shelve'].value.should == 'yes'
 
+      # all other file nodes will have their publish/preserve/shelve attributes set
+      aft_file_nodes[1].attributes['size'].value.should == '450604'
+      aft_file_nodes[1].attributes['mimetype'].value.should == 'audio/x-wav'
+      aft_file_nodes[1].attributes['publish'].value.should == 'no'
+      aft_file_nodes[1].attributes['preserve'].value.should == 'yes'
+      aft_file_nodes[1].attributes['shelve'].value.should == 'no'
+
+      aft_file_nodes[2].attributes['size'].value.should == '3151'
+      aft_file_nodes[2].attributes['mimetype'].value.should == 'application/pdf'
+      aft_file_nodes[2].attributes['publish'].value.should == 'yes'
+      aft_file_nodes[2].attributes['preserve'].value.should == 'yes'
+      aft_file_nodes[2].attributes['shelve'].value.should == 'yes'
+
+      aft_file_nodes[3].attributes['size'].value.should == '3151'
+      aft_file_nodes[3].attributes['mimetype'].value.should == 'application/pdf'
+      aft_file_nodes[3].attributes['publish'].value.should == 'yes'
+      aft_file_nodes[3].attributes['preserve'].value.should == 'yes'
+      aft_file_nodes[3].attributes['shelve'].value.should == 'yes'
+
+      aft_file_nodes[4].attributes['size'].value.should == '42212'
+      aft_file_nodes[4].attributes['mimetype'].value.should == 'audio/mpeg'
+      aft_file_nodes[4].attributes['publish'].value.should == 'yes'
+      aft_file_nodes[4].attributes['preserve'].value.should == 'no'
+      aft_file_nodes[4].attributes['shelve'].value.should == 'yes'
+
+      aft_file_nodes[5].attributes['size'].value.should == '63468'
+      aft_file_nodes[5].attributes['mimetype'].value.should == 'image/tiff'
+      aft_file_nodes[5].attributes['publish'].value.should == 'no'
+      aft_file_nodes[5].attributes['preserve'].value.should == 'yes'
+      aft_file_nodes[5].attributes['shelve'].value.should == 'no'
+      
       # check that each resource node end with a type="page" (i.e. was not changed)
       aft_res_nodes=aft.xpath('//resource')
-      aft_res_nodes.size.should == 2
-      aft_res_nodes.each do |res_node|
-        res_node.attributes['type'].value.should == 'page'
-      end
+      aft_res_nodes.size.should == 3
+      aft_res_nodes[0].attributes['type'].value.should == 'page' # first resource type should be set to page (which is was before)
+      aft_res_nodes[1].attributes['type'].value.should == 'file' # second resource type should be set to file (which is the default if it contains no images)
+      aft_res_nodes[2].attributes['type'].value.should == 'image' # third resource type should be set to image (which is the default if it contains an images)
       
       # check for imageData nodes being present for each file node that is an image
       bef.xpath('//file/imageData').size.should == 0

@@ -39,11 +39,11 @@ GEM
     addressable (2.2.7)
     akami (1.0.0)
       gyoku (>= 0.4.0)
-    assembly-image (1.1.1)
+    assembly-image (1.1.2)
       assembly-objectfile (~> 1.0.1)
       nokogiri
       uuidtools
-    assembly-objectfile (1.0.3)
+    assembly-objectfile (1.0.4)
       mime-types
       mini_exiftool
     bagit (0.2.0)
