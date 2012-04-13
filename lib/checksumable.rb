@@ -5,17 +5,15 @@ module Dor::Assembly
 
     def compute_checksums
       # Get the object we'll use to compute checksums.
-      cs_types = [:md5, :sha1]
-      cs_tool  = Checksum::Tools.new({}, *cs_types)
 
       # Process each <file> node in the content metadata.
       file_nodes.each do |fn|
         # Compute checksums.
-        checksums = cs_tool.digest_file(path_to_file fn['id'])
+        obj=Assembly::ObjectFile.new(path_to_file fn['id'])
 
         # Modify the content metadata XML.
         remove_checksum_nodes fn
-        add_checksum_nodes fn, checksums
+        add_checksum_nodes fn, {:md5=>obj.md5,:sha1=>obj.sha1}
       end
 
       # Save the modified XML.
@@ -28,7 +26,7 @@ module Dor::Assembly
     end
 
     def add_checksum_nodes(parent_node, checksums)
-      # Checksum::Tools returns a hash like this:
+      # checksums are sent in a hash like this:
       #     :md5  => CHECKSUM,
       #     :sha1 => CHECKSUM,
       # 

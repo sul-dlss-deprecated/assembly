@@ -2,8 +2,7 @@ source :rubygems
 source "http://sulair-rails-dev.stanford.edu"
 
 gem "lyber-core"
-gem "checksum-tools"
-gem "assembly-objectfile"
+gem "assembly-objectfile", "~> 1.1.0"
 gem "assembly-image"
 gem "rest-client"
 
@@ -22,4 +21,3 @@ group :development do
   gem "capistrano", "2.9.0"
   gem "lyberteam-devel","0.5.3"
 end
-
