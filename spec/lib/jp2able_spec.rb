@@ -39,13 +39,13 @@ describe Dor::Assembly::Jp2able do
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
 
       # Only tifs should exist.
-      @item.file_nodes.size.should == 2
+      @item.file_nodes.size.should == 3
       tifs.all?  { |t| File.file? t }.should == true
       jp2s.none? { |j| File.file? j }.should == true
 
       # Both tifs and jp2s should exist.
       @item.create_jp2s
-      @item.file_nodes.size.should == 4
+      @item.file_nodes.size.should == 6
       tifs.all? { |t| File.file? t }.should == true
       jp2s.all? { |j| File.file? j }.should == true
     end
@@ -55,7 +55,7 @@ describe Dor::Assembly::Jp2able do
       @item.load_content_metadata
 
       # Only 2 tifs should exist before calling method.
-      @item.file_nodes.size.should == 2
+      @item.file_nodes.size.should == 3
       @item.create_jp2s
 
       # Read the XML file and check the file names.
@@ -64,6 +64,7 @@ describe Dor::Assembly::Jp2able do
       file_nodes.map { |fn| fn['id'] }.sort.should == %w(
         image111.jp2 image111.tif
         image112.jp2 image112.tif
+        sub/image113.jp2 sub/image113.tif
       )
     end
 

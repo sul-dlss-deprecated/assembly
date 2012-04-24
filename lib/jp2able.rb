@@ -10,7 +10,7 @@ module Dor::Assembly
         if obj.jp2able?
           img=Assembly::Image.new(obj.path) # create a new image object from the object file so we can generate a jp2
           jp2       = img.create_jp2
-          file_name = File.basename jp2.path
+          file_name = fn['id'].gsub(File.basename(img.path),File.basename(jp2.path)) # generate new filename for jp2 file node in content metadata by replacing filename in base file node with new jp2 filenameis incoming file 
           add_jp2_file_node fn.parent, file_name
         end
       end

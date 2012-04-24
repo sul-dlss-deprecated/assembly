@@ -29,6 +29,10 @@ describe Dor::Assembly::Checksumable do
         "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
         "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
       },
+      "sub/image113.tif" => {
+        "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
+        "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
+      },
     }
   end
  
@@ -55,9 +59,9 @@ describe Dor::Assembly::Checksumable do
 
     it 'should update the content metadata correctly' do
       @item.load_content_metadata
-      all_cs_nodes.size.should == 5
+      all_cs_nodes.size.should == 6
       @item.compute_checksums
-      all_cs_nodes.size.should == 4
+      all_cs_nodes.size.should == 6
 
       @item.file_nodes.each do |fnode|
         file_name = fnode['id']

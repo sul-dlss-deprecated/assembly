@@ -30,7 +30,7 @@ describe Dor::Assembly::ChecksumComparable do
 
     it "should succeed if checksums agree, with the correct N of successes" do
       setup 'aa111bb2222'
-      @item.compare_checksums.should == 3
+      @item.compare_checksums.should == 4
     end
 
     it "should return 0 if no comparisons are made" do

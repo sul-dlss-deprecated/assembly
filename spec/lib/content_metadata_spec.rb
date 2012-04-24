@@ -85,7 +85,7 @@ describe Dor::Assembly::ContentMetadata do
     it "#file_nodes should return the expected N of Nokogiri elements" do
       @item.load_content_metadata
       fns = @item.file_nodes
-      fns.size.should == 2
+      fns.size.should == 3
       fns.each { |fn| fn.should be_kind_of Nokogiri::XML::Element }
     end
 
@@ -93,7 +93,7 @@ describe Dor::Assembly::ContentMetadata do
       basic_setup 'aa111bb2222'
       @item.load_content_metadata
       objs = @item.fnode_tuples
-      objs.size.should == 2
+      objs.size.should == 3
       objs.each { |file_node, obj|
         file_node.should be_instance_of Nokogiri::XML::Element
         obj.should be_instance_of Assembly::ObjectFile

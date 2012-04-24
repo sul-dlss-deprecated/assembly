@@ -69,7 +69,7 @@ describe Dor::Assembly::Exifable do
 
       # check that each file node does not start with size, mimetype attributes
       bef_file_nodes=bef.xpath('//file')
-      bef_file_nodes.size.should == 2
+      bef_file_nodes.size.should == 3
       bef_file_nodes.each do |file_node|
         file_node.attributes['size'].nil?.should == true
         file_node.attributes['mimetype'].nil?.should == true
@@ -77,28 +77,28 @@ describe Dor::Assembly::Exifable do
 
       # check that each resource node starts out without a type
       bef_res_nodes=bef.xpath('//resource')
-      bef_res_nodes.size.should == 2
+      bef_res_nodes.size.should == 3
       bef_res_nodes.each do |res_node|
         res_node.attributes['type'].nil?.should == true
       end
 
       # check that each file node now has size, mimetype 
       aft_file_nodes=aft.xpath('//file')
-      aft_file_nodes.size.should == 2
+      aft_file_nodes.size.should == 3
       aft_file_nodes[0].attributes['size'].value.should == '63468'
       aft_file_nodes[1].attributes['size'].value.should == '63472'
       aft_file_nodes.each {|file_node| file_node.attributes['mimetype'].value.should == 'image/tiff'}
 
       # check that each resource node ends up as type=image
       aft_res_nodes=aft.xpath('//resource')
-      aft_res_nodes.size.should == 2
+      aft_res_nodes.size.should == 3
       aft_res_nodes.each do |res_node|
         res_node.attributes['type'].value.should == 'image'
       end
             
       # check for imageData nodes being present for each file node
       bef.xpath('//file/imageData').size.should == 0
-      aft.xpath('//file/imageData').size.should == 2
+      aft.xpath('//file/imageData').size.should == 3
 
     end
 
