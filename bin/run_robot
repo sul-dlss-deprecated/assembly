@@ -37,8 +37,9 @@ if action == 'run'
     instance.start
   end
 else
+  sleep_time = Dor::Config.assembly.robot_sleep_time || 900
   controller = LyberCore::Robots::ServiceController.new(
-    :sleep_time  => 30,  # TODO: remove this.
+    :sleep_time  => sleep_time,
     :logger      => logger, 
     :working_dir => ROBOT_ROOT, 
     :argv        => ARGV.dup)
