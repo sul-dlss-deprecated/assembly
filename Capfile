@@ -53,6 +53,8 @@ set :deploy_to,  "/home/#{user}/#{application}"
 set :deploy_via, :copy
 set :shared_config_certs_dir, true
 
+after "deploy:symlink", "check_for_assembly_workspace"
+
 # Robots run as background daemons. They are restarted at deploy time.
 set :robots, %w(
   jp2-create 
@@ -62,3 +64,8 @@ set :robots, %w(
   accessioning-initiate
 )
 set :workflow, 'assemblyWF'
+
+desc "Check for /dor/assembly workspace"
+task :check_for_assembly_workspace, :roles => [:app, :web] do
+  Dir.mkdir '/dor/assembly' unless File.directory? '/dor/assembly'
+end
