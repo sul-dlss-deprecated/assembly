@@ -13,6 +13,14 @@ def noko_doc(x)
   Nokogiri.XML(x) { |conf| conf.default_xml.noblanks }
 end
 
+def get_filenames(item)
+  item.file_nodes.map { |fn| item.path_to_file fn['id'] }
+end
+
+def count_file_types(files,extension)
+  files.reject {|file| File.extname(file) != extension}.size
+end
+
 def clone_test_input(destination)
   # Use rsync to create a copy of the test_input directory that we can modify.
   source = Dor::Config.assembly.root_dir

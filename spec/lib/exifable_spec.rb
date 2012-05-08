@@ -126,7 +126,7 @@ describe Dor::Assembly::Exifable do
             
       # check that each file node does not start with size, mimetype attributes
       bef_file_nodes=bef.xpath('//file')
-      bef_file_nodes.size.should == 6
+      bef_file_nodes.size.should == 7
       bef_file_nodes.each do |file_node|
         file_node.attributes['size'].nil?.should == true
         file_node.attributes['mimetype'].nil?.should == true
@@ -139,7 +139,7 @@ describe Dor::Assembly::Exifable do
 
       # check that the file nodes now have the correct size, mimetype 
       aft_file_nodes=aft.xpath('//file')
-      aft_file_nodes.size.should == 6
+      aft_file_nodes.size.should == 7
       aft_file_nodes[0].attributes['size'].value.should == '63468'
       aft_file_nodes[0].attributes['mimetype'].value.should == 'image/tiff'
       # the first file node should preserve the existing publish/preserve/shelve attributes set in the incoming content metadata and not overwrite them with the default for tiff
@@ -148,17 +148,17 @@ describe Dor::Assembly::Exifable do
       aft_file_nodes[0].attributes['shelve'].value.should == 'yes'
 
       # all other file nodes will have their publish/preserve/shelve attributes set
-      aft_file_nodes[1].attributes['size'].value.should == '450604'
-      aft_file_nodes[1].attributes['mimetype'].value.should == 'audio/x-wav'
-      aft_file_nodes[1].attributes['publish'].value.should == 'no'
-      aft_file_nodes[1].attributes['preserve'].value.should == 'yes'
-      aft_file_nodes[1].attributes['shelve'].value.should == 'no'
+      aft_file_nodes[1].attributes['size'].value.should == '465'
+      aft_file_nodes[1].attributes['mimetype'].value.should == 'image/jp2'
+      aft_file_nodes[1].attributes['publish'].value.should == 'yes'
+      aft_file_nodes[1].attributes['preserve'].value.should == 'no'
+      aft_file_nodes[1].attributes['shelve'].value.should == 'yes'
 
-      aft_file_nodes[2].attributes['size'].value.should == '3151'
-      aft_file_nodes[2].attributes['mimetype'].value.should == 'application/pdf'
-      aft_file_nodes[2].attributes['publish'].value.should == 'yes'
+      aft_file_nodes[2].attributes['size'].value.should == '450604'
+      aft_file_nodes[2].attributes['mimetype'].value.should == 'audio/x-wav'
+      aft_file_nodes[2].attributes['publish'].value.should == 'no'
       aft_file_nodes[2].attributes['preserve'].value.should == 'yes'
-      aft_file_nodes[2].attributes['shelve'].value.should == 'yes'
+      aft_file_nodes[2].attributes['shelve'].value.should == 'no'
 
       aft_file_nodes[3].attributes['size'].value.should == '3151'
       aft_file_nodes[3].attributes['mimetype'].value.should == 'application/pdf'
@@ -166,17 +166,23 @@ describe Dor::Assembly::Exifable do
       aft_file_nodes[3].attributes['preserve'].value.should == 'yes'
       aft_file_nodes[3].attributes['shelve'].value.should == 'yes'
 
-      aft_file_nodes[4].attributes['size'].value.should == '42212'
-      aft_file_nodes[4].attributes['mimetype'].value.should == 'audio/mpeg'
+      aft_file_nodes[4].attributes['size'].value.should == '3151'
+      aft_file_nodes[4].attributes['mimetype'].value.should == 'application/pdf'
       aft_file_nodes[4].attributes['publish'].value.should == 'yes'
-      aft_file_nodes[4].attributes['preserve'].value.should == 'no'
+      aft_file_nodes[4].attributes['preserve'].value.should == 'yes'
       aft_file_nodes[4].attributes['shelve'].value.should == 'yes'
 
-      aft_file_nodes[5].attributes['size'].value.should == '63468'
-      aft_file_nodes[5].attributes['mimetype'].value.should == 'image/tiff'
-      aft_file_nodes[5].attributes['publish'].value.should == 'no'
-      aft_file_nodes[5].attributes['preserve'].value.should == 'yes'
-      aft_file_nodes[5].attributes['shelve'].value.should == 'no'
+      aft_file_nodes[5].attributes['size'].value.should == '42212'
+      aft_file_nodes[5].attributes['mimetype'].value.should == 'audio/mpeg'
+      aft_file_nodes[5].attributes['publish'].value.should == 'yes'
+      aft_file_nodes[5].attributes['preserve'].value.should == 'no'
+      aft_file_nodes[5].attributes['shelve'].value.should == 'yes'
+
+      aft_file_nodes[6].attributes['size'].value.should == '63468'
+      aft_file_nodes[6].attributes['mimetype'].value.should == 'image/tiff'
+      aft_file_nodes[6].attributes['publish'].value.should == 'no'
+      aft_file_nodes[6].attributes['preserve'].value.should == 'yes'
+      aft_file_nodes[6].attributes['shelve'].value.should == 'no'
       
       # check that each resource node end with a type="page" (i.e. was not changed)
       aft_res_nodes=aft.xpath('//resource')
@@ -187,7 +193,7 @@ describe Dor::Assembly::Exifable do
       
       # check for imageData nodes being present for each file node that is an image
       bef.xpath('//file/imageData').size.should == 0
-      aft.xpath('//file/imageData').size.should == 2
+      aft.xpath('//file/imageData').size.should == 3
 
     end
 

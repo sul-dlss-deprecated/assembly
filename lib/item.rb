@@ -6,7 +6,6 @@ module Dor::Assembly
 
     include Dor::Assembly::Jp2able
     include Dor::Assembly::Checksumable
-    include Dor::Assembly::ChecksumComparable
     include Dor::Assembly::Exifable
     include Dor::Assembly::Accessionable
 

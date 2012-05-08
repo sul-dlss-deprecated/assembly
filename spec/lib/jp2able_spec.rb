@@ -68,6 +68,27 @@ describe Dor::Assembly::Jp2able do
       )
     end
 
+    it 'should not create the expected jp2 file if it exists, but it should not fail with an error either' do
+      basic_setup 'ff222cc3333', @tmp_root_dir
+      @item.load_content_metadata
+
+      # there are multiple file types in this content folder, starting with 2 tifs and 1 jp2
+      files = get_filenames(@item)
+      files.size.should == 7
+      count_file_types(files,'.tif').should == 2
+      count_file_types(files,'.jp2').should == 1
+      
+      # create the jp2s
+      @item.create_jp2s
+
+      # we should now have an extra file node for the jp2 just created
+      files = get_filenames(@item)
+      files.size.should == 8
+      count_file_types(files,'.tif').should == 2
+      count_file_types(files,'.jp2').should == 2
+      
+    end
+
   end
 
   describe '#add_jp2_file_node' do

@@ -14,7 +14,4 @@ Spurious error message from robot framework:
     ruby-1.8.7-p302@assembly/gems/solrizer-1.2.0/config/solr_mappings.yml
     I, [2012-03-10T19:22:43.243495 #27010]  INFO -- : Starting assemblyWF:checksum...
     E, [2012-03-10T19:22:43.399322 #27010] ERROR -- : Unable to start assemblyWF:checksum
-    I, [2012-03-10T19:22:43.399941 #27010]  INFO -- : Starting assemblyWF:checksum-compare...
-    E, [2012-03-10T19:22:43.603310 #27010] ERROR -- : Unable to start assemblyWF:checksum-compare
     SLEEP condition reached in assemblyWF:checksum. Sleeping for 900 seconds.
-    SLEEP condition reached in assemblyWF:checksum-compare. Sleeping for 900 seconds.

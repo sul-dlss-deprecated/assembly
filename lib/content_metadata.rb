@@ -47,7 +47,7 @@ module Dor::Assembly
     end
 
     def fnode_tuples
-      # Returns a list of filenode pairs.
+      # Returns a list of filenode pairs (file node and associated ObjectFile object)
       file_nodes.map { |fn| [ fn, Assembly::ObjectFile.new(path_to_file fn['id']) ] }
     end
 

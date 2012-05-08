@@ -9,9 +9,16 @@ module Dor::Assembly
       fnode_tuples.each do |fn, obj|
         if obj.jp2able?
           img=Assembly::Image.new(obj.path) # create a new image object from the object file so we can generate a jp2
-          jp2       = img.create_jp2
-          file_name = fn['id'].gsub(File.basename(img.path),File.basename(jp2.path)) # generate new filename for jp2 file node in content metadata by replacing filename in base file node with new jp2 filenameis incoming file 
-          add_jp2_file_node fn.parent, file_name
+          # try to create the jp2
+          begin
+            jp2       = img.create_jp2
+            file_name = fn['id'].gsub(File.basename(img.path),File.basename(jp2.path)) # generate new filename for jp2 file node in content metadata by replacing filename in base file node with new jp2 filenameis incoming file 
+            add_jp2_file_node fn.parent, file_name
+          rescue SecurityError
+            # if we get a security exception, this means we have an existing jp2 -- don't fail, but do log it
+            message="WARNING: Did not create jp2 for #{img.path} -- file already exists" 
+            Assembly::Jp2Create.logger.warn(message)
+          end
         end
       end
 

@@ -10,20 +10,11 @@ checksum-compute:
     batch_limit:  1000
     error_limit:  10
 
-checksum-compare:
-    prerequisite:
-      - start-assembly
-      - jp2-create      
-      - checksum-compute
-    batch_limit:  1000
-    error_limit:  10
-
 exif-collect:
     prerequisite:
       - start-assembly
       - jp2-create      
       - checksum-compute      
-      - checksum-compare
     batch_limit:  1000
     error_limit:  10
 
@@ -32,7 +23,6 @@ accessioning-initiate:
       - start-assembly
       - jp2-create      
       - checksum-compute      
-      - checksum-compare      
       - exif-collect
     batch_limit:  1000
     error_limit:  10

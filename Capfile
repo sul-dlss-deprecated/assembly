@@ -59,7 +59,6 @@ after "deploy:symlink", "check_for_assembly_workspace"
 set :robots, %w(
   jp2-create 
   checksum-compute 
-  checksum-compare 
   exif-collect 
   accessioning-initiate
 )
