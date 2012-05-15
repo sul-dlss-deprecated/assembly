@@ -7,21 +7,23 @@ module Dor::Assembly
    
       fnode_tuples.each do |fn, obj|
 
-        # always add certain attributes to file node regardless of type
-        add_data_to_file_node fn,obj
+        if obj.file_exists?
+          # always add certain attributes to file node regardless of type
+          add_data_to_file_node fn,obj
       
-        # now depending on the type of object in the file node (i.e. image vs pdf) add other attributes to content metadata
-        case obj.object_type
+          # now depending on the type of object in the file node (i.e. image vs pdf) add other attributes to content metadata
+          case obj.object_type
 
-          when :image # when the object type is an image
-            set_node_type fn.parent,'image'  # set the resource type to 'image' if it's not currently defined
-            fn.add_child image_data_xml(obj.exif)    
+            when :image # when the object type is an image
+              set_node_type fn.parent,'image'  # set the resource type to 'image' if it's not currently defined
+              fn.add_child image_data_xml(obj.exif)    
           
-          else
-            set_node_type fn.parent,'file'  # set the resource type to 'file' if it's not currently defined
+            else
+              set_node_type fn.parent,'file'  # set the resource type to 'file' if it's not currently defined
                 
-          end
-      
+            end
+        end
+        
       end
       
       # set the root contentMetadata type to default to 'image' if it's not currently defined

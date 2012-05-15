@@ -6,7 +6,7 @@ Check dependencies for jp2 creation in the assembly-image gem.
 
 1.0.0  Released to production
 1.2.0  Changed expected checksum behavior from <provider_checksum> node to regular <checksum> node.  Eliminated checksum_compare robot.  Must be run in combination with pre-assembly 1.2.0.
-
+1.2.1  Updated jp2 robot to not fail if a file is not found
 
 == Running tests
 
