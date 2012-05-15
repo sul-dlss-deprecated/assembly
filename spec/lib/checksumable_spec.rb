@@ -77,6 +77,21 @@ describe Dor::Assembly::Checksumable do
       end
     end
 
+    it 'should not fail when an existing md5 checksum matches but is CAP CASE' do
+      
+      @item.load_content_metadata
+      
+      all_file_nodes[0].xpath('checksum[@type="md5"]')[0].content='42616f9E6C1B7E7B7A71B4FA0C5Ef794'  # change the md5 hash in the first file node to be all caps
+      all_cs_nodes.size.should == 5
+      
+      # now check that it was re-computed and still succeeds
+      lambda { @item.compute_checksums }.should_not raise_error
+
+      # this was the first file node it got to, so no new checksums were added
+      all_cs_nodes.size.should == 8
+      
+    end
+
     it 'should fail when an existing md5 checksum does not match' do
       
       @item.load_content_metadata
@@ -92,7 +107,7 @@ describe Dor::Assembly::Checksumable do
       all_cs_nodes.size.should == 5
       
     end
-
+    
     it 'should fail when an existing sha1 checksum does not match, but continue to add checksums to other missing nodes before that' do
       
       @item.load_content_metadata

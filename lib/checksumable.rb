@@ -39,7 +39,7 @@ module Dor::Assembly
     def checksums_equal?(existing_checksum_nodes,computed_checksum)
       
       match=true
-      existing_checksum_nodes.each {|checksum| match = false if checksum.content != computed_checksum}
+      existing_checksum_nodes.each {|checksum| match = false if checksum.content.downcase != computed_checksum}
       return match
       
     end
