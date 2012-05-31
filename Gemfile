@@ -18,6 +18,6 @@ group :development do
     instance_eval(File.read(mygems))
   end
   gem "ruby-debug"
-  gem "capistrano", "2.9.0"
-  gem "lyberteam-devel","0.5.3"
+  gem "capistrano"
+  gem "lyberteam-devel"
 end
