@@ -5,9 +5,9 @@ gem "lyber-core"
 gem "assembly-objectfile", "~> 1.1.2"
 gem "assembly-image", "~> 1.2.1"
 gem "rest-client"
+gem "rake"
 
 group :test do
-  gem "rake"
   gem "rcov"
   gem "rspec", "~> 2.6"
   gem 'equivalent-xml'
