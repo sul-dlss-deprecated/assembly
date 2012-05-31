@@ -32,17 +32,20 @@ set :rvm_ruby_string, "1.8.7@#{application}"
 task :dev do
   role :app, 'sul-lyberservices-dev.stanford.edu'
   set :deploy_env, 'development'
+  set :rails_env,  'development'  # TEMPORARY: needed until lyberteam-gems-devel is fixed.
   set :bundle_without, []         # Deploy all gem groups on the dev VM.
 end
 
 task :testing do
   role :app, 'sul-lyberservices-test.stanford.edu'
   set :deploy_env, 'test'
+  set :rails_env,  'test'  # TEMPORARY: see above
 end
 
 task :production do
   role :app, 'sul-lyberservices-prod.stanford.edu'
   set :deploy_env, 'production'
+  set :rails_env,  'production' # TEMPORARY: see above
 end
 
 set :sunet_id,   Capistrano::CLI.ui.ask('SUNetID: ') { |q| q.default =  `whoami`.chomp }
@@ -53,7 +56,7 @@ set :deploy_to,  "/home/#{user}/#{application}"
 set :deploy_via, :copy
 set :shared_config_certs_dir, true
 
-#after "deploy:symlink", "check_for_assembly_workspace"
+after "deploy", "dlss:log_release"
 
 # Robots run as background daemons. They are restarted at deploy time.
 set :robots, %w(
@@ -63,6 +66,8 @@ set :robots, %w(
   accessioning-initiate
 )
 set :workflow, 'assemblyWF'
+
+# after "deploy:symlink", "check_for_assembly_workspace"
 
 desc "Check for /dor/assembly workspace"
 task :check_for_assembly_workspace, :roles => [:app, :web] do
