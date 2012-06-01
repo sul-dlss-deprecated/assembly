@@ -41,14 +41,17 @@ module Dor::Assembly
       File.join druid_tree_path, file_name
     end
 
-    def file_nodes
-      # Returns all Nokogiri <file> nodes from content metadata.
-      @cm.xpath '//resource/file'
+    def file_nodes(resource_type='')
+      # Returns all Nokogiri <file> nodes from content metadata, optionally restricted to specific resource content types if specified
+      xpath_query = "//resource"
+      xpath_query += "[@type='#{resource_type}']" unless resource_type==''
+      xpath_query += "/file"
+      @cm.xpath xpath_query
     end
 
-    def fnode_tuples
-      # Returns a list of filenode pairs (file node and associated ObjectFile object)
-      file_nodes.map { |fn| [ fn, Assembly::ObjectFile.new(path_to_file fn['id']) ] }
+    def fnode_tuples(resource_type='')
+      # Returns a list of filenode pairs (file node and associated ObjectFile object), optionally restricted to specific resource content types if specified
+      file_nodes(resource_type).map { |fn| [ fn, Assembly::ObjectFile.new(path_to_file fn['id']) ] }
     end
 
   end

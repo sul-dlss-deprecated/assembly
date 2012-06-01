@@ -4,25 +4,24 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def collect_exif_info
-   
+          
       fnode_tuples.each do |fn, obj|
 
         # always add certain attributes to file node regardless of type
         add_data_to_file_node fn,obj
     
-        # now depending on the type of object in the file node (i.e. image vs pdf) add other attributes to content metadata
+        # now depending on the type of object in the file node (i.e. image vs pdf) add other attributes to resource content metadata
         case obj.object_type
 
-          when :image # when the object type is an image
-            set_node_type fn.parent,'image'  # set the resource type to 'image' if it's not currently defined
+          when :image # when the object file type is an image
             fn.add_child image_data_xml(obj.exif)    
         
-          else
-            set_node_type fn.parent,'file'  # set the resource type to 'file' if it's not currently defined
+          else #all other object file types will force resource type to not be an image
+            set_node_type fn.parent,'file' # set the resource type to 'file' if it's not currently defined
               
           end
       end
-            
+                    
       # set the root contentMetadata type to default to 'image' if it's not currently defined
       set_node_type @cm.root,'image'
 

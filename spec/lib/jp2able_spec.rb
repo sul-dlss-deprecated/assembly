@@ -4,10 +4,6 @@ class Jp2ableItem
 end
 
 describe Dor::Assembly::Jp2able do
-  
-  before :each do
-    basic_setup 'aa111bb2222'
-  end
 
   def basic_setup(dru, root_dir = nil)
     root_dir           = root_dir || Dor::Config.assembly.root_dir
@@ -21,6 +17,7 @@ describe Dor::Assembly::Jp2able do
  
   describe '#Jp2ableItem' do
     it 'should be able to initialize our testing object' do
+      basic_setup 'aa111bb2222', @tmp_root_dir
       @item.should be_a_kind_of Jp2ableItem
     end
   end
@@ -32,7 +29,7 @@ describe Dor::Assembly::Jp2able do
       clone_test_input @tmp_root_dir
     end
 
-    it 'should create the expected jp2 files' do
+    it 'should not create and jp2 files when resource type is not specified' do
       basic_setup 'aa111bb2222', @tmp_root_dir
       @item.load_content_metadata
       tifs = @item.file_nodes.map { |fn| @item.path_to_file fn['id'] }
@@ -43,57 +40,80 @@ describe Dor::Assembly::Jp2able do
       tifs.all?  { |t| File.file? t }.should == true
       jp2s.none? { |j| File.file? j }.should == true
 
-      # Both tifs and jp2s should exist.
+      # We now have jp2s since all resource types = image
       @item.create_jp2s
+      files = get_filenames(@item)      
       @item.file_nodes.size.should == 6
-      tifs.all? { |t| File.file? t }.should == true
-      jp2s.all? { |j| File.file? j }.should == true
+      count_file_types(files,'.tif').should == 3
+      count_file_types(files,'.jp2').should == 3
     end
 
-    it 'should persist the expected changes to content metadata XML file' do
-      basic_setup 'aa111bb2222', @tmp_root_dir
+    it 'should create jp2 files only for resource type image or page' do
+      basic_setup 'ff222cc3333', @tmp_root_dir
       @item.load_content_metadata
+      tifs = @item.file_nodes.map { |fn| @item.path_to_file fn['id'] }
+      jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
+      bef_files = get_filenames(@item)
 
-      # Only 2 tifs should exist before calling method.
-      @item.file_nodes.size.should == 3
+      # there should be 10 file nodes in total
+      @item.file_nodes.size.should == 10
+      count_file_types(bef_files,'.tif').should == 5
+      count_file_types(bef_files,'.jp2').should == 1
+
       @item.create_jp2s
+      # we now have two extra jps, only for the resource nodes that had type=image or page specified, but not for the others
+      @item.file_nodes.size.should == 12
+      aft_files = get_filenames(@item)
+      count_file_types(aft_files,'.tif').should == 5
+      count_file_types(aft_files,'.jp2').should == 3
 
       # Read the XML file and check the file names.
       xml = Nokogiri::XML File.read(@item.cm_file_name)
       file_nodes = xml.xpath "//resource/file"
-      file_nodes.map { |fn| fn['id'] }.sort.should == %w(
-        image111.jp2 image111.tif
-        image112.jp2 image112.tif
-        sub/image113.jp2 sub/image113.tif
-      )
+      file_nodes.map { |fn| fn['id'] }.sort.should == ["file111.mp3", "file111.pdf", "file111.wav", "file112.pdf", "image111.jp2", "image111.tif", "image112.tif", "image113.tif", "image114.jp2", "image114.tif", "image115.jp2", "image115.tif"]
+      
     end
 
-    it 'should not create the expected jp2 file if it exists, but it should not fail with an error either' do
+    it 'should not overwrite existing jp2s but should not fail either' do
+
       basic_setup 'ff222cc3333', @tmp_root_dir
+
+      # copy an existing jp2 
+      source_jp2=File.join @tmp_root_dir, @item.druid.path,'image111.jp2'
+      copy_jp2=File.join @tmp_root_dir, @item.druid.path,'image115.jp2'
+      system "cp #{source_jp2} #{copy_jp2}"
+      
       @item.load_content_metadata
+      tifs = @item.file_nodes.map { |fn| @item.path_to_file fn['id'] }
+      jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
+      bef_files = get_filenames(@item)
 
-      # there are multiple file types in this content folder, starting with 2 tifs and 1 jp2
-      files = get_filenames(@item)
-      files.size.should == 7
-      count_file_types(files,'.tif').should == 2
-      count_file_types(files,'.jp2').should == 1
+      # there should be 10 file nodes in total
+      @item.file_nodes.size.should == 10
+      count_file_types(bef_files,'.tif').should == 5
+      count_file_types(bef_files,'.jp2').should == 1
       
-      # create the jp2s
+      File.exists?(copy_jp2).should == true
+       
       @item.create_jp2s
-
-      # we should now have an extra file node for the jp2 just created
-      files = get_filenames(@item)
-      files.size.should == 8
-      count_file_types(files,'.tif').should == 2
-      count_file_types(files,'.jp2').should == 2
+      # we now have only one extra jp2, only for the resource nodes that had type=image or page specified, since one was not created because it was already there
+      @item.file_nodes.size.should == 11
+      aft_files = get_filenames(@item)
+      count_file_types(aft_files,'.tif').should == 5
+      count_file_types(aft_files,'.jp2').should == 2
       
+      # cleanup copied jp2
+      system "rm #{copy_jp2}"
+
     end
 
   end
 
   describe '#add_jp2_file_node' do
     
-    it 'should add the expected <file> node to XML' do
+    it 'should add a <file> node to XML if the resource type is not specified' do
+      basic_setup 'aa111bb2222', @tmp_root_dir
+     
       exp_xml = <<-END.gsub(/^ {8}/, '')
         <?xml version="1.0"?>
         <contentMetadata>

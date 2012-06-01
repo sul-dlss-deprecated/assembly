@@ -4,9 +4,13 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def create_jp2s
-      # For each supported image type, generate a jp2 derivative
+      # For each supported image type that is part of specific resource types, generate a jp2 derivative
       # and modify content metadata XML to reflect the new file.
-      fnode_tuples.each do |fn, obj|
+      jp2able_fnode_tuples=[]
+      # grab all the file node tuples for each valid resource type that we want to generate derivates for
+      Dor::Config.assembly.jp2_resource_types.each {|resource_type| jp2able_fnode_tuples += fnode_tuples(resource_type)}
+            
+      jp2able_fnode_tuples.each do |fn, obj|
         if obj.jp2able?
           img=Assembly::Image.new(obj.path) # create a new image object from the object file so we can generate a jp2
           # try to create the jp2
