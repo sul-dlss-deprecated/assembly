@@ -56,8 +56,6 @@ set :deploy_to,  "/home/#{user}/#{application}"
 set :deploy_via, :copy
 set :shared_config_certs_dir, true
 
-after "deploy", "dlss:log_release"
-
 # Robots run as background daemons. They are restarted at deploy time.
 set :robots, %w(
   jp2-create 
