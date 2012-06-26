@@ -18,7 +18,7 @@ module Dor::Assembly
     end
 
     def setup
-      @druid        = Druid.new(@druid) unless @druid.class == Druid
+      @druid        = DruidTools::Druid.new(@druid) unless @druid.class == DruidTools::Druid
       @root_dir     = Dor::Config.assembly.root_dir
       cmf           = Dor::Config.assembly.cm_file_name 
       @cm_file_name = path_to_file cmf

@@ -12,10 +12,10 @@ describe Dor::Assembly::Checksumable do
     cm_file_name = Dor::Config.assembly.cm_file_name
 
     @item              = ChecksumableItem.new
-    @item.druid        = Druid.new dru
+    @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
     @item.cm           = Nokogiri::XML dummy_xml
-    @item.cm_file_name = File.join root_dir, @item.druid.path, cm_file_name
+    @item.cm_file_name = File.join root_dir, Assembly::Utils.get_staging_path(@item.druid.id), cm_file_name
 
     @fake_checksum_data = { :md5 => "a123", :sha1 => "567c" }
     @parent_file_node   = @item.cm.xpath('//file').first

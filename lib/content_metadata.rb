@@ -34,7 +34,7 @@ module Dor::Assembly
     end
 
     def druid_tree_path
-      File.join @root_dir, @druid.path
+      File.join @root_dir, Assembly::Utils.get_staging_path(@druid.id)
     end
 
     def path_to_file(file_name)

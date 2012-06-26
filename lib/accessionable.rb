@@ -11,7 +11,7 @@ module Dor::Assembly
     end
     
     def initialize_workspace
-      source_path = @druid.path(Dor::Config.assembly.root_dir)
+      source_path = Assembly::Utils.get_staging_path(@druid.id,Dor::Config.assembly.root_dir)
       url         = "#{Dor::Config.dor.service_root}/dor/v1/objects/druid:#{@druid.id}/initialize_workspace"
       RestClient.post url, :source => source_path      
     end

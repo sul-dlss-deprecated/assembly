@@ -4,7 +4,7 @@ describe Dor::Assembly::Item do
     cmf          = Dor::Config.assembly.cm_file_name
     root_dir     = Dor::Config.assembly.root_dir
     @dru         = 'aa111bb2222'
-    @druid       = Druid.new @dru
+    @druid       = DruidTools::Druid.new @dru
     @exp_cm_file = "#{root_dir}/aa/111/bb/2222/#{cmf}"
   end
 
@@ -15,7 +15,8 @@ describe Dor::Assembly::Item do
       @item.druid.should == @druid
 
       @item = Dor::Assembly::Item.new :druid => @druid
-      @item.druid.druid.should == @dru
+      @item.druid.druid.should == "druid:#{@dru}"
+      @item.druid.id.should == @dru
     end
 
     it "should know the path to the content metadata file" do

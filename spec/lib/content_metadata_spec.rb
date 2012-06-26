@@ -12,9 +12,9 @@ describe Dor::Assembly::ContentMetadata do
     root_dir           = root_dir || Dor::Config.assembly.root_dir
     cmf                = Dor::Config.assembly.cm_file_name
     @item              = ContentMetadataItem.new
-    @item.druid        = Druid.new dru
+    @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
-    @item.cm_file_name = File.join root_dir, @item.druid.path, cmf
+    @item.cm_file_name = File.join root_dir, Assembly::Utils.get_staging_path(@item.druid.id), cmf
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
   end
  
@@ -68,13 +68,13 @@ describe Dor::Assembly::ContentMetadata do
 
     it "#druid_tree_path should return the expected string" do
       @item.root_dir = 'foo/bar'
-      @item.druid = Druid.new 'xx999yy8888'
+      @item.druid = DruidTools::Druid.new 'xx999yy8888'
       @item.druid_tree_path.should == 'foo/bar/xx/999/yy/8888'
     end
 
     it "#path_to_file should return expected string" do
       @item.root_dir = 'foo/bar'
-      @item.druid = Druid.new 'xx999yy8888'
+      @item.druid = DruidTools::Druid.new 'xx999yy8888'
       @item.path_to_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/foo.doc'
     end
 

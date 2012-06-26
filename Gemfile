@@ -4,8 +4,11 @@ source "http://sulair-rails-dev.stanford.edu"
 gem "lyber-core"
 gem "assembly-objectfile", "~> 1.1.8"
 gem "assembly-image", "~> 1.3.0"
+gem "assembly-utils"
 gem "rest-client"
 gem "rake"
+gem "druid-tools"
+gem "dor-services", "~> 3.8.0"
 
 group :test do
   gem "rcov"

@@ -59,3 +59,4 @@ require env_file
 
 require 'assembly'
 require 'assembly-image'
+require 'assembly-utils'

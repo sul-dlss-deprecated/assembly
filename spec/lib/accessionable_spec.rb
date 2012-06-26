@@ -8,7 +8,7 @@ describe Dor::Assembly::Accessionable do
   before :each do
     root_dir           = Dor::Config.assembly.root_dir
     @item              = AccessionableItem.new
-    @item.druid        = Druid.new 'aa111bb2222'
+    @item.druid        = DruidTools::Druid.new 'aa111bb2222'
   end
 
   describe '#AccessionableItem' do
