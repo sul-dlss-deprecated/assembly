@@ -16,7 +16,7 @@ module Dor::Assembly
           # try to create the jp2
           begin
             jp2       = img.create_jp2
-            file_name = fn['id'].gsub(File.basename(img.path),File.basename(jp2.path)) # generate new filename for jp2 file node in content metadata by replacing filename in base file node with new jp2 filenameis incoming file 
+            file_name = fn['id'].gsub(File.basename(img.path),File.basename(jp2.path)) # generate new filename for jp2 file node in content metadata by replacing filename in base file node with new jp2 filename 
             add_jp2_file_node fn.parent, file_name
           rescue SecurityError
             # if we get a security exception, this means we have an existing jp2 -- don't fail, but do log it

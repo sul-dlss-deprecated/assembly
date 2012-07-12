@@ -1,6 +1,13 @@
 #!/usr/bin/env ruby
+# To start an irb session with gems and configuration loaded:
+# robot_root$ ./bin/console development
 
-require 'rubygems'
-require 'irb'
+unless(ARGV.first.nil?)
+  ENV['ROBOT_ENVIRONMENT'] = ARGV.first
+end
+
 require File.expand_path(File.dirname(__FILE__) + '/../config/boot')
+require 'irb'
+
 IRB.start
+
