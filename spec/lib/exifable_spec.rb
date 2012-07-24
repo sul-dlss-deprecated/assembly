@@ -15,7 +15,7 @@ describe Dor::Assembly::Exifable do
     @item              = ExifableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
-    @item.cm_file_name = File.join root_dir, Assembly::Utils.get_staging_path(@item.druid.id), cm_file_name
+    @item.cm_file_name = File.join root_dir, 'aa/111/bb/2222', cm_file_name
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
   end
 

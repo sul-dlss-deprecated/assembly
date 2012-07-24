@@ -3,7 +3,6 @@ module Dor::Assembly
   class Item
 
     include Dor::Assembly::ContentMetadata
-
     include Dor::Assembly::Jp2able
     include Dor::Assembly::Checksumable
     include Dor::Assembly::Exifable
@@ -21,7 +20,7 @@ module Dor::Assembly
       @druid        = DruidTools::Druid.new(@druid) unless @druid.class == DruidTools::Druid
       @root_dir     = Dor::Config.assembly.root_dir
       cmf           = Dor::Config.assembly.cm_file_name 
-      @cm_file_name = path_to_file cmf
+      @cm_file_name = content_metadata_file cmf
     end
 
   end

@@ -7,11 +7,10 @@ describe Dor::Assembly::Jp2able do
 
   def basic_setup(dru, root_dir = nil)
     root_dir           = root_dir || Dor::Config.assembly.root_dir
-    cm_file_name       = Dor::Config.assembly.cm_file_name
+    @cm_file_name       = Dor::Config.assembly.cm_file_name
     @item              = Jp2ableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
-    @item.cm_file_name = File.join root_dir, Assembly::Utils.get_staging_path(@item.druid.id), cm_file_name
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
   end
  
@@ -31,6 +30,8 @@ describe Dor::Assembly::Jp2able do
 
     it 'should not create and jp2 files when resource type is not specified' do
       basic_setup 'aa111bb2222', @tmp_root_dir
+      @item.cm_file_name = path_to_metadata_file(@cm_file_name)
+
       @item.load_content_metadata
       tifs = @item.file_nodes.map { |fn| @item.path_to_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
@@ -50,6 +51,7 @@ describe Dor::Assembly::Jp2able do
 
     it 'should create jp2 files only for resource type image or page' do
       basic_setup 'ff222cc3333', @tmp_root_dir
+      @item.cm_file_name = path_to_metadata_file(@cm_file_name)
       @item.load_content_metadata
       tifs = @item.file_nodes.map { |fn| @item.path_to_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
@@ -77,10 +79,11 @@ describe Dor::Assembly::Jp2able do
     it 'should not overwrite existing jp2s but should not fail either' do
 
       basic_setup 'ff222cc3333', @tmp_root_dir
-
+      @item.cm_file_name = path_to_metadata_file(@cm_file_name)
+      
       # copy an existing jp2 
-      source_jp2=File.join @tmp_root_dir, Assembly::Utils.get_staging_path(@item.druid.id),'image111.jp2'
-      copy_jp2=File.join @tmp_root_dir, Assembly::Utils.get_staging_path(@item.druid.id),'image115.jp2'
+      source_jp2=File.join @tmp_root_dir, 'ff/222/cc/3333','image111.jp2'
+      copy_jp2=File.join @tmp_root_dir, 'ff/222/cc/3333','image115.jp2'
       system "cp #{source_jp2} #{copy_jp2}"
       
       @item.load_content_metadata
@@ -113,7 +116,8 @@ describe Dor::Assembly::Jp2able do
     
     it 'should add a <file> node to XML if the resource type is not specified' do
       basic_setup 'aa111bb2222', @tmp_root_dir
-     
+      @item.cm_file_name = path_to_metadata_file(@cm_file_name)
+           
       exp_xml = <<-END.gsub(/^ {8}/, '')
         <?xml version="1.0"?>
         <contentMetadata>

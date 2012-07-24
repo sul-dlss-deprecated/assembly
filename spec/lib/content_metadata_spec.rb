@@ -14,7 +14,7 @@ describe Dor::Assembly::ContentMetadata do
     @item              = ContentMetadataItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
-    @item.cm_file_name = File.join root_dir, Assembly::Utils.get_staging_path(@item.druid.id), cmf
+    @item.cm_file_name = File.join root_dir, 'aa/111/bb/2222', cmf
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
   end
  
@@ -69,15 +69,33 @@ describe Dor::Assembly::ContentMetadata do
     it "#druid_tree_path should return the expected string" do
       @item.root_dir = 'foo/bar'
       @item.druid = DruidTools::Druid.new 'xx999yy8888'
-      @item.druid_tree_path.should == 'foo/bar/xx/999/yy/8888'
+      @item.druid_tree_path.should == 'foo/bar/xx/999/yy/8888/xx999yy8888'
     end
 
-    it "#path_to_file should return expected string" do
+    it "#parent_druid_tree_path should return the expected string" do
       @item.root_dir = 'foo/bar'
       @item.druid = DruidTools::Druid.new 'xx999yy8888'
-      @item.path_to_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/foo.doc'
+      @item.parent_druid_tree_path.should == 'foo/bar/xx/999/yy/8888'
     end
 
+    it "#path_to_content_file should return expected string" do
+      @item.root_dir = 'foo/bar'
+      @item.druid = DruidTools::Druid.new 'xx999yy8888'
+      @item.path_to_content_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/xx999yy8888/content/foo.doc'
+    end
+
+    it "#path_to_metadata_file should return expected string" do
+      @item.root_dir = 'foo/bar'
+      @item.druid = DruidTools::Druid.new 'xx999yy8888'
+      @item.path_to_metadata_file('foo.xml').should == 'foo/bar/xx/999/yy/8888/xx999yy8888/metadata/foo.xml'
+    end
+
+    it "#alt_path_to_file should return expected string" do
+      @item.root_dir = 'foo/bar'
+      @item.druid = DruidTools::Druid.new 'xx999yy8888'
+      @item.alt_path_to_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/foo.doc'
+    end
+    
   end
 
   describe "Methods returning <file> nodes and filenode-Image tuples" do

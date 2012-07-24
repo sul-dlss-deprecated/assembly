@@ -9,7 +9,7 @@ module Dor::Assembly
       # Process each <file> node in the content metadata.
       file_nodes.each do |fn|
         # Compute checksums.
-        obj=Assembly::ObjectFile.new(path_to_file fn['id'])
+        obj=content_file(fn['id'])
 
         # compute checksums
         checksums={:md5=>obj.md5,:sha1=>obj.sha1}
