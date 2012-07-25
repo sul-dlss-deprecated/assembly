@@ -15,10 +15,58 @@ describe Dor::Assembly::Exifable do
     @item              = ExifableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
-    @item.cm_file_name = File.join root_dir, 'aa/111/bb/2222', cm_file_name
+    @item.cm_file_name = @item.metadata_file cm_file_name
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
   end
 
+  def run_persist_xml_test
+  
+    # Content metadata before.
+    @item.load_content_metadata
+    bef = noko_doc @item.cm.to_xml
+
+    # Content metadata after (as read from the modified file).
+    @item.collect_exif_info
+    aft = Nokogiri::XML File.read(@item.cm_file_name)
+
+    # check that the contentmetadata resource type is image after
+    bef.root['type'].should == nil
+    aft.root['type'].should == 'image'
+
+    # check that each file node does not start with size, mimetype attributes
+    bef_file_nodes=bef.xpath('//file')
+    bef_file_nodes.size.should == 3
+    bef_file_nodes.each do |file_node|
+      file_node.attributes['size'].nil?.should == true
+      file_node.attributes['mimetype'].nil?.should == true
+    end
+
+    # check that each resource node starts out with type=image
+    bef_res_nodes=bef.xpath('//resource')
+    bef_res_nodes.size.should == 3
+    bef_res_nodes.each do |res_node|
+      res_node.attributes['type'].value.should == 'image'
+    end
+
+    # check that each file node now has size, mimetype 
+    aft_file_nodes=aft.xpath('//file')
+    aft_file_nodes.size.should == 3
+    aft_file_nodes[0].attributes['size'].value.should == '63468'
+    aft_file_nodes[1].attributes['size'].value.should == '63472'
+    aft_file_nodes.each {|file_node| file_node.attributes['mimetype'].value.should == 'image/tiff'}
+
+    # check that each resource node is still type=image
+    aft_res_nodes=aft.xpath('//resource')
+    aft_res_nodes.size.should == 3
+    aft_res_nodes.each do |res_node|
+      res_node.attributes['type'].value.should == 'image'
+    end
+          
+    # check for imageData nodes being present for each file node
+    bef.xpath('//file/imageData').size.should == 0
+    aft.xpath('//file/imageData').size.should == 3
+  end
+  
   describe '#ExifableItem' do
     it 'should be able to initialize our testing object' do
       @item.should be_a_kind_of ExifableItem
@@ -54,59 +102,20 @@ describe Dor::Assembly::Exifable do
 
     it 'should persist the expected changes to content metadata XML file' do
       basic_setup 'aa111bb2222', @tmp_root_dir
-
-      # Content metadata before.
-      @item.load_content_metadata
-      bef = noko_doc @item.cm.to_xml
-
-      # Content metadata after (as read from the modified file).
-      @item.collect_exif_info
-      aft = Nokogiri::XML File.read(@item.cm_file_name)
-
-      # check that the contentmetadata resource type is image after
-      bef.root['type'].should == nil
-      aft.root['type'].should == 'image'
-
-      # check that each file node does not start with size, mimetype attributes
-      bef_file_nodes=bef.xpath('//file')
-      bef_file_nodes.size.should == 3
-      bef_file_nodes.each do |file_node|
-        file_node.attributes['size'].nil?.should == true
-        file_node.attributes['mimetype'].nil?.should == true
-      end
-
-      # check that each resource node starts out with type=image
-      bef_res_nodes=bef.xpath('//resource')
-      bef_res_nodes.size.should == 3
-      bef_res_nodes.each do |res_node|
-        res_node.attributes['type'].value.should == 'image'
-      end
-
-      # check that each file node now has size, mimetype 
-      aft_file_nodes=aft.xpath('//file')
-      aft_file_nodes.size.should == 3
-      aft_file_nodes[0].attributes['size'].value.should == '63468'
-      aft_file_nodes[1].attributes['size'].value.should == '63472'
-      aft_file_nodes.each {|file_node| file_node.attributes['mimetype'].value.should == 'image/tiff'}
-
-      # check that each resource node is still type=image
-      aft_res_nodes=aft.xpath('//resource')
-      aft_res_nodes.size.should == 3
-      aft_res_nodes.each do |res_node|
-        res_node.attributes['type'].value.should == 'image'
-      end
-            
-      # check for imageData nodes being present for each file node
-      bef.xpath('//file/imageData').size.should == 0
-      aft.xpath('//file/imageData').size.should == 3
-
+      run_persist_xml_test
     end
 
+    it 'should persist the expected changes to content metadata XML file in the new locatin' do
+      basic_setup 'gg111bb2222', @tmp_root_dir
+      run_persist_xml_test
+    end
+    
     it 'should not overwrite existing contentmetadata type and resource types if they exist in incoming content metadata XML file' do
       basic_setup 'ff222cc3333', @tmp_root_dir
 
       # Content metadata before.
       @item.load_content_metadata
+      
       bef = noko_doc @item.cm.to_xml
       
       # Content metadata after (as read from the modified file).

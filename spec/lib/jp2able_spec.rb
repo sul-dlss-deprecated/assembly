@@ -30,10 +30,10 @@ describe Dor::Assembly::Jp2able do
 
     it 'should not create and jp2 files when resource type is not specified' do
       basic_setup 'aa111bb2222', @tmp_root_dir
-      @item.cm_file_name = path_to_metadata_file(@cm_file_name)
+      @item.cm_file_name = @item.metadata_file(@cm_file_name)
 
       @item.load_content_metadata
-      tifs = @item.file_nodes.map { |fn| @item.path_to_file fn['id'] }
+      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
 
       # Only tifs should exist.
@@ -51,9 +51,9 @@ describe Dor::Assembly::Jp2able do
 
     it 'should create jp2 files only for resource type image or page' do
       basic_setup 'ff222cc3333', @tmp_root_dir
-      @item.cm_file_name = path_to_metadata_file(@cm_file_name)
+      @item.cm_file_name = @item.metadata_file(@cm_file_name)
       @item.load_content_metadata
-      tifs = @item.file_nodes.map { |fn| @item.path_to_file fn['id'] }
+      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
       bef_files = get_filenames(@item)
 
@@ -76,10 +76,37 @@ describe Dor::Assembly::Jp2able do
       
     end
 
+    it 'should create jp2 files only for resource type image or page in new location' do
+      basic_setup 'gg111bb2222', @tmp_root_dir
+      @item.cm_file_name = @item.metadata_file(@cm_file_name)
+      @item.load_content_metadata
+      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
+      bef_files = get_filenames(@item)
+
+      # there should be 3 file nodes in total
+      @item.file_nodes.size.should == 3
+      count_file_types(bef_files,'.tif').should == 3
+      count_file_types(bef_files,'.jp2').should == 0
+
+      @item.create_jp2s
+      # we now have three jps
+      @item.file_nodes.size.should == 6
+      aft_files = get_filenames(@item)
+      count_file_types(aft_files,'.tif').should == 3
+      count_file_types(aft_files,'.jp2').should == 3
+
+      # Read the XML file and check the file names.
+      xml = Nokogiri::XML File.read(@item.cm_file_name)
+      file_nodes = xml.xpath "//resource/file"
+      file_nodes.map { |fn| fn['id'] }.sort.should == ["image111.jp2", "image111.tif", "image112.jp2", "image112.tif", "sub/image113.jp2", "sub/image113.tif"]
+      
+    end
+    
     it 'should not overwrite existing jp2s but should not fail either' do
 
       basic_setup 'ff222cc3333', @tmp_root_dir
-      @item.cm_file_name = path_to_metadata_file(@cm_file_name)
+      @item.cm_file_name = @item.metadata_file(@cm_file_name)
       
       # copy an existing jp2 
       source_jp2=File.join @tmp_root_dir, 'ff/222/cc/3333','image111.jp2'
@@ -87,7 +114,7 @@ describe Dor::Assembly::Jp2able do
       system "cp #{source_jp2} #{copy_jp2}"
       
       @item.load_content_metadata
-      tifs = @item.file_nodes.map { |fn| @item.path_to_file fn['id'] }
+      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
       bef_files = get_filenames(@item)
 
@@ -116,7 +143,7 @@ describe Dor::Assembly::Jp2able do
     
     it 'should add a <file> node to XML if the resource type is not specified' do
       basic_setup 'aa111bb2222', @tmp_root_dir
-      @item.cm_file_name = path_to_metadata_file(@cm_file_name)
+      @item.cm_file_name = @item.metadata_file(@cm_file_name)
            
       exp_xml = <<-END.gsub(/^ {8}/, '')
         <?xml version="1.0"?>

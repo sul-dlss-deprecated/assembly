@@ -20,7 +20,7 @@ module Dor::Assembly
       @druid        = DruidTools::Druid.new(@druid) unless @druid.class == DruidTools::Druid
       @root_dir     = Dor::Config.assembly.root_dir
       cmf           = Dor::Config.assembly.cm_file_name 
-      @cm_file_name = content_metadata_file cmf
+      @cm_file_name = metadata_file cmf
     end
 
   end

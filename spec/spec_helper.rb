@@ -7,14 +7,15 @@ require 'equivalent-xml'
 
 tmp_output_dir = File.join(ROBOT_ROOT, 'tmp')
 FileUtils.mkdir_p tmp_output_dir
-  
+
+include Assembly  
 def noko_doc(x)
   # Returns Nokogiri XML Document, with config to ignore blanks.
   Nokogiri.XML(x) { |conf| conf.default_xml.noblanks }
 end
 
 def get_filenames(item)
-  item.file_nodes.map { |fn| item.path_to_file fn['id'] }
+  item.file_nodes.map { |fn| item.content_file fn['id'] }
 end
 
 def count_file_types(files,extension)

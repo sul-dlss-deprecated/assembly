@@ -11,7 +11,6 @@
         <file preserve="yes" publish="no" shelve="no" id="image112.tif">
             <checksum type="md5">ac440802bd590ce0899dafecc5a5ab1b</checksum>
             <checksum type="sha1">5c9f6dc2ca4fd3329619b54a2c6f99a08c088444</checksum>
-            <checksum type="foo">FOO</checksum>
             <checksum type="bar">BAR</checksum>
         </file>
     </resource>

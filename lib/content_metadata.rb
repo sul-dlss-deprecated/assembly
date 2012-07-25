@@ -10,18 +10,14 @@ module Dor::Assembly
       :druid,
       :root_dir
     )
+
+    # returns the location of a content file, which can be in the old location if not found in the new location    
+    def content_file(filename)
+      File.exists?(path_to_content_file(filename)) ? path_to_content_file(filename) : alt_path_to_file(filename)  
+    end
     
-    # generates an Assembly::ObjectFile class for a content file, will check both the old folder style if the content file is not found in the new path 
-    def content_file(file)
-      if File.exists?(path_to_content_file(file))
-        Assembly::ObjectFile.new(path_to_content_file(file))
-      else
-        Assembly::ObjectFile.new(alt_path_to_file(file))        
-      end
-    end    
-    
-    # returns the location of the content metadata file, which can be in the old location if not found in the new location
-    def content_metadata_file(filename)
+    # returns the location of a metadata file, which can be in the old location if not found in the new location
+    def metadata_file(filename)
       File.exists?(path_to_metadata_file(filename)) ? path_to_metadata_file(filename) : alt_path_to_file(filename)  
     end
     
@@ -82,7 +78,7 @@ module Dor::Assembly
 
     def fnode_tuples(resource_type='')
       # Returns a list of filenode pairs (file node and associated ObjectFile object), optionally restricted to specific resource content types if specified
-      file_nodes(resource_type).map { |fn| [ fn, content_file(fn['id']) ] }
+      file_nodes(resource_type).map { |fn| [ fn, Assembly::ObjectFile.new(content_file(fn['id'])) ] }
     end
 
   end
