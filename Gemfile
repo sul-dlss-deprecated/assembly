@@ -2,9 +2,9 @@ source :rubygems
 source "http://sulair-rails-dev.stanford.edu"
 
 gem "lyber-core"
-gem "assembly-objectfile", "~> 1.1.8"
-gem "assembly-image", "~> 1.3.0"
-gem "assembly-utils", "~> 1.0.5"
+gem "assembly-objectfile", ">= 1.2.5"
+gem "assembly-image", ">= 1.3.0"
+gem "assembly-utils", ">= 1.0.5"
 gem "rest-client"
 gem "rake"
 gem "druid-tools"
@@ -22,5 +22,6 @@ group :development do
   end
   gem "ruby-debug"
   gem "capistrano"
-  gem "lyberteam-devel"
+  gem "lyberteam-devel", "<= 0.8.0"  # we need to stay on older versions for now until we can fix the deployment capistrano issues, 7/25/2012, Peter Mangiafico
+  gem "lyberteam-capistrano-devel", "<= 0.9.0"
 end
