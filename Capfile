@@ -56,6 +56,14 @@ set :deploy_to,  "/home/#{user}/#{application}"
 set :deploy_via, :copy
 set :shared_config_certs_dir, true
 
+set :branch do
+  default_tag = `git tag`.split("\n").last
+
+  tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [#{default_tag}] "
+  tag = default_tag if tag.empty?
+  tag
+end
+
 # Robots run as background daemons. They are restarted at deploy time.
 set :robots, %w(
   jp2-create 
