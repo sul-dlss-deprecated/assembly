@@ -96,22 +96,21 @@ describe Dor::Assembly::Exifable do
   describe '#collect_exif_info' do
   
     before(:each) do
-      @tmp_root_dir = "tmp/test_input"
-      clone_test_input @tmp_root_dir
+      clone_test_input TMP_ROOT_DIR
     end
 
     it 'should persist the expected changes to content metadata XML file' do
-      basic_setup 'aa111bb2222', @tmp_root_dir
+      basic_setup 'aa111bb2222', TMP_ROOT_DIR
       run_persist_xml_test
     end
 
     it 'should persist the expected changes to content metadata XML file in the new locatin' do
-      basic_setup 'gg111bb2222', @tmp_root_dir
+      basic_setup 'gg111bb2222', TMP_ROOT_DIR
       run_persist_xml_test
     end
     
     it 'should not overwrite existing contentmetadata type and resource types if they exist in incoming content metadata XML file' do
-      basic_setup 'ff222cc3333', @tmp_root_dir
+      basic_setup 'ff222cc3333', TMP_ROOT_DIR
 
       # Content metadata before.
       @item.load_content_metadata

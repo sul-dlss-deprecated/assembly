@@ -43,7 +43,6 @@ describe Dor::Assembly::ContentMetadata do
       File.read(tf.path).should == @dummy_xml_content
     end
 
-
     it "should write to @cm_file_name, if @cm_handle is not set" do
       tf = File.join @tmp_dir, 'out.xml'
       FileUtils.rm_f tf
@@ -65,6 +64,22 @@ describe Dor::Assembly::ContentMetadata do
       n.should be_kind_of Nokogiri::XML::Element
     end
 
+    it "#final_path_to_object should return the expected string when the new druid folder is not found" do
+      basic_setup 'aa111bb2222'
+      @item.root_dir = 'foo/bar'
+      @item.druid = DruidTools::Druid.new 'xx999yy8888'
+      @item.final_path_to_object.should == 'foo/bar/xx/999/yy/8888'      
+    end
+
+    it "#final_path_to_object should return the expected string when the new druid folder is found" do
+      basic_setup 'aa111bb2222'
+      @item.root_dir = TMP_ROOT_DIR
+      @item.druid = DruidTools::Druid.new('xx999yy8888',@item.root_dir)
+      FileUtils.mkdir_p @item.druid.path()
+      @item.final_path_to_object.should == 'tmp/test_input/xx/999/yy/8888/xx999yy8888'      
+      FileUtils.rm_rf @item.druid.path()
+    end
+    
     it "#druid_tree_path should return the expected string" do
       basic_setup 'aa111bb2222'
       @item.root_dir = 'foo/bar'
@@ -72,11 +87,11 @@ describe Dor::Assembly::ContentMetadata do
       @item.druid_tree_path.should == 'foo/bar/xx/999/yy/8888/xx999yy8888'
     end
 
-    it "#parent_druid_tree_path should return the expected string" do
+    it "#old_druid_tree_path should return the expected string" do
       basic_setup 'aa111bb2222'
       @item.root_dir = 'foo/bar'
       @item.druid = DruidTools::Druid.new 'xx999yy8888'
-      @item.parent_druid_tree_path.should == 'foo/bar/xx/999/yy/8888'
+      @item.old_druid_tree_path.should == 'foo/bar/xx/999/yy/8888'
     end
 
     it "#path_to_content_file should return expected string" do
@@ -93,11 +108,11 @@ describe Dor::Assembly::ContentMetadata do
       @item.path_to_metadata_file('foo.xml').should == 'foo/bar/xx/999/yy/8888/xx999yy8888/metadata/foo.xml'
     end
 
-    it "#alt_path_to_file should return expected string" do
+    it "#old_path_to_file should return expected string" do
       basic_setup 'aa111bb2222'
       @item.root_dir = 'foo/bar'
       @item.druid = DruidTools::Druid.new 'xx999yy8888'
-      @item.alt_path_to_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/foo.doc'
+      @item.old_path_to_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/foo.doc'
     end
     
   end

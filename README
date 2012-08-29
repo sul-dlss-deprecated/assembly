@@ -14,12 +14,13 @@ Check dependencies for jp2 creation in the assembly-image gem.
 1.4.0  Update robots so that they will find content and metadata files in both the old style (oo/000/oo/0001) and the new style (oo/000/oo/0001/content and oo/000/oo/0001/metadata)
 1.4.1  update web service call to remove "v1" from URL
 
+1.4.2  When generating the source path to pass to the initiate workspace web service call, determine if we are using the new druid tree folder or the older style.  Send the source path to the correct location.
+
 == Running tests
 
 For local testing, add this to your bash profile:
 
     export ROBOT_ENVIRONMENT="local"
-
 
 == Deployment
 
