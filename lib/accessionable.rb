@@ -12,7 +12,7 @@ module Dor::Assembly
     
     def initialize_workspace
       url         = "#{Dor::Config.dor.service_root}/dor/v1/objects/druid:#{@druid.id}/initialize_workspace"
-      RestClient.post url, :source => parent_druid_tree_path
+      RestClient.post url, :source => final_path_to_object
     end
     
     def initialize_apo_workflow

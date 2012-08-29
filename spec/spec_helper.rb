@@ -8,6 +8,8 @@ require 'equivalent-xml'
 tmp_output_dir = File.join(ROBOT_ROOT, 'tmp')
 FileUtils.mkdir_p tmp_output_dir
 
+TMP_ROOT_DIR = "tmp/test_input"
+
 include Assembly  
 def noko_doc(x)
   # Returns Nokogiri XML Document, with config to ignore blanks.
