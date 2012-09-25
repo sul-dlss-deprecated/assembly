@@ -1,6 +1,6 @@
 GEM
   remote: http://rubygems.org/
-  remote: http://sulair-rails-dev.stanford.edu/
+  remote: http://sul-gems.stanford.edu/
   specs:
     actionmailer (3.2.8)
       actionpack (= 3.2.8)
