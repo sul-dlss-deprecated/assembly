@@ -27,7 +27,6 @@ end
 # Some of these requires must occur before we load the environment file. 
 require 'dor-services'
 require 'lyber_core'
-require 'checksum-tools'
 
 # Define modules, with autoload behavior, needed by the robot framework.
 def camel_case(s)
