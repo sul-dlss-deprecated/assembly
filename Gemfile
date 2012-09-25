@@ -1,5 +1,5 @@
 source :rubygems
-source "http://sulair-rails-dev.stanford.edu"
+source 'http://sul-gems.stanford.edu'
 
 gem "lyber-core"
 gem "assembly-objectfile", ">= 1.2.5"
