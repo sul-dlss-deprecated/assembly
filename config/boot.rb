@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'bundle/setup'
+require 'bundler/setup'
 require 'active_support/core_ext'
 
 # Environment and robot root directory.
