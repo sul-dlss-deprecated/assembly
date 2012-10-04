@@ -36,8 +36,8 @@ module Dor::Assembly
 
     def add_data_to_file_node(node,file)
 
-      node['mimetype']=file.mimetype
-      node['size']=file.filesize.to_s
+      node['mimetype']=file.mimetype unless node['mimetype']
+      node['size']=file.filesize.to_s unless node['size']
 
       # add publish/preserve/shelve attributes based on mimetype, unless they already exist in content metadata (use defaults if mimetype not found in mapping)
       file_attributes=Assembly::FILE_ATTRIBUTES[file.mimetype] || Assembly::FILE_ATTRIBUTES['default']
