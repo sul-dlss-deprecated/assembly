@@ -1,6 +1,7 @@
 class ChecksumableItem
   include Dor::Assembly::Checksumable
   include Dor::Assembly::ContentMetadata
+  include Dor::Assembly::Findable  
 end
 
 describe Dor::Assembly::Checksumable do

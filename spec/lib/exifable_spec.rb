@@ -1,6 +1,7 @@
 class ExifableItem
   include Dor::Assembly::Exifable
   include Dor::Assembly::ContentMetadata
+  include Dor::Assembly::Findable
 end
 
 describe Dor::Assembly::Exifable do
@@ -107,6 +108,56 @@ describe Dor::Assembly::Exifable do
     it 'should persist the expected changes to content metadata XML file in the new locatin' do
       basic_setup 'gg111bb2222', TMP_ROOT_DIR
       run_persist_xml_test
+    end
+
+    it 'should not overwrite existing mimetypes and filesizes in file nodes if they exist in incoming content metadata XML file' do
+      basic_setup 'cc333dd4444', TMP_ROOT_DIR
+
+      # Content metadata before.
+      @item.load_content_metadata
+      
+      bef = noko_doc @item.cm.to_xml
+      
+      # Content metadata after (as read from the modified file).
+      @item.collect_exif_info
+      aft = Nokogiri::XML File.read(@item.cm_file_name)
+
+      # check that the content metadata type is image (default for only images)
+      bef.root['type'].nil?.should == true
+      aft.root['type'].should == 'image'
+
+      # check that the first resource node starts with a type="page" and the second is blank
+      bef_res_nodes=bef.xpath('//resource')
+      bef_res_nodes.size.should == 1
+      bef_res_nodes[0].attributes['type'].nil?.should == true  # first resource type should not exist
+            
+      # check that each file node starts with size, mimetype attributes
+      bef_file_nodes=bef.xpath('//file')
+      bef_file_nodes.size.should == 2
+      bef_file_nodes.each do |file_node|
+        file_node.attributes['size'].nil?.should == false
+        file_node.attributes['mimetype'].nil?.should == false
+      end
+
+      # check that the file nodes still have bogus size, mimetype 
+      aft_file_nodes=aft.xpath('//file')
+      aft_file_nodes.size.should == 2
+      aft_file_nodes[0].attributes['size'].value.should == '100'
+      aft_file_nodes[0].attributes['mimetype'].value.should == 'crappy/mimetype'
+
+      # all other file nodes will have their publish/preserve/shelve attributes set
+      aft_file_nodes[1].attributes['size'].value.should == '500'
+      aft_file_nodes[1].attributes['mimetype'].value.should == 'crappy/again'
+            
+      # check that each resource node end with a type="file" (i.e. was not changed)
+      aft_res_nodes=aft.xpath('//resource')
+      aft_res_nodes.size.should == 1
+      aft_res_nodes[0].attributes['type'].value.should == 'file' # first resource type should be set to file (default when not all files are images)
+      
+      # check for imageData nodes being present for each file node that is an image
+      bef.xpath('//file/imageData').size.should == 0
+      aft.xpath('//file/imageData').size.should == 1
+
     end
     
     it 'should not overwrite existing contentmetadata type and resource types if they exist in incoming content metadata XML file' do

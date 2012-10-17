@@ -15,8 +15,11 @@ Check dependencies for jp2 creation in the assembly-image gem.
 1.4.1  update web service call to remove "v1" from URL
 
 1.4.2  When generating the source path to pass to the initiate workspace web service call, determine if we are using the new druid tree folder or the older style.  Send the source path to the correct location.
-
+1.4.3  don't overwrite mimetype or filesize if it already exists in content metadata
 1.4.4  Show more detailed error messages when computing checksums fail
+
+1.5.0  allow multiple root directories to be specified so that we can have the robots look in directories other than '/dor/assembly' to find the content
+
 
 == Running tests
 

@@ -1,5 +1,6 @@
 class ContentMetadataItem
   include Dor::Assembly::ContentMetadata
+  include Dor::Assembly::Findable  
 end
 
 describe Dor::Assembly::ContentMetadata do
@@ -64,57 +65,32 @@ describe Dor::Assembly::ContentMetadata do
       n.should be_kind_of Nokogiri::XML::Element
     end
 
-    it "#final_path_to_object should return the expected string when the new druid folder is not found" do
+    it "#path_to_object should return nil when no content folder is not found" do
       basic_setup 'aa111bb2222'
       @item.root_dir = 'foo/bar'
       @item.druid = DruidTools::Druid.new 'xx999yy8888'
-      @item.final_path_to_object.should == 'foo/bar/xx/999/yy/8888'      
+      @item.path_to_object.should be nil      
     end
 
-    it "#final_path_to_object should return the expected string when the new druid folder is found" do
+    it "#path_to_object should return the expected string when the new druid folder is found" do
       basic_setup 'aa111bb2222'
       @item.root_dir = TMP_ROOT_DIR
       @item.druid = DruidTools::Druid.new('xx999yy8888',@item.root_dir)
       FileUtils.mkdir_p @item.druid.path()
-      @item.final_path_to_object.should == 'tmp/test_input/xx/999/yy/8888/xx999yy8888'      
+      @item.path_to_object.should == 'tmp/test_input/xx/999/yy/8888/xx999yy8888'      
       FileUtils.rm_rf @item.druid.path()
     end
-    
-    it "#druid_tree_path should return the expected string" do
+
+    it "#path_to_object should return the expected string when the new druid folder is not found, but the older druid style folder is found" do
       basic_setup 'aa111bb2222'
-      @item.root_dir = 'foo/bar'
-      @item.druid = DruidTools::Druid.new 'xx999yy8888'
-      @item.druid_tree_path.should == 'foo/bar/xx/999/yy/8888/xx999yy8888'
+      @item.root_dir = TMP_ROOT_DIR
+      path=Assembly::Utils.get_staging_path('xx999yy8888',@item.root_dir)
+      @item.druid = DruidTools::Druid.new('xx999yy8888',@item.root_dir)
+      FileUtils.mkdir_p path
+      @item.path_to_object.should == 'tmp/test_input/xx/999/yy/8888'      
+      FileUtils.rm_rf path
     end
 
-    it "#old_druid_tree_path should return the expected string" do
-      basic_setup 'aa111bb2222'
-      @item.root_dir = 'foo/bar'
-      @item.druid = DruidTools::Druid.new 'xx999yy8888'
-      @item.old_druid_tree_path.should == 'foo/bar/xx/999/yy/8888'
-    end
-
-    it "#path_to_content_file should return expected string" do
-      basic_setup 'aa111bb2222'
-      @item.root_dir = 'foo/bar'
-      @item.druid = DruidTools::Druid.new 'xx999yy8888'
-      @item.path_to_content_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/xx999yy8888/content/foo.doc'
-    end
-
-    it "#path_to_metadata_file should return expected string" do
-      basic_setup 'aa111bb2222'
-      @item.root_dir = 'foo/bar'
-      @item.druid = DruidTools::Druid.new 'xx999yy8888'
-      @item.path_to_metadata_file('foo.xml').should == 'foo/bar/xx/999/yy/8888/xx999yy8888/metadata/foo.xml'
-    end
-
-    it "#old_path_to_file should return expected string" do
-      basic_setup 'aa111bb2222'
-      @item.root_dir = 'foo/bar'
-      @item.druid = DruidTools::Druid.new 'xx999yy8888'
-      @item.old_path_to_file('foo.doc').should == 'foo/bar/xx/999/yy/8888/foo.doc'
-    end
-    
   end
 
   describe "Methods returning <file> nodes and filenode-Image tuples" do
