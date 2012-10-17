@@ -23,10 +23,14 @@ Dor::Config.configure do
     cm_file_name  'contentMetadata.xml'
     dm_file_name  'descMetadata.xml'
     next_workflow 'accessionWF'
+    robot_sleep_time 30
   end
 
   dor do
     service_root 'https://USERNAME:PASSWORD@lyberservices-dev.stanford.edu/dor'
   end
 
+  # Used by the initiatlize_workspace method to specify common accessioning workspace.
+   stacks.local_workspace_root '/dor/workspace'
+   
 end

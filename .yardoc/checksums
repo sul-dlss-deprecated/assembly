@@ -1,0 +1,7 @@
+lib/content_metadata.rb 0b80196bb60325824d751bc0efae2b8921386484
+lib/checksumable.rb 27df288819da4c8794f439672faff60aeb4683e5
+lib/jp2able.rb a0998c0bfc37557bf55e33cb998d1caa70407487
+lib/accessionable.rb a461a1b666eee8998fd427d980845ee8d236586c
+lib/item.rb 84476096ee5a3fee5d917553092f63d0a47fbf5c
+lib/exifable.rb 9a4111a2471d59b2133187f2393f348b275aaa0c
+lib/assembly.rb c28dea92aac38ea458a5a74f1805fd75907be69f

@@ -19,13 +19,17 @@ module Dor::Assembly
         sha1_nodes=fn.xpath('checksum[@type="sha1"]')
       
         # if we have any existing checksum nodes, compare them all against the checksums we just computed, and raise an error if any fail
-        raise %Q<Checksums disagree: type="md5", file="#{fn['id']}".> unless checksums_equal?(md5_nodes,checksums[:md5])
-        raise %Q<Checksums disagree: type="sha1", file="#{fn['id']}".> unless checksums_equal?(sha1_nodes,checksums[:sha1])
-      
-        # Modify the content metadata XML to add the checksums if they do not exist        
-        add_checksum_node fn, 'md5',checksums[:md5] if md5_nodes.size == 0
-        add_checksum_node fn, 'sha1',checksums[:sha1] if sha1_nodes.size == 0
-        
+        if md5_nodes.size != 0
+          raise %Q<Checksums disagree: type="md5", file="#{fn['id']}", computed="#{checksums[:md5]}, provided="#{md5_nodes.first}".> unless checksums_equal?(md5_nodes,checksums[:md5])
+        else
+          add_checksum_node fn, 'md5',checksums[:md5]
+        end
+        if sha1_nodes.size != 0
+          raise %Q<Checksums disagree: type="sha1", file="#{fn['id']}", computed="#{checksums[:sha1]}", provided="#{sha1_nodes.first}".> unless checksums_equal?(sha1_nodes,checksums[:sha1])
+        else
+          add_checksum_node fn, 'sha1',checksums[:sha1]
+        end
+                
       end
 
       # Save the modified XML.
@@ -37,7 +41,7 @@ module Dor::Assembly
     def checksums_equal?(existing_checksum_nodes,computed_checksum)
       
       match=true
-      existing_checksum_nodes.each {|checksum| match = false if checksum.content.downcase != computed_checksum}
+      existing_checksum_nodes.each {|checksum| match = false if checksum.content.downcase != computed_checksum.downcase}
       return match
       
     end
