@@ -22,9 +22,8 @@ Check dependencies for jp2 creation in the assembly-image gem.
 
 == Running tests
 
-For local testing, add this to your bash profile:
-
-    export ROBOT_ENVIRONMENT="local"
+	Copy config/environments/local.example.rb to config/environments/development.rb
+	bundle exec rspec spec
 
 == Deployment
 

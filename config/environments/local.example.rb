@@ -29,8 +29,5 @@ Dor::Config.configure do
   dor do
     service_root 'https://USERNAME:PASSWORD@lyberservices-dev.stanford.edu/dor'
   end
-
-  # Used by the initiatlize_workspace method to specify common accessioning workspace.
-   stacks.local_workspace_root '/dor/workspace'
    
 end
