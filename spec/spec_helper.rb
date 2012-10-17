@@ -1,4 +1,4 @@
-environment = ENV['ROBOT_ENVIRONMENT'] ||= 'development'
+environment = (ENV['ROBOT_ENVIRONMENT'] ||= 'local')
 bootfile    = File.expand_path(File.dirname(__FILE__) + '/../config/boot')
 
 require bootfile
