@@ -10,6 +10,9 @@ FileUtils.mkdir_p tmp_output_dir
 
 TMP_ROOT_DIR = "tmp/test_input"
 
+# override for testing
+Dor::Config.assembly.root_dir=['spec/test_input','spec/test_input2']
+
 include Assembly  
 def noko_doc(x)
   # Returns Nokogiri XML Document, with config to ignore blanks.
@@ -26,6 +29,6 @@ end
 
 def clone_test_input(destination)
   # Use rsync to create a copy of the test_input directory that we can modify.
-  source = Dor::Config.assembly.root_dir
+  source = 'spec/test_input'
   system "rsync -rqOlt --delete #{source}/ #{destination}/"
 end

@@ -4,7 +4,7 @@ require 'jp2able'
 require 'checksumable'
 require 'exifable'
 require 'accessionable'
-
+require 'findable'
 require 'item'
 
 Dor::Config.configure do

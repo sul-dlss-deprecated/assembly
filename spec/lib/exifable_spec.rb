@@ -1,6 +1,7 @@
 class ExifableItem
   include Dor::Assembly::Exifable
   include Dor::Assembly::ContentMetadata
+  include Dor::Assembly::Findable
 end
 
 describe Dor::Assembly::Exifable do

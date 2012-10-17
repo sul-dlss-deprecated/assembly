@@ -1,14 +1,15 @@
 class AccessionableItem
   include Dor::Assembly::Accessionable
   include Dor::Assembly::ContentMetadata
+  include Dor::Assembly::Findable  
 end
 
 describe Dor::Assembly::Accessionable do
   
   before :each do
-    root_dir           = Dor::Config.assembly.root_dir
     @item              = AccessionableItem.new
     @item.druid        = DruidTools::Druid.new 'aa111bb2222'
+    @item.root_dir     = Dor::Config.assembly.root_dir
   end
 
   describe '#AccessionableItem' do
@@ -20,13 +21,12 @@ describe Dor::Assembly::Accessionable do
   describe '#initiate_accessioning' do
   
     it 'should be runnable using stubs for external calls' do
-      conf = Dor::Config.assembly
       @item.should_receive(:initialize_workspace)
       @item.should_receive(:initialize_apo_workflow)
       RestClient.stub(:post) # don't actually make the RestClient calls, just assume they work
       @item.initiate_accessioning
     end
-
+    
   end
 
 end

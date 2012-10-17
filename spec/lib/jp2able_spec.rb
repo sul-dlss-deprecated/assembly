@@ -1,6 +1,7 @@
 class Jp2ableItem
   include Dor::Assembly::Jp2able
   include Dor::Assembly::ContentMetadata
+  include Dor::Assembly::Findable
 end
 
 describe Dor::Assembly::Jp2able do

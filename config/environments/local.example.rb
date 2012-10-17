@@ -19,7 +19,7 @@ Dor::Config.configure do
   end
 
   assembly do
-    root_dir      'spec/test_input'
+    root_dir      ['spec/test_input','spec/test_input2']
     cm_file_name  'contentMetadata.xml'
     dm_file_name  'descMetadata.xml'
     next_workflow 'accessionWF'
