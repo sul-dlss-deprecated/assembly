@@ -2,7 +2,7 @@ source :rubygems
 source 'http://sul-gems.stanford.edu'
 
 gem "lyber-core"
-gem "assembly-objectfile", ">= 1.4.2"
+gem "assembly-objectfile", ">= 1.4.3"
 gem "assembly-image", ">= 1.3.5"
 gem "assembly-utils", ">= 1.0.10"
 gem "rest-client"
