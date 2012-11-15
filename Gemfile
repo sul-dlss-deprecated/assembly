@@ -4,7 +4,7 @@ source 'http://sul-gems.stanford.edu'
 gem "lyber-core"
 gem "assembly-objectfile", ">= 1.4.5"
 gem "assembly-image", ">= 1.3.5"
-gem "assembly-utils", ">= 1.0.10"
+gem "assembly-utils", ">= 1.1.4"
 gem "rest-client"
 gem "rake"
 gem "druid-tools"
