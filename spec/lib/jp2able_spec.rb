@@ -105,6 +105,8 @@ describe Dor::Assembly::Jp2able do
     
     it 'should not overwrite existing jp2s but should not fail either' do
 
+      Dor::Config.assembly.overwrite_jp2 = false
+
       basic_setup 'ff222cc3333', TMP_ROOT_DIR
       @item.cm_file_name = @item.metadata_file(@cm_file_name)
       
@@ -137,6 +139,96 @@ describe Dor::Assembly::Jp2able do
 
     end
 
+    it 'should overwrite existing jp2s but should not fail either' do
+
+      Dor::Config.assembly.overwrite_jp2 = true
+
+      basic_setup 'ff222cc3333', TMP_ROOT_DIR
+      @item.cm_file_name = @item.metadata_file(@cm_file_name)
+      
+      # copy an existing jp2 
+      source_jp2=File.join TMP_ROOT_DIR, 'ff/222/cc/3333','image111.jp2'
+      copy_jp2=File.join TMP_ROOT_DIR, 'ff/222/cc/3333','image115.jp2'
+      system "cp #{source_jp2} #{copy_jp2}"
+      
+      @item.load_content_metadata
+      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
+      bef_files = get_filenames(@item)
+
+      # there should be 10 file nodes in total
+      @item.file_nodes.size.should == 10
+      count_file_types(bef_files,'.tif').should == 5
+      count_file_types(bef_files,'.jp2').should == 1
+      
+      File.exists?(copy_jp2).should == true
+       
+      @item.create_jp2s
+
+      @item.file_nodes.size.should == 11
+      aft_files = get_filenames(@item)
+      count_file_types(aft_files,'.tif').should == 5
+      count_file_types(aft_files,'.jp2').should == 2
+      
+      # cleanup copied jp2
+      system "rm #{copy_jp2}"
+
+    end
+    
+    it 'should not overwrite existing jp2s when there is a DPG style jp2 already there' do
+
+      Dor::Config.assembly.overwrite_dpg_jp2 = false
+      
+      basic_setup 'hh222cc3333', TMP_ROOT_DIR
+      @item.cm_file_name = @item.metadata_file(@cm_file_name)
+      
+      @item.load_content_metadata
+      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
+      bef_files = get_filenames(@item)
+
+      # there should be 6 file nodes in total to start
+      @item.file_nodes.size.should == 6
+      count_file_types(bef_files,'.tif').should == 5
+      count_file_types(bef_files,'.jp2').should == 1
+             
+      @item.create_jp2s
+            
+      # we now have three extra jp2, one for each tif that didn't have a matching dpg style jp2
+      # even if the jp2 does not exist in the original content metadata, if a matching one is found, a derivative won't be created
+      @item.file_nodes.size.should == 9  # there are 9 total nodes, 4 jp2 and 5 tif
+      aft_files = get_filenames(@item)
+      count_file_types(aft_files,'.tif').should == 5
+      count_file_types(aft_files,'.jp2').should == 4
+            
+    end
+
+    it 'should overwrite existing jp2s when there is a DPG style jp2 already there' do
+
+      Dor::Config.assembly.overwrite_dpg_jp2 = true
+      
+      basic_setup 'hh222cc3333', TMP_ROOT_DIR
+      @item.cm_file_name = @item.metadata_file(@cm_file_name)
+      
+      @item.load_content_metadata
+      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
+      bef_files = get_filenames(@item)
+
+      # there should be 6 file nodes in total to start
+      @item.file_nodes.size.should == 6
+      count_file_types(bef_files,'.tif').should == 5
+      count_file_types(bef_files,'.jp2').should == 1
+             
+      @item.create_jp2s
+            
+      @item.file_nodes.size.should == 11  
+      aft_files = get_filenames(@item)
+      count_file_types(aft_files,'.tif').should == 5
+      count_file_types(aft_files,'.jp2').should == 6
+            
+    end
+    
   end
 
   describe '#add_jp2_file_node' do

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<contentMetadata type="file" objectId="ff2222cc3333">
-    <resource sequence="1" id="ff2222cc3333_1">
+<contentMetadata type="file" objectId="ff222cc3333">
+    <resource sequence="1" id="ff222cc3333_1">
         <label>Side 1</label>
         <file preserve="yes" publish="yes" shelve="yes" id="image111.tif">
             <checksum type="md5">42616f9e6c1b7e7b7a71b4fa0c5ef794</checksum>
@@ -13,7 +13,7 @@
             <checksum type="md5">42616f9e6c1b7e7b7a71b4fa0c5ef7XX</checksum>
         </file>
     </resource>
-    <resource sequence="2" id="ff2222cc3333_2">
+    <resource sequence="2" id="ff222cc3333_2">
         <label>Side 2</label>
         <file id="file112.pdf">
           <checksum type="md5">42616f9e6c1b7e7b7a71b4fa0c5ef7XX</checksum>
@@ -25,19 +25,19 @@
             <checksum type="md5">42616f9e6c1b7e7b7a71b4fa0c5ef7XX</checksum>
         </file>
     </resource>
-    <resource sequence="3" id="ff2222cc3333_3">
+    <resource sequence="3" id="ff222cc3333_3">
         <label>Side 3</label>
         <file id="image113.tif">
             <checksum type="md5">42616f9e6c1b7e7b7a71b4fa0c5ef794</checksum>
         </file>
    </resource>
-    <resource type="page" sequence="4" id="ff2222cc3333_3">
+    <resource type="page" sequence="4" id="ff222cc3333_3">
         <label>Side 3</label>
         <file id="image114.tif">
             <checksum type="md5">42616f9e6c1b7e7b7a71b4fa0c5ef794</checksum>
         </file>
    </resource>
-    <resource type="image" sequence="5" id="ff2222cc3333_3">
+    <resource type="image" sequence="5" id="ff222cc3333_3">
         <label>Side 4</label>
         <file id="image115.tif">
             <checksum type="md5">42616f9e6c1b7e7b7a71b4fa0c5ef794</checksum>

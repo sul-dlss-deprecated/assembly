@@ -24,7 +24,7 @@ Dor::Config.configure do
     dm_file_name  'descMetadata.xml'
     next_workflow 'accessionWF'
     overwrite_jp2     false
-    overwrite_dpg_jp2 false    
+    overwrite_dpg_jp2 false
     robot_sleep_time 30
   end
 

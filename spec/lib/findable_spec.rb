@@ -47,8 +47,8 @@ describe Dor::Assembly::Findable do
   end
 
   it "should throw an exception when the object folder is found but the content metadata file is not found" do
-    exp_msg = "Content metadata file contentMetadata.xml not found for hh222cc3333 in any of the root directories: spec/test_input,spec/test_input2"
-    lambda {@item = Dor::Assembly::Item.new :druid =>  'druid:hh222cc3333'}.should raise_error RuntimeError, exp_msg
+    exp_msg = "Content metadata file contentMetadata.xml not found for hh222cc4444 in any of the root directories: spec/test_input,spec/test_input2"
+    lambda {@item = Dor::Assembly::Item.new :druid =>  'druid:hh222cc4444'}.should raise_error RuntimeError, exp_msg
   end  
   
 end
