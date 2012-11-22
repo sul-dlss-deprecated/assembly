@@ -28,7 +28,12 @@ Check dependencies for jp2 creation in the assembly-image gem.
 
 == Deployment
 
-See the Capfile.
+cap testing deploy  # for test
+cap production deploy # for production
+
+Enter the branch or tag you want deployed.
+
+See the Capfile for more info
 
 
 == General notes on the assembly robots
