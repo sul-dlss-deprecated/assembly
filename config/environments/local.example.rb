@@ -29,7 +29,7 @@ Dor::Config.configure do
   end
 
   dor do
-    service_root 'https://USERNAME:PASSWORD@lyberservices-dev.stanford.edu/dor'
+    service_root 'https://USERNAME:PASSWORD@lyberservices-dev.stanford.edu/dor/v1'
   end
    
 end
