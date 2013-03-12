@@ -47,7 +47,7 @@ GEM
       mime-types
       mini_exiftool
       nokogiri
-    assembly-utils (1.2.1)
+    assembly-utils (1.2.2)
       activeresource (>= 3.2.6)
       activesupport (>= 3.2.6)
       csv-mapper
