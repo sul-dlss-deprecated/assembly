@@ -82,6 +82,7 @@ set :robots, %w(
 set :workflow, 'assemblyWF'
 
 # after "deploy:symlink", "check_for_assembly_workspace"
+after "deploy:update", "deploy:cleanup" 
 
 desc "Check for /dor/assembly workspace"
 task :check_for_assembly_workspace, :roles => [:app, :web] do
