@@ -20,6 +20,7 @@ Check dependencies for jp2 creation in the assembly-image gem.
 1.5.1  Update service_root configuration to allow different service URLs (e.g. with or without v1) for test and production 
 1.5.2  Require latest versions of assembly-image and assembly-objectfile to prevent problems that could occur with spaces in image filenames
 1.5.3  Don't create another JP2 if one with the same DPG basename already exists; allow overwrite settings to be configured by environment
+1.6.0  Only run checksum-compute, exif-collect and jp-create on object types of ITEM.  APOs and Collections will not error out even without contentMetadata.
 
 == Running tests
 

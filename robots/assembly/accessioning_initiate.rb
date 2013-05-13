@@ -6,11 +6,15 @@ module Assembly
       super('assemblyWF', 'accessioning-initiate', opts)
     end
 
-    def process_item(work_item)
-      @ai = Dor::Assembly::Item.new :druid => work_item.druid
-      @ai.initiate_accessioning
+    def assembly_item(druid)
+      @ai ||= Dor::Assembly::Item.new :druid => druid
     end
-
+    
+    def process_item(work_item)
+      ai=assembly_item(work_item.druid)
+      ai.initiate_accessioning 
+    end
+    
   end
 
 end

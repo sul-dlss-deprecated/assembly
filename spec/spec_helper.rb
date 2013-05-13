@@ -32,3 +32,8 @@ def clone_test_input(destination)
   source = 'spec/test_input'
   system "rsync -rqOlt --delete #{source}/ #{destination}/"
 end
+
+def setup_work_item(druid)
+  @work_item=double("work_item")
+  @work_item.stub('druid').and_return(druid)
+end

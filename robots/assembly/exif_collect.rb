@@ -6,9 +6,16 @@ module Assembly
       super('assemblyWF', 'exif-collect', opts)
     end
 
+    def assembly_item(druid)
+      @ai ||= Dor::Assembly::Item.new :druid => druid
+    end
+    
     def process_item(work_item)
-      @ai = Dor::Assembly::Item.new :druid => work_item.druid
-      @ai.collect_exif_info
+      ai = assembly_item(work_item.druid)
+      if ai.is_item?
+        ai.load_content_metadata
+        ai.collect_exif_info
+      end
     end
 
   end
