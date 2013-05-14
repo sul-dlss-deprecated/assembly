@@ -20,7 +20,7 @@ module Dor::Assembly
     end
 
     def object
-      @fobj ||= Dor::Item.find(@druid)
+      @fobj ||= Dor::Item.find(@druid.druid)
     end
 
     def check_for_path
