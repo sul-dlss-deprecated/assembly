@@ -6,18 +6,21 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def initiate_accessioning
+      Assembly::AccessioningInitiate.logger.info("Inititate accessiong for #{@druid.id}")
       initialize_workspace
       initialize_apo_workflow
     end
     
     def initialize_workspace
       url         = "#{Dor::Config.dor.service_root}/objects/druid:#{@druid.id}/initialize_workspace"
-      RestClient.post url, :source => path_to_object
+      resp=RestClient.post url, :source => path_to_object
+      Assembly::AccessioningInitiate.logger.info("REST call to #{url} with response #{resp.code}")
     end
     
     def initialize_apo_workflow
       url         = "#{Dor::Config.dor.service_root}/objects/druid:#{@druid.id}/apo_workflows/accessionWF"
-      RestClient.post url, {}       
+      resp=RestClient.post url, {}       
+      Assembly::AccessioningInitiate.logger.info("REST call to #{url} with response #{resp.code}")
     end
     
   end
