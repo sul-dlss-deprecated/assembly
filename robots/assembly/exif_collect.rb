@@ -12,7 +12,9 @@ module Assembly
     
     def process_item(work_item)
       druid=work_item.druid
-      if assembly_item(druid).is_item?
+      if (Dor::Config.configure.assembly.items_only && !assembly_item(druid).is_item?) 
+         Assembly::ExifCollect.logger.info("Skipping exif-collect for #{druid} since it is not an item")
+      else
         assembly_item(druid).load_content_metadata
         assembly_item(druid).collect_exif_info
       end

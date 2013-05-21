@@ -4,6 +4,9 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def create_jp2s
+      
+      Assembly::Jp2Create.logger.info("Creating JP2s for #{druid}")
+      
       # For each supported image type that is part of specific resource types, generate a jp2 derivative
       # and modify content metadata XML to reflect the new file.
       jp2able_fnode_tuples=[]

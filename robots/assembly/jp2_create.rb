@@ -12,9 +12,11 @@ module Assembly
     
     def process_item(work_item)
       druid=work_item.druid
-      if assembly_item(druid).is_item?
+      if (Dor::Config.configure.assembly.items_only && !assembly_item(druid).is_item?) 
+        Assembly::Jp2Create.logger.info("Skipping JP2-create for #{druid} since it is not an item")
+      else
         assembly_item(druid).load_content_metadata
-        assembly_item(druid).create_jp2s
+        assembly_item(druid).create_jp2s      
       end
     end
 
