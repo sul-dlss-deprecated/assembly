@@ -5,7 +5,7 @@ module Dor::Assembly
 
     def collect_exif_info
 
-      Assembly::ExifCollect.logger.info("Collecting exif info for #{druid}")
+      Assembly::ExifCollect.logger.warn("Collecting exif info for #{druid}")
           
       fnode_tuples.each do |fn, obj|
 

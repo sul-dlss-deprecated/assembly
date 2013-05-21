@@ -5,7 +5,7 @@ module Dor::Assembly
 
     def compute_checksums
       
-      Assembly::ChecksumCompute.logger.info("Computing checksums for #{druid}")
+      Assembly::ChecksumCompute.logger.warn("Computing checksums for #{druid}")
       
       # Get the object we'll use to compute checksums.
 
