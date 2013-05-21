@@ -33,7 +33,7 @@ module Dor::Assembly
     end
     
     def is_item?
-      object_type == 'item'
+      object_type.strip == 'item'
     end
   
   end

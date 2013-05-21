@@ -4,6 +4,9 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def compute_checksums
+      
+      Assembly::ChecksumCompute.logger.info("Computing checksums for #{druid}")
+      
       # Get the object we'll use to compute checksums.
 
       # Process each <file> node in the content metadata.

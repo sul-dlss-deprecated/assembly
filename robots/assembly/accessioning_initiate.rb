@@ -11,8 +11,8 @@ module Assembly
     end
     
     def process_item(work_item)
-      ai=assembly_item(work_item.druid)
-      ai.initiate_accessioning 
+      druid=work_item.druid
+      assembly_item(druid).initiate_accessioning 
     end
     
   end
