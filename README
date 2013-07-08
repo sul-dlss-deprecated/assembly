@@ -23,6 +23,7 @@ Check dependencies for jp2 creation in the assembly-image gem.
 1.6.0  Only run checksum-compute, exif-collect and jp-create on object types of ITEM.  APOs and Collections will not error out even without contentMetadata.
 1.6.1  Add some additional logging and slight refactoring; make skipping of non-items configurable
 1.6.2  Bug fixes related to caching of Dor::Item in Assembly::Item class for multiple items being processed
+1.6.3  Add new config parameter to set tmp folder location for jp2-create and imagemagick
 
 == Running tests
 

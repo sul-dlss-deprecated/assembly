@@ -25,7 +25,8 @@ module Dor::Assembly
              message="WARNING: Did not create jp2 for #{img.path} -- file already exists" 
              Assembly::Jp2Create.logger.warn(message)            
            else
-             jp2       = img.create_jp2(:overwrite=>Dor::Config.assembly.overwrite_jp2)
+             tmp_folder = Dor::Config.assembly.tmp_folder || '/tmp'
+             jp2       = img.create_jp2(:overwrite=>Dor::Config.assembly.overwrite_jp2,:tmp_folder=>tmp_folder)
              file_name = fn['id'].gsub(File.basename(img.path),File.basename(jp2.path)) # generate new filename for jp2 file node in content metadata by replacing filename in base file node with new jp2 filename 
              add_jp2_file_node fn.parent, file_name
            end
