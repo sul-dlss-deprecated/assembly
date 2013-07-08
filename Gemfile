@@ -3,12 +3,15 @@ source 'http://sul-gems.stanford.edu'
 
 gem "lyber-core"
 gem "assembly-objectfile", ">= 1.4.9"
-gem "assembly-image", ">= 1.3.9"
+gem "assembly-image", ">= 1.4.0"
 gem "assembly-utils", ">= 1.2.1"
 gem "rest-client"
 gem "rake"
 gem "druid-tools"
+gem "mini_exiftool", "~> 1.6"
 gem "dor-services", ">= 3.8.0"
+gem "nokogiri", "~> 1.5.10" # 1.6.x requires ruby 1.9
+gem "activesupport", "~> 3" # 4.0 requires ruby 1.9.3
 
 group :test do
   gem "rcov"
