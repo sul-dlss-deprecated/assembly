@@ -12,6 +12,8 @@ gem "mini_exiftool", "~> 1.6"
 gem "dor-services", ">= 3.8.0"
 gem "nokogiri", "~> 1.5.10" # 1.6.x requires ruby 1.9
 gem "activesupport", "~> 3" # 4.0 requires ruby 1.9.3
+gem "actionpack", "~> 3" # 4.0 requires ruby 1.9.3
+gem "actionmailer", "~> 3" # 4.0 requires ruby 1.9.3
 
 group :test do
   gem "rcov"
