@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 source 'http://sul-gems.stanford.edu'
 
 gem "lyber-core"
-gem "assembly-objectfile", ">= 1.4.9"
-gem "assembly-image", ">= 1.4.0"
+gem "assembly-objectfile", ">= 1.5.6"
+gem "assembly-image", ">= 1.5.0"
 gem "assembly-utils", ">= 1.2.1"
 gem "rest-client"
 gem "rake"

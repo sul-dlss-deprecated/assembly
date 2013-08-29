@@ -40,13 +40,17 @@ GEM
     akami (1.2.0)
       gyoku (>= 0.4.0)
       nokogiri (>= 1.4.0)
-    assembly-image (1.4.0)
-      assembly-objectfile (>= 1.4.1)
+    assembly-image (1.5.0)
+      activesupport (~> 3)
+      assembly-objectfile (>= 1.5.6)
+      mini_exiftool (~> 1.6)
+      nokogiri (~> 1.5.10)
       uuidtools
-    assembly-objectfile (1.5.0)
+    assembly-objectfile (1.5.6)
+      activesupport (~> 3)
       mime-types
-      mini_exiftool
-      nokogiri
+      mini_exiftool (~> 1.6)
+      nokogiri (~> 1.5.6)
     assembly-utils (1.2.4)
       activeresource (>= 3.2.6)
       activesupport (>= 3.2.6)
@@ -279,8 +283,8 @@ DEPENDENCIES
   actionmailer (~> 3)
   actionpack (~> 3)
   activesupport (~> 3)
-  assembly-image (>= 1.4.0)
-  assembly-objectfile (>= 1.4.9)
+  assembly-image (>= 1.5.0)
+  assembly-objectfile (>= 1.5.6)
   assembly-utils (>= 1.2.1)
   capistrano
   dor-services (>= 3.8.0)
