@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Assembly::ExifCollect do
 
   before :each do

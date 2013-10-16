@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Assembly::ChecksumCompute do
 
   before :each do

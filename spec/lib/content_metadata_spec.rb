@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 class ContentMetadataItem
   include Dor::Assembly::ContentMetadata
   include Dor::Assembly::Findable  

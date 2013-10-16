@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 class ExifableItem
   include Dor::Assembly::Exifable
   include Dor::Assembly::ContentMetadata

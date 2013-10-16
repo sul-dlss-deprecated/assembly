@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 class ChecksumableItem
   include Dor::Assembly::Checksumable
   include Dor::Assembly::ContentMetadata

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 class Jp2ableItem
   include Dor::Assembly::Jp2able
   include Dor::Assembly::ContentMetadata

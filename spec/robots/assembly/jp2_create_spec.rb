@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Assembly::Jp2Create do
 
   before :each do

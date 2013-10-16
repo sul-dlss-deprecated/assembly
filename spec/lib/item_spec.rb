@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Dor::Assembly::Item do
 
   describe "Initialization" do

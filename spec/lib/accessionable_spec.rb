@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 class AccessionableItem
   include Dor::Assembly::Accessionable
   include Dor::Assembly::ContentMetadata
