@@ -2,21 +2,21 @@ source 'https://rubygems.org'
 source 'http://sul-gems.stanford.edu'
 
 gem "lyber-core"
-gem "assembly-objectfile", ">= 1.5.6"
-gem "assembly-image", ">= 1.5.0"
-gem "assembly-utils", ">= 1.2.1"
+gem "assembly-objectfile"
+gem "assembly-image"
+gem "assembly-utils"
 gem "rest-client"
 gem "rake"
 gem "druid-tools"
 gem "mini_exiftool", "~> 1.6"
-gem "dor-services", ">= 3.8.0"
-gem "nokogiri", "~> 1.5.10" # 1.6.x requires ruby 1.9
-gem "activesupport", "~> 3" # 4.0 requires ruby 1.9.3
-gem "actionpack", "~> 3" # 4.0 requires ruby 1.9.3
-gem "actionmailer", "~> 3" # 4.0 requires ruby 1.9.3
+gem "dor-services"
+gem "nokogiri"
+gem "activesupport"
+gem "actionpack"
+gem "actionmailer"
 
 group :test do
-  gem "rcov"
+  gem "rcov", :platform => :ruby_18
   gem "rspec", "~> 2.6"
   gem 'equivalent-xml'
 end
@@ -25,8 +25,10 @@ group :development do
   if File.exists?(mygems = File.join(ENV['HOME'],'.gemfile'))
     instance_eval(File.read(mygems))
   end
-  gem "ruby-debug"
-  gem "capistrano"
-	gem 'lyberteam-devel', '>= 1.0.1'
+  gem "ruby-debug", :platform => :ruby_18
+  gem "capistrano", "< 3"
 	gem 'lyberteam-capistrano-devel', '>= 1.1.0'
+  gem 'net-ssh-kerberos', :platform => :ruby_18
+  gem 'net-ssh-krb', :platform => :ruby_19
+  gem 'gssapi', :github => 'cbeer/gssapi', :platform => :ruby_19
 end
