@@ -25,7 +25,6 @@
 load 'deploy'
 require 'dlss/capistrano/robots'
 require 'rvm/capistrano'
-
 set :application,     'assembly'
 set :git_subdir,      "lyberteam/#{application}.git"
 set :rvm_ruby_string, "1.9.3-p448"
@@ -94,6 +93,14 @@ set :robots, %w(
   accessioning-initiate
 )
 set :workflow, 'assemblyWF'
+
+
+after "deploy", "rvm:trust_rvmrc"
+namespace :rvm do
+  task :trust_rvmrc do
+    run "rvm rvmrc trust #{release_path}"
+  end
+end
 
 # after "deploy:symlink", "check_for_assembly_workspace"
 after "deploy:update", "deploy:cleanup" 
