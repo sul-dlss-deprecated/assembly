@@ -22,12 +22,20 @@
 #   # Start robots.
 #   $ cap dev deploy:start
 
-load 'deploy' if respond_to?(:namespace) # cap2 differentiator
+load 'deploy'
 require 'dlss/capistrano/robots'
+require 'rvm/capistrano'
 
 set :application,     'assembly'
 set :git_subdir,      "lyberteam/#{application}.git"
-set :rvm_ruby_string, "1.8.7-p358@#{application}"
+set :rvm_ruby_string, "1.9.3-p448"
+
+set :shared_children, %w(
+  log
+  .rvmrc
+  config/certs
+  config/environments
+)
 
 set :branch do
   default_tag = `git tag`.split("\n").last
@@ -54,6 +62,12 @@ task :production do
   role :app, 'sul-lyberservices-prod.stanford.edu'
   set :deploy_env, 'production'
   set :rails_env,  'production' # TEMPORARY: see above
+end
+
+namespace :dlss do
+  task :set_shared_children do
+    # no-op
+  end
 end
 
 set :sunet_id,   Capistrano::CLI.ui.ask('SUNetID: ') { |q| q.default =  `whoami`.chomp }
