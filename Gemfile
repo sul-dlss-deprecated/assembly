@@ -18,12 +18,14 @@ gem "actionmailer"
 group :test do
   gem "rspec", "~> 2.6"
   gem 'equivalent-xml'
+  gem 'yard'
 end
 
 group :development do
   if File.exists?(mygems = File.join(ENV['HOME'],'.gemfile'))
     instance_eval(File.read(mygems))
   end
+  gem 'yard'
   gem "capistrano", "< 3"
   gem "rvm-capistrano"
 	gem 'lyberteam-capistrano-devel', '>= 1.1.0'
