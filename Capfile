@@ -37,9 +37,10 @@ set :shared_children, %w(
 )
 
 set :branch do
-  default_tag = `git tag`.split("\n").last
-
-  tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [#{default_tag}] "
+  last_tag = `git describe --abbrev=0 --tags`.strip
+  default_tag = 'master'
+  
+  tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [default: #{default_tag}, last tag: #{last_tag}] "
   tag = default_tag if tag.empty?
   tag
 end
