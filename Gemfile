@@ -3,7 +3,7 @@ source 'http://sul-gems.stanford.edu'
 
 gem "lyber-core"
 gem "assembly-objectfile"
-gem "assembly-image"
+gem "assembly-image", ">=1.6.1"
 gem "assembly-utils"
 gem "rest-client"
 gem "rake"
