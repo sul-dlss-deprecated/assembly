@@ -26,7 +26,7 @@ Check dependencies for jp2 creation in the assembly-image gem.
 1.6.3  Add new config parameter to set tmp folder location for jp2-create and imagemagick
 1.6.4  Update to latest version of assembly gems to allow jp2 creation to occur when color profiles are missing
 1.6.5  Update to latest version of assembly gems to avoid EXIF UTF-8 issues
-1.6.6  Update to latest version of assembly-image gem
+1.6.6-1.6.7  Update to latest version of assembly-image gem
 
 == Running tests
 
