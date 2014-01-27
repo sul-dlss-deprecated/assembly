@@ -65,6 +65,7 @@ GEM
       fastercsv
       lyber-core
       nokogiri
+    awesome_print (1.2.0)
     bagit (0.3.2)
       docopt (~> 0.5.0)
       validatable (~> 1.6)
@@ -284,6 +285,7 @@ DEPENDENCIES
   assembly-image (>= 1.6.3)
   assembly-objectfile
   assembly-utils
+  awesome_print
   capistrano (< 3)
   dor-services (>= 4.3.2)
   druid-tools
