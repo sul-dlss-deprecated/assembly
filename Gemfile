@@ -15,22 +15,21 @@ gem "activesupport"
 gem "actionpack"
 gem "actionmailer"
 
-group :test do
+group :test,:development do
   gem "rspec", "~> 2.6"
   gem 'equivalent-xml'
   gem 'yard'
 end
 
-group :development do
+group :development,:deployment do
   if File.exists?(mygems = File.join(ENV['HOME'],'.gemfile'))
     instance_eval(File.read(mygems))
   end
-  gem 'yard'
   gem "capistrano", "< 3"
   gem "rvm-capistrano"
 	gem 'lyberteam-capistrano-devel', '>= 1.1.0'
+  gem 'net-ssh-kerberos', :platform => :ruby_18
+  gem 'net-ssh-krb', :platform => :ruby_19
+  gem 'gssapi', :github => 'cbeer/gssapi', :platform => :ruby_19
 end
 
-gem 'net-ssh-kerberos', :platform => :ruby_18
-gem 'net-ssh-krb', :platform => :ruby_19
-gem 'gssapi', :github => 'cbeer/gssapi', :platform => :ruby_19
