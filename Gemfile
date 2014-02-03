@@ -1,9 +1,6 @@
 source 'https://rubygems.org'
 source 'http://sul-gems.stanford.edu'
 
-# Let's require at least ruby 1.9, but allow ruby 2.0 too
-ruby "1.9.3" if RUBY_VERSION < "1.9"
-
 gem "lyber-core"
 gem "assembly-objectfile"
 gem "assembly-image", ">=1.6.3"
