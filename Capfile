@@ -27,11 +27,10 @@ require 'dlss/capistrano/robots'
 require 'rvm/capistrano'
 set :application,     'assembly'
 set :git_subdir,      "lyberteam/#{application}.git"
-set :rvm_ruby_string, "1.9.3-p448"
+set :rvm_ruby_string, "1.9.3"
 
 set :shared_children, %w(
   log
-  .rvmrc
   config/certs
   config/environments
 )
@@ -88,17 +87,11 @@ set :robots, %w(
 set :workflow, 'assemblyWF'
 
 
-after "deploy", "rvm:trust_rvmrc"
-namespace :rvm do
-  task :trust_rvmrc do
-    run "rvm rvmrc trust #{release_path}"
-  end
-end
+# after "deploy", "rvm:trust_rvmrc"
+# namespace :rvm do
+#   task :trust_rvmrc do
+#     run "rvm rvmrc trust #{release_path}"
+#   end
+# end
 
-# after "deploy:symlink", "check_for_assembly_workspace"
 after "deploy:update", "deploy:cleanup" 
-
-desc "Check for /dor/assembly workspace"
-task :check_for_assembly_workspace, :roles => [:app, :web] do
-  Dir.mkdir '/dor/assembly' unless File.directory? '/dor/assembly'
-end

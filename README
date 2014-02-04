@@ -1,3 +1,7 @@
+== Assembly Robot Suite
+
+Uses ruby 1.9.3
+
 == Dependencies
 
 Check dependencies for jp2 creation in the assembly-image gem.
