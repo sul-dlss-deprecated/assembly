@@ -16,7 +16,7 @@ module Dor::Assembly
         case obj.object_type
 
           when :image # when the object file type is an image
-            fn.add_child image_data_xml(obj.exif)    
+            fn.add_child(image_data_xml(obj.exif)) if fn.css('imageData').size == 0    
         
           else #all other object file types will force resource type to not be an image
             set_node_type fn.parent,'file' # set the resource type to 'file' if it's not currently defined
