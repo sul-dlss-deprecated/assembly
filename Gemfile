@@ -27,7 +27,7 @@ group :development do
   gem "rvm-capistrano"
   gem 'awesome_print'
   gem 'gssapi', :github => 'cbeer/gssapi'
+  gem 'net-ssh-kerberos', :platform => :ruby_18
+  gem 'net-ssh-krb', :platform => :ruby_19
 end
 
-gem 'net-ssh-kerberos', :platform => :ruby_18
-gem 'net-ssh-krb', :platform => :ruby_19
