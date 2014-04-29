@@ -10,3 +10,4 @@ pkg/*
 pid
 tags
 tmp
+.ruby-*
