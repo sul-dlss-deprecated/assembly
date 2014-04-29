@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 source 'http://sul-gems.stanford.edu'
 
 gem "lyber-core", "~> 3.1"
+gem "addressable", "2.3.5"
 gem "assembly-objectfile"
 gem "assembly-image", ">=1.6.6"
 gem "assembly-utils"
@@ -18,6 +19,8 @@ group :test do
   gem "rspec", "~> 2.6"
   gem 'equivalent-xml'
   gem 'yard'
+  gem 'pry-rescue'
+  gem 'pry-debugger'
 end
 
 group :development do
