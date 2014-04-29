@@ -1,12 +1,12 @@
 module Dor::Assembly
   module Checksumable
-    
+
     include Dor::Assembly::ContentMetadata
 
     def compute_checksums
-      
-      Assembly::ChecksumCompute.logger.warn("Computing checksums for #{druid}")
-      
+
+      Robots::DorRepo::Assembly::ChecksumCompute.logger.warn("Computing checksums for #{druid}")
+
       # Get the object we'll use to compute checksums.
 
       # Process each <file> node in the content metadata.
@@ -20,7 +20,7 @@ module Dor::Assembly
         # find any existing checksum nodes
         md5_nodes=fn.xpath('checksum[@type="md5"]')
         sha1_nodes=fn.xpath('checksum[@type="sha1"]')
-      
+
         # if we have any existing checksum nodes, compare them all against the checksums we just computed, and raise an error if any fail
         if md5_nodes.size != 0
           raise %Q<Checksums disagree: type="md5", file="#{fn['id']}", computed="#{checksums[:md5]}, provided="#{md5_nodes.first}".> unless checksums_equal?(md5_nodes,checksums[:md5])
@@ -32,23 +32,23 @@ module Dor::Assembly
         else
           add_checksum_node fn, 'sha1',checksums[:sha1]
         end
-                
+
       end
 
       # Save the modified XML.
       persist_content_metadata
-      
+
     end
 
     # compare existing checksum nodes with computed checksum, return false if there are any mismatches, otherwise return true
     def checksums_equal?(existing_checksum_nodes,computed_checksum)
-      
+
       match=true
       existing_checksum_nodes.each {|checksum| match = false if checksum.content.downcase != computed_checksum.downcase}
       return match
-      
+
     end
-    
+
     def add_checksum_node(parent_node, checksum_type,checksum)
       cn         = new_node_in_cm 'checksum'
       cn.content = checksum
