@@ -2,5 +2,4 @@ server 'sul-lyberservices-prod.stanford.edu', user: 'lyberadmin', roles: %w{web 
 
 Capistrano::OneTimeKey.generate_one_time_key!
 
-set :branch, 'assembly-aalsum'
 set :deploy_environment, 'production'

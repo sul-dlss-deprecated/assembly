@@ -14,7 +14,6 @@ gem "dor-services", ">= 4.6"
 gem "nokogiri"
 gem "actionpack", "~> 3.2"
 
-
 group :test do
   gem "rspec", "~> 2.6"
   gem 'equivalent-xml'
@@ -27,7 +26,6 @@ group :development do
   gem "capistrano", '~> 3.0'
   gem 'capistrano-bundler', '~> 1.1'
   gem "lyberteam-capistrano-devel", '3.0.0.pre1'
-  gem 'rainbow', '< 2.0'
   gem 'awesome_print'
   gem 'net-ssh-kerberos', :platform => :ruby_18
   gem 'net-ssh-krb', :platform => :ruby_19
