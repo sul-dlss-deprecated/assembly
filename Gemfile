@@ -10,16 +10,20 @@ gem "rest-client"
 gem "rake"
 gem "druid-tools"
 gem "mini_exiftool", "~> 1.6"
-gem "dor-services", ">= 4.6"
+gem "dor-services", "~> 4.6"
 gem "nokogiri"
 gem "actionpack", "~> 3.2"
+gem 'resque'
+gem "pry-debugger", '0.2.2', :platform => :ruby_19
+gem 'pry-rescue'
+gem 'robot-controller'
+gem 'dor-workflow-service', '~> 1.6'
+gem 'slop'
 
 group :test do
   gem "rspec", "~> 2.6"
   gem 'equivalent-xml'
   gem 'yard'
-  gem 'pry-rescue'
-  gem 'pry-debugger'
 end
 
 group :development do
