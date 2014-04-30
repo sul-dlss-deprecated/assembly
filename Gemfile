@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 source 'http://sul-gems.stanford.edu'
 
 gem "lyber-core", "~> 3.1"
-gem "addressable", "2.3.5"
+gem "addressable", "2.3.5" # specs won't run with 2.3.6
 gem "assembly-objectfile"
 gem "assembly-image", ">=1.6.6"
 gem "assembly-utils"
@@ -24,9 +24,10 @@ group :test do
 end
 
 group :development do
-  gem 'lyberteam-capistrano-devel', '>= 1.1.0'
-  gem "capistrano", "< 3"
-  gem "rvm-capistrano"
+  gem "capistrano", '~> 3.0'
+  gem 'capistrano-bundler', '~> 1.1'
+  gem "lyberteam-capistrano-devel", '3.0.0.pre1'
+  gem 'rainbow', '< 2.0'
   gem 'awesome_print'
   gem 'net-ssh-kerberos', :platform => :ruby_18
   gem 'net-ssh-krb', :platform => :ruby_19
