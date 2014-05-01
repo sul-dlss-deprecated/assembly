@@ -19,9 +19,9 @@ gem 'pry-rescue'
 gem 'robot-controller'
 gem 'dor-workflow-service', '~> 1.6'
 gem 'slop'
+gem "rspec", "~> 2.6"
 
 group :test do
-  gem "rspec", "~> 2.6"
   gem 'equivalent-xml'
   gem 'yard'
 end
