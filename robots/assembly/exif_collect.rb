@@ -10,8 +10,8 @@ module Robots
           super('dor', 'assemblyWF', 'exif-collect', opts)
         end
 
-        def perform(work_item)
-          ai = Dor::Assembly::Item.new :druid => work_item.druid
+        def perform(druid)
+          ai = Dor::Assembly::Item.new :druid => druid
           if (Dor::Config.configure.assembly.items_only && !ai.is_item?)
              Robots::DorRepo::Assembly::ExifCollect.logger.warn("Skipping exif-collect for #{work_item.druid} since it is not an item")
           else
