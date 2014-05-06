@@ -9,8 +9,8 @@ module Robots
                     super('dor', 'assemblyWF', 'accessioning-initiate', opts)
                 end
 
-                def perform(work_item)
-                    ai = Dor::Assembly::Item.new :druid => work_item.druid
+                def perform(druid)
+                    ai = Dor::Assembly::Item.new :druid => druid
                     ai.initiate_accessioning
                 end
 
