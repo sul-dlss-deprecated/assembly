@@ -6,7 +6,7 @@ module Robots
                 include LyberCore::Robot
 
                 def initialize(opts = {})
-                    super('assemblyWF', 'accessioning-initiate', opts)
+                    super('dor', 'assemblyWF', 'accessioning-initiate', opts)
                 end
 
                 def perform(work_item)

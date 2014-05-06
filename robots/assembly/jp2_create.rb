@@ -6,7 +6,7 @@ module Robots
         include LyberCore::Robot
 
         def initialize(opts = {})
-          super('assemblyWF', 'jp2-create', opts)
+          super('dor', 'assemblyWF', 'jp2-create', opts)
         end
 
         def perform(druid)

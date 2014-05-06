@@ -6,7 +6,7 @@ module Robots
         include LyberCore::Robot
 
         def initialize(opts = {})
-          super('assemblyWF', 'checksum-compute', opts)
+          super('dor', 'assemblyWF', 'checksum-compute', opts)
         end
 
         def perform(druid)

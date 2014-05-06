@@ -7,7 +7,7 @@ module Robots
         include LyberCore::Robot
 
         def initialize(opts = {})
-          super('assemblyWF', 'exif-collect', opts)
+          super('dor', 'assemblyWF', 'exif-collect', opts)
         end
 
         def perform(work_item)
