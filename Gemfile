@@ -17,7 +17,6 @@ gem 'resque'
 gem "pry-debugger", '0.2.2', :platform => :ruby_19
 gem 'pry-rescue'
 gem 'robot-controller'
-gem 'dor-workflow-service', '~> 1.6'
 gem 'slop'
 gem "rspec", "~> 2.6"
 
