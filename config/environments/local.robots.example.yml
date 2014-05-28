@@ -15,7 +15,7 @@
 #          - an asterix (*).
 #    3. instances is a single integer.
 #
-#  Both lane and instances are optional. Lane defaults to *, and 
+#  Both lane and instances are optional. Lane defaults to 'default', and 
 #  instances defaults to 1.
 #
 #  When a robot is allocated to multiple lanes, it reads them in
@@ -44,11 +44,11 @@ sul-robots1-dev:
   - dor_assemblyWF_jp2-create:A:3
   - dor_assemblyWF_jp2-create:B:3
   - dor_assemblyWF_jp2-create:C:3
-  - dor_assemblyWF_jp2-create:default:3
+  - dor_assemblyWF_jp2-create::3
   - dor_assemblyWF_checksum-compute:A:3
   - dor_assemblyWF_checksum-compute:B:3
   - dor_assemblyWF_checksum-compute:C:3
-  - dor_assemblyWF_checksum-compute:default:3
+  - dor_assemblyWF_checksum-compute::3
   
 sul-robots2-dev:
   - dor_assemblyWF_jp2-create:*:3
