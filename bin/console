@@ -7,7 +7,13 @@ unless(ARGV.first.nil?)
 end
 
 require File.expand_path(File.dirname(__FILE__) + '/../config/boot')
-require 'irb'
+
+silence_warnings do
+  begin
+    require 'pry'
+    IRB = Pry
+  rescue LoadError
+  end
+end
 
 IRB.start
-

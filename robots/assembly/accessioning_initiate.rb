@@ -1,16 +1,21 @@
-module Assembly
-  
-  class AccessioningInitiate < LyberCore::Robots::Robot
+module Robots
+    module DorRepo
+        module Assembly
 
-    def initialize(opts = {})
-      super('assemblyWF', 'accessioning-initiate', opts)
+            class AccessioningInitiate
+                include LyberCore::Robot
+
+                def initialize(opts = {})
+                    super('dor', 'assemblyWF', 'accessioning-initiate', opts)
+                end
+
+                def perform(druid)
+                    ai = Dor::Assembly::Item.new :druid => druid
+                    ai.initiate_accessioning
+                end
+
+            end
+        end
     end
-    
-    def process_item(work_item)
-      ai = Dor::Assembly::Item.new :druid => work_item.druid
-      ai.initiate_accessioning 
-    end
-    
-  end
 
 end

@@ -24,31 +24,24 @@ rescue LoadError, NameError, NoMethodError
 end
 
 # Require general DLSS infrastructure.
-# Some of these requires must occur before we load the environment file. 
+# Some of these requires must occur before we load the environment file.
 require 'dor-services'
 require 'lyber_core'
 
-# Define modules, with autoload behavior, needed by the robot framework.
-def camel_case(s)
-  s.split(/_/).map { |part| part.capitalize }.join('')
-end
 
-workflow_dirs = Dir["#{ROBOT_ROOT}/robots/*"].select { |f| File.directory?(f) }
-workflow_dirs.each do |wfdir|
-  # For each workflow (eg, assembly), create a module (Assembly).
-  module_name = camel_case File.basename(wfdir)
-  mod         = Module.new
+require 'assembly/accessioning_initiate'
+require 'assembly/checksum_compute'
+require 'assembly/exif_collect'
+require 'assembly/jp2_create'
+require 'content_metadata'
+require 'accessionable'
+require 'assembly'
+require 'checksumable'
+require 'exifable'
+require 'findable'
+require 'item'
+require 'jp2able'
 
-  robot_files = Dir["#{wfdir}/*.rb"]
-  robot_files.each do |rf|
-    # For each robot step in that workflow (eg, checksum.rb), 
-    # set up an autoload: eg, Assembly.autoload(:Checksum, 'checksum').
-    robot_name = camel_case File.basename(rf, '.rb')
-    mod.autoload(robot_name.to_sym, rf)
-  end
-
-  Object.const_set(module_name.to_sym, mod)
-end
 
 # Require the project and environment.
 # These requires need to come after the autoload code; otherwise, you
@@ -59,3 +52,10 @@ require env_file
 require 'assembly'
 require 'assembly-image'
 require 'assembly-utils'
+
+require 'resque'
+REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"
+Resque.redis = REDIS_URL
+
+require 'active_support/core_ext' # camelcase
+require 'robot-controller'
