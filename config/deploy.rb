@@ -17,7 +17,7 @@ set :deploy_to, "/home/lyberadmin/#{fetch(:application)}"
 # set :format, :pretty
 
 # Default value for :log_level is :debug
-# set :log_level, :debug
+set :log_level, :info
 
 # Default value for :pty is false
 # set :pty, true
@@ -44,9 +44,9 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 10 do
       within release_path do
-        execute :bundle, :exec, :controller, :stop
-        execute :bundle, :exec, :controller, :quit
-        execute :bundle, :exec, :controller, :boot
+        test :bundle, :exec, :controller, :stop
+        test :bundle, :exec, :controller, :quit
+        test :bundle, :exec, :controller, :boot
       end
     end
   end
