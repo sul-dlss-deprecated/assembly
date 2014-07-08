@@ -1,6 +1,4 @@
 source 'https://rubygems.org'
-source 'http://sul-gems.stanford.edu'
-
 
 gem "lyber-core", "~> 3.2", ">= 3.2.2"
 gem "addressable", "2.3.5" # specs won't run with 2.3.6
@@ -16,6 +14,7 @@ gem "nokogiri"
 gem 'resque'
 gem "pry-debugger", '0.2.2', :platform => :ruby_19
 gem 'pry-rescue'
+gem 'pry-stack_explorer'
 gem 'robot-controller', '~> 0.3', '>= 0.3.5'
 gem 'slop'
 gem "rspec", "~> 2.6"
@@ -28,9 +27,8 @@ end
 group :development do
   gem "capistrano", '~> 3.0'
   gem 'capistrano-bundler', '~> 1.1'
-  gem "lyberteam-capistrano-devel", '3.0.0.pre1'
+  gem "lyberteam-capistrano-devel", '~> 3.0'
   gem 'awesome_print'
   gem 'net-ssh-kerberos', :platform => :ruby_18
   gem 'net-ssh-krb', :platform => :ruby_19
 end
-
