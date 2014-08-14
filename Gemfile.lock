@@ -137,7 +137,7 @@ GEM
       rainbow (~> 2.0)
     hooks (0.3.6)
       uber (~> 0.0.4)
-    i18n (0.6.9)
+    i18n (0.6.11)
     interception (0.5)
     iso-639 (0.2.4)
     json (1.8.1)
@@ -209,7 +209,7 @@ GEM
     pry-stack_explorer (0.4.9.1)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
-    rack (1.4.5)
+    rack (1.5.2)
     rack-protection (1.5.3)
       rack
     rainbow (2.0.0)
@@ -222,9 +222,9 @@ GEM
     rdf-xsd (1.0.2.1)
       nokogiri (>= 1.5.0)
       rdf (>= 0.3.4)
-    redis (3.0.7)
-    redis-namespace (1.4.1)
-      redis (~> 3.0.4)
+    redis (3.1.0)
+    redis-namespace (1.5.1)
+      redis (~> 3.0, >= 3.0.4)
     resque (1.25.2)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
@@ -233,7 +233,7 @@ GEM
       vegas (~> 0.1.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    robot-controller (0.3.7)
+    robot-controller (1.0.0)
       bluepill (~> 0.0.67)
       resque (~> 1.25.2)
     rsolr (1.0.10)
@@ -320,7 +320,7 @@ DEPENDENCIES
   rake
   resque
   rest-client
-  robot-controller (~> 0.3, >= 0.3.7)
+  robot-controller (~> 1.0)
   rspec (~> 2.6)
   slop
   yard
