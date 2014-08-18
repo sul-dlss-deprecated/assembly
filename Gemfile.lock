@@ -299,7 +299,7 @@ PLATFORMS
 
 DEPENDENCIES
   addressable (= 2.3.5)
-  assembly-image (>= 1.6.4)
+  assembly-image (>= 1.6.6)
   assembly-objectfile
   assembly-utils
   awesome_print
