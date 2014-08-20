@@ -20,7 +20,7 @@ Dor::Config.configure do
 
   assembly do
     root_dir      ['spec/test_input','spec/test_input2'] # directories to search for content that should be acted upon by the robots
-    cm_file_name  'contentMetadata.xml' # the name of the contentMetadata file
+    cm_file_name  'contentMetadata.xml'  # the name of the contentMetadata file
     dm_file_name  'descMetadata.xml' # the name of the descMetadata file
     next_workflow 'accessionWF' # name of the next workflow to start after assembly robots are done
     overwrite_jp2     false # indicates if the jp2-create robot should overwrite an existing jp2 of the same name as the new one being created
@@ -30,7 +30,7 @@ Dor::Config.configure do
   end
 
   dor do
-    service_root 'https://USERNAME:PASSWORD@lyberservices-dev.stanford.edu/dor'
+    service_root 'https://USERNAME:PASSWORD@lyberservices-dev.stanford.edu/dor/v1'
   end
 
  stacks do
@@ -44,3 +44,5 @@ Dor::Config.configure do
  end
    
 end
+
+REDIS_URL ||= "sul-lyberservices-dev.stanford.edu:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"
