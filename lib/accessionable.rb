@@ -1,3 +1,4 @@
+require 'content_metadata'
 require 'rest_client'
 
 module Dor::Assembly
