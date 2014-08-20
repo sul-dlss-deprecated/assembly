@@ -9,13 +9,13 @@
 #  where
 #    1. robot is a single robot identifier (fully-qualified with
 #       REPO_SUITE_ROBOT, e.g., "dor_accessionWF_technical-metadata").
-#    2. lane is
-#          - a single identifier ('A'), or
-#          - a list of identiers ('A,B,C'), or
+#    2. lane is 
+#          - a single identifier ('A'), or 
+#          - a list of identiers ('A,B,C'), or 
 #          - an asterix (*).
 #    3. instances is a single integer.
 #
-#  Both lane and instances are optional. Lane defaults to 'default', and
+#  Both lane and instances are optional. Lane defaults to 'default', and 
 #  instances defaults to 1.
 #
 #  When a robot is allocated to multiple lanes, it reads them in
@@ -30,7 +30,7 @@
 #
 #  Note that the syntax is YAML, so the lists must not contain spaces or
 #  needs to be quoted.
-#
+#  
 #    RIGHT
 #      - dor_accessionWF_technical-metadata:A:5
 #      - 'dor_accessionWF_technical-metadata : A : 5'
@@ -41,17 +41,16 @@
 #
 
 sul-robots1-dev:
-  - dor_assemblyWF_jp2-create:A:3
-  - dor_assemblyWF_jp2-create:B:3
-  - dor_assemblyWF_jp2-create:C:3
-  - dor_assemblyWF_jp2-create::3
-  - dor_assemblyWF_checksum-compute:A:3
-  - dor_assemblyWF_checksum-compute:B:3
-  - dor_assemblyWF_checksum-compute:C:3
-  - dor_assemblyWF_checksum-compute:default:3
+  - dor_assemblyWF_jp2-create
 
 sul-robots2-dev:
-  - dor_assemblyWF_jp2-create:*:3
-  - dor_assemblyWF_checksum-compute:*:3
-  - dor_assemblyWF_exif-collect:*:3
-  - dor_assemblyWF_accessioning-initiate:*:3
+  - dor_assemblyWF_jp2-create
+
+sul-robots3-dev:
+  - dor_assemblyWF_checksum-compute
+
+sul-robots4-dev:
+  - dor_assemblyWF_exif-collect
+
+sul-robots5-dev:
+  - dor_assemblyWF_accessioning-initiate
