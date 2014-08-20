@@ -1,6 +1,5 @@
 require 'rake'
 require 'rake/testtask'
-require 'resque/tasks'
 require 'robot-controller/tasks'
 
 Dir.glob('lib/tasks/*.rake').each { |r| import r }
@@ -17,6 +16,7 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
+desc 'Load complete environment into rake process'
 task :environment do
   require_relative 'config/boot'
 end

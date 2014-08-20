@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
-source 'http://sul-gems.stanford.edu'
 
-gem "lyber-core", "~> 3.2", ">= 3.2.2"
+gem 'lyber-core', '~> 3.2', '>=3.2.4'
 gem "addressable", "2.3.5" # specs won't run with 2.3.6
 gem "assembly-objectfile"
 gem "assembly-image", ">=1.6.6"
@@ -12,12 +11,11 @@ gem "druid-tools"
 gem "mini_exiftool", "~> 1.6"
 gem "dor-services", "~> 4.8"
 gem "nokogiri"
-gem 'resque'
-gem "pry-debugger", '0.2.2', :platform => :ruby_19
+gem "pry-debugger", '0.2.2', :platform => :ruby_19 # for bin/console
 gem 'pry-rescue'
 gem 'pry-stack_explorer'
-gem 'robot-controller', '~> 1.0'
-gem 'slop'
+gem 'robot-controller', '~> 1.0' # requires Resque
+gem 'slop', '~> 3.5.0'          # for bin/run_robot
 gem "rspec", "~> 2.6"
 
 group :test do
