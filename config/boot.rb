@@ -40,8 +40,17 @@ env_file = File.expand_path(File.dirname(__FILE__) + "/./environments/#{environm
 require env_file
 require 'assembly-image'
 
+# Load Resque configuration and controller
 require 'resque'
-REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"
-Resque.redis = REDIS_URL
-
+begin
+  if defined? REDIS_TIMEOUT
+    _server, _namespace = REDIS_URL.split('/', 2)
+    _host, _port, _db = _server.split(':')
+    _redis = Redis.new(:host => _host, :port => _port, :thread_safe => true, :db => _db, :timeout => REDIS_TIMEOUT.to_f)
+    Resque.redis = Redis::Namespace.new(_namespace, :redis => _redis)
+  else
+    Resque.redis = REDIS_URL
+  end
+end
+require 'active_support/core_ext' # camelcase
 require 'robot-controller'
