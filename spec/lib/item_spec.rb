@@ -24,21 +24,21 @@ describe Dor::Assembly::Item do
       @dru         = 'aa111bb2222'
       @item = Dor::Assembly::Item.new :druid => @dru
       @item.stub(:object_type).and_return('item')
-      @item.is_item?.should be_true
+      @item.is_item?.should be_truthy
     end
 
     it "should return is_item? as false for object type == set" do
       @dru         = 'aa111bb2222'
       @item = Dor::Assembly::Item.new :druid => @dru
       @item.stub(:object_type).and_return('set')
-      @item.is_item?.should be_false
+      @item.is_item?.should be_falsey
     end
 
     it "should return is_item? as false for object type not known" do
       @dru         = 'aa111bb2222'
       @item = Dor::Assembly::Item.new :druid => @dru
       @item.stub(:object_type).and_return('')
-      @item.is_item?.should be_false
+      @item.is_item?.should be_falsey
     end
     
   end

@@ -4,6 +4,7 @@ bootfile    = File.expand_path(File.dirname(__FILE__) + '/../config/boot')
 require bootfile
 require 'tempfile'  
 require 'equivalent-xml'  
+require 'equivalent-xml/rspec_matchers'
 
 tmp_output_dir = File.join(ROBOT_ROOT, 'tmp')
 FileUtils.mkdir_p tmp_output_dir

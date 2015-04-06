@@ -1,5 +1,4 @@
-# config valid only for Capistrano 3.1
-lock '3.2.1'
+lock '3.4.0'
 
 set :application, 'assembly'
 set :repo_url, 'https://github.com/sul-dlss/assembly'
@@ -34,7 +33,7 @@ set :log_level, :info
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-set :stages, %W(dev staging production)
+set :stages, %W(dev staging production lyberservices)
 
 set :linked_dirs, %w(log run config/environments config/certs)
 

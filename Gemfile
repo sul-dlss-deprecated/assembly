@@ -19,17 +19,16 @@ gem 'pry-stack_explorer'
 gem 'robot-controller', '~> 1.0'
 gem 'slop'
 gem "rspec", "~> 2.6"
+gem 'awesome_print'
 
 group :test do
   gem 'equivalent-xml'
   gem 'yard'
 end
 
-group :development do
+group :deployment do
   gem "capistrano", '~> 3.0'
-  gem 'capistrano-bundler', '~> 1.1'
-  gem "lyberteam-capistrano-devel", '~> 3.0'
-  gem 'awesome_print'
-  gem 'net-ssh-kerberos', :platform => :ruby_18
-  gem 'net-ssh-krb', :platform => :ruby_19
+  gem 'capistrano-bundler'
+  gem "lyberteam-capistrano-devel", '~> 3'
+  gem 'capistrano-rvm'
 end
