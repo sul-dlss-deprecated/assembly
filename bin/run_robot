@@ -41,5 +41,5 @@ else
 end
 
 druids.each do |druid|
-  bot.work druid
+  bot.perform druid
 end
