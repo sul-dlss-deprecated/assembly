@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-source 'http://sul-gems.stanford.edu'
+source 'https://sul-gems.stanford.edu'
 
 gem "lyber-core", "~> 3.2", ">= 3.2.2"
 gem "addressable", "2.3.5" # specs won't run with 2.3.6

@@ -1,6 +1,6 @@
 GEM
   remote: https://rubygems.org/
-  remote: http://sul-gems.stanford.edu/
+  remote: https://sul-gems.stanford.edu/
   specs:
     active-fedora (5.7.1)
       activeresource (>= 3.0.0)
