@@ -6,11 +6,11 @@ gem "addressable", "2.3.5" # specs won't run with 2.3.6
 gem "assembly-objectfile"
 gem "assembly-image", ">=1.6.6"
 gem "assembly-utils"
-gem "rest-client"
+gem "rest-client", '>=1.8'
 gem "rake"
 gem "druid-tools"
 gem "mini_exiftool", "~> 1.6"
-gem "dor-services", "~> 4.8"
+gem "dor-services", "~> 4.19"
 gem "nokogiri"
 gem 'resque'
 gem "pry-debugger", '0.2.2', :platform => :ruby_19
