@@ -1,6 +1,5 @@
 GEM
   remote: https://rubygems.org/
-  remote: https://sul-gems.stanford.edu/
   specs:
     active-fedora (5.7.1)
       activeresource (>= 3.0.0)
@@ -314,13 +313,13 @@ DEPENDENCIES
   assembly-objectfile
   assembly-utils
   awesome_print
-  capistrano (~> 3.0)
+  capistrano (~> 3)
   capistrano-bundler
   capistrano-rvm
   dor-services (~> 4.19)
   druid-tools
   equivalent-xml
-  lyber-core (~> 3.2, >= 3.2.2)
+  lyber-core (~> 3, >= 3.2.2)
   lyberteam-capistrano-devel (~> 3)
   mini_exiftool (~> 1.6)
   nokogiri

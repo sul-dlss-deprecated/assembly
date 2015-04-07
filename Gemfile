@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
-source 'https://sul-gems.stanford.edu'
 
-gem "lyber-core", "~> 3.2", ">= 3.2.2"
+gem "lyber-core", "~> 3", ">= 3.2.2"
 gem "addressable", "2.3.5" # specs won't run with 2.3.6
 gem "assembly-objectfile"
 gem "assembly-image", ">=1.6.6"
@@ -18,17 +17,20 @@ gem 'pry-rescue'
 gem 'pry-stack_explorer'
 gem 'robot-controller', '~> 1.0'
 gem 'slop'
-gem "rspec", "~> 2.6"
-gem 'awesome_print'
 
 group :test do
   gem 'equivalent-xml'
   gem 'yard'
+  gem "rspec", "~> 2.6"
 end
 
 group :deployment do
-  gem "capistrano", '~> 3.0'
+  gem "capistrano", '~> 3'
   gem 'capistrano-bundler'
   gem "lyberteam-capistrano-devel", '~> 3'
   gem 'capistrano-rvm'
+end
+
+group :development do
+  gem 'awesome_print'
 end
