@@ -15,7 +15,7 @@ gem 'resque'
 gem "pry-debugger", '0.2.2', :platform => :ruby_19
 gem 'pry-rescue'
 gem 'pry-stack_explorer'
-gem 'robot-controller', '~> 1.0'
+gem 'robot-controller', '~> 2.0'
 gem 'slop'
 
 group :test do
