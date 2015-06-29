@@ -1,12 +1,15 @@
-== Assembly Robot Suite
+[![Build Status](https://travis-ci.org/sul-dlss/assembly.svg?branch=master)](https://travis-ci.org/sul-dlss/assembly)
+[![Dependency Status](https://gemnasium.com/sul-dlss/assembly.svg)](https://gemnasium.com/sul-dlss/assembly)
+
+# Assembly Robot Suite
 
 Uses ruby 1.9.3
 
-== Dependencies
+## Dependencies
 
 Check dependencies for jp2 creation in the assembly-image gem.
 
-==Version History
+## Version History
 
 1.0.0  Released to production
 1.2.0  Changed expected checksum behavior from <provider_checksum> node to regular <checksum> node.  Eliminated checksum_compare robot.  Must be run in combination with pre-assembly 1.2.0.
@@ -33,12 +36,12 @@ Check dependencies for jp2 creation in the assembly-image gem.
 1.6.6-1.6.8  Update to latest version of assembly-image gem
 1.6.9  Exif collect robot will only add image data node if it is not there
 
-== Running tests
+## Running tests
 
 	Copy config/environments/local.example.rb to config/environments/development.rb
 	bundle exec rspec spec
 
-== Deployment
+## Deployment
 
 cap testing deploy  # for test
 cap production deploy # for production
@@ -48,7 +51,7 @@ Enter the branch or tag you want deployed.
 See the Capfile for more info
 
 
-== General notes on the assembly robots
+## General notes on the assembly robots
 
 The assembly robots do not interact with DOR, except for the workflow changes
 provided by robot framework. Instead, all of the work occurs directly in the
@@ -58,7 +61,7 @@ Typically, a robot does some work and then adds more information to the
 contentMetadata.xml file sitting in the druid tree directory.
 
 
-== Robots
+## Robots
 
     - Create JP2.
 
