@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/sul-dlss/assembly.svg?branch=master)](https://travis-ci.org/sul-dlss/assembly)
+For Build Status, see Jenkins
+
 [![Dependency Status](https://gemnasium.com/sul-dlss/assembly.svg)](https://gemnasium.com/sul-dlss/assembly)
 
 # Assembly Robot Suite
