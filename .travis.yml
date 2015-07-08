@@ -7,6 +7,10 @@ rvm:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - ROBOT_ENVIRONMENT=local
 
-sudo: false
 language: ruby
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get -qq install imagemagick libimage-exiftool-perl 

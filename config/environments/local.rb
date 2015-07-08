@@ -3,16 +3,16 @@ CERT_DIR = File.join(File.dirname(__FILE__), "..", "certs")
 Dor::Config.configure do
 
   fedora do
-    url       'https://USERNAME:PASSWORD@dor-dev.stanford.edu/fedora'
+    url       'https://localhost/fedora'
   end
 
   ssl do
-    cert_file File.join(CERT_DIR, "dlss-dev-test.crt")
-    key_file  File.join(CERT_DIR, "dlss-dev-test.key")
+    cert_file File.join(CERT_DIR, "local.crt")
+    key_file  File.join(CERT_DIR, "local.key")
     key_pass  ''
   end
   
-  workflow.url 'https://lyberservices-dev.stanford.edu/workflow/'
+  workflow.url 'https://localhost/workflow/'
 
   robots do 
     workspace '/tmp'
@@ -30,19 +30,19 @@ Dor::Config.configure do
   end
 
   dor do
-    service_root 'https://USERNAME:PASSWORD@lyberservices-dev.stanford.edu/dor/v1'
+    service_root 'https://localhost/dor/v1'
   end
 
  stacks do
     document_cache_storage_root '/purl/document_cache'
-    document_cache_host 'sul-purl-prod.stanford.edu'
-    document_cache_user 'lyberadmin'
+    document_cache_host 'localhost'
+    document_cache_user 'user'
     local_workspace_root '/dor/workspace'
     storage_root '/stacks'
-    host 'stacks.stanford.edu'
-    user 'lyberadmin'
+    host 'localhost'
+    user 'user'
  end
    
 end
 
-REDIS_URL ||= "sul-lyberservices-dev.stanford.edu:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"
+REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"
