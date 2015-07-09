@@ -1,0 +1,7 @@
+#
+# robots.yml - Provides the complete list of all robots in this suite
+#
+- dor_assemblyWF_accessioning-initiate
+- dor_assemblyWF_checksum-compute
+- dor_assemblyWF_exif-collect
+- dor_assemblyWF_jp2-create
