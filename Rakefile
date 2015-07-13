@@ -10,10 +10,11 @@ task :app_version do
   puts File.read(File.expand_path('../VERSION', __FILE__)).match('[\w\.]+')[0]
 end
 
-require 'rspec/core/rake_task'
-
-desc "Run specs"
-RSpec::Core::RakeTask.new(:spec)
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+rescue LoadError
+end
 
 task :default => :spec
 
