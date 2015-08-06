@@ -9,7 +9,7 @@ gem "rest-client", '>=1.8'
 gem "rake"
 gem "druid-tools"
 gem "mini_exiftool", "~> 1.6"
-gem "dor-services", "~> 4.19"
+gem "dor-services", "~> 4.21.4"
 gem "nokogiri"
 gem 'resque'
 gem "pry-debugger", '0.2.2', :platform => :ruby_19
