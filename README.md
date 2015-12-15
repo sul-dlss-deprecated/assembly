@@ -1,14 +1,12 @@
-For Build Status, see Jenkins
-
-[![Dependency Status](https://gemnasium.com/sul-dlss/assembly.svg)](https://gemnasium.com/sul-dlss/assembly)
+[<img src="https://travis-ci.org/sul-dlss/assembly.png"/>](http://travis-ci.org/sul-dlss/assembly) | [![Dependency Status](https://gemnasium.com/sul-dlss/assembly.svg)](https://gemnasium.com/sul-dlss/assembly) | [![Coverage Status](https://coveralls.io/repos/sul-dlss/assembly/badge.svg?branch=master&service=github)](https://coveralls.io/github/sul-dlss/assembly?branch=master)
 
 # Assembly Robot Suite
 
-Uses ruby 1.9.3
+Uses ruby `1.9.3` in production, but testing against `2.2.x`.  Legacy CI in Jenkins.
 
 ## Dependencies
 
-Check dependencies for jp2 creation in the `assembly-image` gem.
+Refer to dependencies for jp2 creation in the `assembly-image` gem.
 
 ## Version History
 
@@ -39,13 +37,17 @@ Check dependencies for jp2 creation in the `assembly-image` gem.
 
 ## Running tests
 
-    Copy config/environments/local.example.rb to config/environments/development.rb
-    bundle exec rspec spec
+```bash
+cp config/environments/local.example.rb config/environments/development.rb
+bundle exec rspec spec
+```
 
 ## Deployment
 
-    cap testing deploy  # for test
-    cap production deploy # for production
+```bash
+cap testing deploy    # for test
+cap production deploy # for production
+```
 
 Enter the branch or tag you want deployed.
 
@@ -66,3 +68,4 @@ Typically, a robot does some work and then adds more information to the
 - Compute and compare checksums.
 - Compute image attributes.
 - Initiate the common-accessioning workflow.
+
