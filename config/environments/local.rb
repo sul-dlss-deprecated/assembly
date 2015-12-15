@@ -11,10 +11,10 @@ Dor::Config.configure do
     key_file  File.join(CERT_DIR, "local.key")
     key_pass  ''
   end
-  
+
   workflow.url 'https://localhost/workflow/'
 
-  robots do 
+  robots do
     workspace '/tmp'
   end
 
@@ -42,7 +42,7 @@ Dor::Config.configure do
     host 'localhost'
     user 'user'
  end
-   
+
 end
 
 REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"

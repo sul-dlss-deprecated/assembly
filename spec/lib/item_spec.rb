@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Dor::Assembly::Item do
 
   describe "Initialization" do
-    
+
     it "should know its druid, whether passed a string druid or a Druid object" do
       @dru         = 'aa111bb2222'
       @druid       = DruidTools::Druid.new @dru
@@ -19,7 +19,7 @@ describe Dor::Assembly::Item do
       exp_msg = "Path to object xx111yy2222 not found in any of the root directories: spec/test_input,spec/test_input2"
       lambda {@item = Dor::Assembly::Item.new :druid => @druid}.should raise_error RuntimeError, exp_msg
     end
-    
+
     it "should return is_item? as true for object type == item" do
       @dru         = 'aa111bb2222'
       @item = Dor::Assembly::Item.new :druid => @dru
@@ -40,7 +40,7 @@ describe Dor::Assembly::Item do
       @item.stub(:object_type).and_return('')
       @item.is_item?.should be_falsey
     end
-    
+
   end
 
 end

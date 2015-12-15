@@ -7,7 +7,7 @@ end
 describe Dor::Assembly::Findable do
 
   before :each do
-    @cm_file_name=Dor::Config.assembly.cm_file_name  
+    @cm_file_name=Dor::Config.assembly.cm_file_name
     @root_dir1=Dor::Config.assembly.root_dir[0]
     @root_dir2=Dor::Config.assembly.root_dir[1]
   end
@@ -23,7 +23,7 @@ describe Dor::Assembly::Findable do
     @item.druid = DruidTools::Druid.new 'druid:xx111yy2222'
     @item.old_druid_tree_path(@root_dir2).should == "#{@root_dir2}/xx/111/yy/2222"
   end
-  
+
   it "should find the path to the content metadata file in the first possible root directory" do
     @item = Dor::Assembly::Item.new :druid => 'druid:aa111bb2222'
     exp_cm_file = "#{@root_dir1}/aa/111/bb/2222/#{@cm_file_name}"
@@ -52,6 +52,6 @@ describe Dor::Assembly::Findable do
     exp_msg = "Content metadata file contentMetadata.xml not found for hh222cc4444 in any of the root directories: spec/test_input,spec/test_input2"
     @item = Dor::Assembly::Item.new :druid =>  'druid:hh222cc4444'
     lambda {@item.load_content_metadata}.should raise_error RuntimeError, exp_msg
-  end  
-  
+  end
+
 end

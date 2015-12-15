@@ -11,10 +11,10 @@ Dor::Config.configure do
     key_file  File.join(CERT_DIR, "dlss-dev-test.key")
     key_pass  ''
   end
-  
+
   workflow.url 'https://lyberservices-dev.stanford.edu/workflow/'
 
-  robots do 
+  robots do
     workspace '/tmp'
   end
 
@@ -42,7 +42,7 @@ Dor::Config.configure do
     host 'stacks.stanford.edu'
     user 'lyberadmin'
  end
-   
+
 end
 
 REDIS_URL ||= "sul-lyberservices-dev.stanford.edu:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"

@@ -444,26 +444,6 @@ Style/TrailingComma:
   Exclude:
     - 'spec/lib/checksumable_spec.rb'
 
-# Offense count: 159
-# Cop supports --auto-correct.
-Style/TrailingWhitespace:
-  Exclude:
-    - 'config/environments/local.example.rb'
-    - 'config/environments/local.rb'
-    - 'lib/assembly.rb'
-    - 'lib/content_metadata.rb'
-    - 'lib/findable.rb'
-    - 'lib/item.rb'
-    - 'old-cap/Capfile'
-    - 'spec/lib/accessionable_spec.rb'
-    - 'spec/lib/checksumable_spec.rb'
-    - 'spec/lib/content_metadata_spec.rb'
-    - 'spec/lib/exifable_spec.rb'
-    - 'spec/lib/findable_spec.rb'
-    - 'spec/lib/item_spec.rb'
-    - 'spec/lib/jp2able_spec.rb'
-    - 'spec/spec_helper.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/UnneededCapitalW:

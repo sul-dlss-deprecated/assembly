@@ -7,7 +7,7 @@ class ExifableItem
 end
 
 describe Dor::Assembly::Exifable do
-  
+
   before :each do
     basic_setup 'aa111bb2222'
   end
@@ -23,7 +23,7 @@ describe Dor::Assembly::Exifable do
   end
 
   def run_persist_xml_test
-  
+
     # Content metadata before.
     @item.load_content_metadata
     bef = noko_doc @item.cm.to_xml
@@ -51,7 +51,7 @@ describe Dor::Assembly::Exifable do
       res_node.attributes['type'].value.should == 'image'
     end
 
-    # check that each file node now has size, mimetype 
+    # check that each file node now has size, mimetype
     aft_file_nodes=aft.xpath('//file')
     aft_file_nodes.size.should == 3
     aft_file_nodes[0].attributes['size'].value.should == '63468'
@@ -64,12 +64,12 @@ describe Dor::Assembly::Exifable do
     aft_res_nodes.each do |res_node|
       res_node.attributes['type'].value.should == 'image'
     end
-          
+
     # check for imageData nodes being present for each file node
     bef.xpath('//file/imageData').size.should == 0
     aft.xpath('//file/imageData').size.should == 3
   end
-  
+
   describe '#ExifableItem' do
     it 'should be able to initialize our testing object' do
       @item.should be_a_kind_of ExifableItem
@@ -77,14 +77,14 @@ describe Dor::Assembly::Exifable do
   end
 
   describe 'Simple XML methods' do
-  
+
     it '#set_node_type_as_image should add type="image" attributes correctly' do
       @item.cm = noko_doc @dummy_xml
       %w(contentMetadata resource).each do |tag|
           node = @item.cm.xpath("//#{tag}").first
           @item.set_node_type node,'image'
       end
-      exp = Nokogiri::XML( '<contentMetadata type="image"><resource type="image">' + 
+      exp = Nokogiri::XML( '<contentMetadata type="image"><resource type="image">' +
                            '</resource></contentMetadata>')
       @item.cm.should be_equivalent_to exp
     end
@@ -97,7 +97,7 @@ describe Dor::Assembly::Exifable do
   end
 
   describe '#collect_exif_info' do
-  
+
     before(:each) do
       clone_test_input TMP_ROOT_DIR
     end
@@ -117,9 +117,9 @@ describe Dor::Assembly::Exifable do
 
       # Content metadata before.
       @item.load_content_metadata
-      
+
       bef = noko_doc @item.cm.to_xml
-      
+
       # Content metadata after (as read from the modified file).
       @item.collect_exif_info
       aft = Nokogiri::XML File.read(@item.cm_file_name)
@@ -132,7 +132,7 @@ describe Dor::Assembly::Exifable do
       bef_res_nodes=bef.xpath('//resource')
       bef_res_nodes.size.should == 1
       bef_res_nodes[0].attributes['type'].nil?.should == true  # first resource type should not exist
-            
+
       # check that each file node starts with size, mimetype attributes
       bef_file_nodes=bef.xpath('//file')
       bef_file_nodes.size.should == 2
@@ -141,7 +141,7 @@ describe Dor::Assembly::Exifable do
         file_node.attributes['mimetype'].nil?.should == false
       end
 
-      # check that the file nodes still have bogus size, mimetype 
+      # check that the file nodes still have bogus size, mimetype
       aft_file_nodes=aft.xpath('//file')
       aft_file_nodes.size.should == 2
       aft_file_nodes[0].attributes['size'].value.should == '100'
@@ -150,26 +150,26 @@ describe Dor::Assembly::Exifable do
       # all other file nodes will have their publish/preserve/shelve attributes set
       aft_file_nodes[1].attributes['size'].value.should == '500'
       aft_file_nodes[1].attributes['mimetype'].value.should == 'crappy/again'
-            
+
       # check that each resource node end with a type="file" (i.e. was not changed)
       aft_res_nodes=aft.xpath('//resource')
       aft_res_nodes.size.should == 1
       aft_res_nodes[0].attributes['type'].value.should == 'file' # first resource type should be set to file (default when not all files are images)
-      
+
       # check for imageData nodes being present for each file node that is an image
       bef.xpath('//file/imageData').size.should == 0
       aft.xpath('//file/imageData').size.should == 1
 
     end
-    
+
     it 'should not overwrite existing contentmetadata type and resource types if they exist in incoming content metadata XML file' do
       basic_setup 'ff222cc3333', TMP_ROOT_DIR
 
       # Content metadata before.
       @item.load_content_metadata
-      
+
       bef = noko_doc @item.cm.to_xml
-      
+
       # Content metadata after (as read from the modified file).
       @item.collect_exif_info
       aft = Nokogiri::XML File.read(@item.cm_file_name)
@@ -186,7 +186,7 @@ describe Dor::Assembly::Exifable do
       bef_res_nodes[2].attributes['type'].nil?.should == true # third resource type should not exist
       bef_res_nodes[3].attributes['type'].value.should == 'page' # fourth resource type should be set to page
       bef_res_nodes[4].attributes['type'].value.should == 'image' # last resource type should be set to image
-            
+
       # check that each file node does not start with size, mimetype attributes
       bef_file_nodes=bef.xpath('//file')
       bef_file_nodes.size.should == 10
@@ -200,7 +200,7 @@ describe Dor::Assembly::Exifable do
         file_node.attributes['shelve'].nil?.should == expected
       end
 
-      # check that the file nodes now have the correct size, mimetype 
+      # check that the file nodes now have the correct size, mimetype
       aft_file_nodes=aft.xpath('//file')
       aft_file_nodes.size.should == 10
       aft_file_nodes[0].attributes['size'].value.should == '63468'
@@ -263,8 +263,8 @@ describe Dor::Assembly::Exifable do
       aft_file_nodes[9].attributes['mimetype'].value.should == 'image/tiff'
       aft_file_nodes[9].attributes['publish'].value.should == 'no'
       aft_file_nodes[9].attributes['preserve'].value.should == 'yes'
-      aft_file_nodes[9].attributes['shelve'].value.should == 'no'            
-            
+      aft_file_nodes[9].attributes['shelve'].value.should == 'no'
+
       # check that each resource node end with a type="file" (i.e. was not changed)
       aft_res_nodes=aft.xpath('//resource')
       aft_res_nodes.size.should == 5
@@ -273,7 +273,7 @@ describe Dor::Assembly::Exifable do
       aft_res_nodes[2].attributes['type'].nil?.should == true # third resource type should be nil still
       aft_res_nodes[3].attributes['type'].value.should == 'page' # fourth resource type should be set to page (which it started out as)
       aft_res_nodes[4].attributes['type'].value.should == 'image' # fifth resource type should be set to image (which it started out as)
-      
+
       # check for imageData nodes being present for each file node that is an image
       bef.xpath('//file/imageData').size.should == 0
       aft.xpath('//file/imageData').size.should == 6

@@ -1,6 +1,6 @@
 module Dor::Assembly
   module Findable
-        
+
     # actual path to object, found by iterating through all possible root paths and looking first for the new druid tree path, then for the old druid path
     #  return nil if not found anywhere
     def path_to_object
@@ -9,7 +9,7 @@ module Dor::Assembly
         new_path=druid_tree_path(root_dir)
         old_path=old_druid_tree_path(root_dir)
         if File.directory? new_path
-          path = new_path 
+          path = new_path
           break
         elsif File.directory? old_path
           path = old_path
@@ -18,25 +18,25 @@ module Dor::Assembly
       end
       return path
     end
-    
+
     # new style path, e.g. aa/111/bb/2222/aa111bb2222
     def druid_tree_path(root_dir)
-      DruidTools::Druid.new(@druid.id,root_dir).path() 
+      DruidTools::Druid.new(@druid.id,root_dir).path()
     end
 
-    # old style path, e.g. aa/111/bb/2222    
+    # old style path, e.g. aa/111/bb/2222
     def old_druid_tree_path(root_dir)
       Assembly::Utils.get_staging_path(@druid.id,root_dir)
     end
-    
-    # returns the location of a content file, which can be in the old location if not found in the new location, e.g.  aa/111/bb/2222/aa111bb2222/content or  aa/111/bb/2222/    
+
+    # returns the location of a content file, which can be in the old location if not found in the new location, e.g.  aa/111/bb/2222/aa111bb2222/content or  aa/111/bb/2222/
     def content_file(filename)
-      File.exists?(path_to_content_file(filename)) ? path_to_content_file(filename) : old_path_to_file(filename)  
+      File.exists?(path_to_content_file(filename)) ? path_to_content_file(filename) : old_path_to_file(filename)
     end
-    
-    # returns the location of a metadata file, which can be in the old location if not found in the new location, e.g.  aa/111/bb/2222/aa111bb2222/metadata or  aa/111/bb/2222/ 
+
+    # returns the location of a metadata file, which can be in the old location if not found in the new location, e.g.  aa/111/bb/2222/aa111bb2222/metadata or  aa/111/bb/2222/
     def metadata_file(filename)
-      File.exists?(path_to_metadata_file(filename)) ? path_to_metadata_file(filename) : old_path_to_file(filename)  
+      File.exists?(path_to_metadata_file(filename)) ? path_to_metadata_file(filename) : old_path_to_file(filename)
     end
 
     # new style path to a content file, e.g.  aa/111/bb/2222/aa111bb2222/content
@@ -53,6 +53,6 @@ module Dor::Assembly
     def old_path_to_file(file_name)
       File.join path_to_object, file_name
     end
-    
+
   end
 end

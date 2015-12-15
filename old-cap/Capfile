@@ -5,8 +5,8 @@
 #    $ cap dev deploy:setup
 #
 # 2) Manually copy files to $application/shared.
-# 
-#       - environment-specific configuration to config/environments.  
+#
+#       - environment-specific configuration to config/environments.
 #       - certs to config/certs.
 #
 # 3) $ cap dev deploy:update
@@ -38,7 +38,7 @@ set :shared_children, %w(
 set :branch do
   last_tag = `git describe --abbrev=0 --tags`.strip
   default_tag = 'master'
-  
+
   tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [default: #{default_tag}, last tag: #{last_tag}] "
   tag = default_tag if tag.empty?
   tag
@@ -71,7 +71,7 @@ end
 
 set :sunet_id,   Capistrano::CLI.ui.ask('SUNetID: ') { |q| q.default =  `whoami`.chomp }
 set :rvm_type,   :system
-set :user,       'lyberadmin' 
+set :user,       'lyberadmin'
 set :repository, "ssh://#{sunet_id}@corn.stanford.edu/afs/ir/dev/dlss/git/#{git_subdir}"
 set :deploy_to,  "/home/#{user}/#{application}"
 set :deploy_via, :copy
@@ -79,9 +79,9 @@ set :shared_config_certs_dir, true
 
 # Robots run as background daemons. They are restarted at deploy time.
 set :robots, %w(
-  jp2-create 
-  checksum-compute 
-  exif-collect 
+  jp2-create
+  checksum-compute
+  exif-collect
   accessioning-initiate
 )
 set :workflow, 'assemblyWF'
@@ -94,4 +94,4 @@ set :workflow, 'assemblyWF'
 #   end
 # end
 
-after "deploy:update", "deploy:cleanup" 
+after "deploy:update", "deploy:cleanup"

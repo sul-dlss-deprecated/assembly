@@ -26,16 +26,16 @@ module Dor::Assembly
     def check_for_path
       raise "Path to object #{@druid.id} not found in any of the root directories: #{@root_dir.join(',')}" if path_to_object == nil
     end
-    
+
     def object_type
       obj_type=object.identityMetadata.objectType
       return (obj_type.nil? ? 'unknown' : obj_type.first)
     end
-    
+
     def is_item?
       object_type.strip == 'item'
     end
-  
+
   end
-  
+
 end

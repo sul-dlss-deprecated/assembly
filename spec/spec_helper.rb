@@ -2,8 +2,8 @@ environment = (ENV['ROBOT_ENVIRONMENT'] ||= 'development')
 bootfile    = File.expand_path(File.dirname(__FILE__) + '/../config/boot')
 
 require bootfile
-require 'tempfile'  
-require 'equivalent-xml'  
+require 'tempfile'
+require 'equivalent-xml'
 require 'equivalent-xml/rspec_matchers'
 
 tmp_output_dir = File.join(ROBOT_ROOT, 'tmp')
@@ -14,7 +14,7 @@ TMP_ROOT_DIR = "tmp/test_input"
 # override for testing
 Dor::Config.assembly.root_dir=['spec/test_input','spec/test_input2']
 
-include Assembly  
+include Assembly
 def noko_doc(x)
   # Returns Nokogiri XML Document, with config to ignore blanks.
   Nokogiri.XML(x) { |conf| conf.default_xml.noblanks }
@@ -47,7 +47,7 @@ def setup_assembly_item(druid,obj_type)
     @assembly_item.stub(:is_item?).and_return(true)
   else
     @assembly_item.stub(:object_type).and_return(obj_type.to_s)
-    @assembly_item.stub(:is_item?).and_return(false)    
+    @assembly_item.stub(:is_item?).and_return(false)
   end
   Dor::Assembly::Item.stub(:new).and_return(@assembly_item)
 end

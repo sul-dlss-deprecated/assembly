@@ -10,11 +10,11 @@ module Dor::Assembly
       :druid,
       :root_dir
     )
-   
+
     def cm_file_name
       @cm_file_name ||= metadata_file(Dor::Config.assembly.cm_file_name)
     end
-    
+
     def load_content_metadata
       # Loads content metadata XML into a Nokogiri document.
       raise "Content metadata file #{Dor::Config.assembly.cm_file_name} not found for #{druid.id} in any of the root directories: #{@root_dir.join(',')}" unless File.exists? cm_file_name
