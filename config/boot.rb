@@ -31,28 +31,17 @@ require 'assembly/accessioning_initiate'
 require 'assembly/checksum_compute'
 require 'assembly/exif_collect'
 require 'assembly/jp2_create'
-require 'content_metadata'
-require 'accessionable'
 require 'assembly'
-require 'checksumable'
-require 'exifable'
-require 'findable'
-require 'item'
-require 'jp2able'
-
 
 # Require the project and environment.
 # These requires need to come after the autoload code; otherwise, you
 # get a warning about an already-initialized constant.
 env_file = File.expand_path(File.dirname(__FILE__) + "/./environments/#{environment}")
 require env_file
-
-require 'assembly'
 require 'assembly-image'
 
 require 'resque'
 REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"
 Resque.redis = REDIS_URL
 
-require 'active_support/core_ext' # camelcase
 require 'robot-controller'
