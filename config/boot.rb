@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'active_support/core_ext'
 
 # Environment and robot root directory.
 environment = ENV['ROBOT_ENVIRONMENT'] ||= 'development'
@@ -28,7 +27,6 @@ end
 require 'dor-services'
 require 'lyber_core'
 
-
 require 'assembly/accessioning_initiate'
 require 'assembly/checksum_compute'
 require 'assembly/exif_collect'
@@ -51,7 +49,6 @@ require env_file
 
 require 'assembly'
 require 'assembly-image'
-require 'assembly-utils'
 
 require 'resque'
 REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"

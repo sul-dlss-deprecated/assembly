@@ -11,3 +11,4 @@ pid
 tags
 tmp
 .ruby-*
+workflow_service.log*

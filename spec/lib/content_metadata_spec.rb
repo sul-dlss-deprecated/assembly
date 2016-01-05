@@ -18,19 +18,17 @@ describe Dor::Assembly::ContentMetadata do
   end
 
   describe "#load_content_metadata" do
-
     it "should load a Nokogiri doc in @cm" do
       basic_setup 'aa111bb2222'
       @item.cm = nil
       @item.load_content_metadata
       @item.cm.should be_kind_of Nokogiri::XML::Document
     end
-
   end
 
   describe "#persist_content_metadata" do
 
-    before(:each) do
+    before :each do
       basic_setup 'aa111bb2222'
       @tmp_dir           = 'tmp'
       @dummy_xml_content = "<xml><foobar /></xml>\n"
@@ -58,9 +56,11 @@ describe Dor::Assembly::ContentMetadata do
   end
 
   describe "Helper methods" do
+    before :each do
+      basic_setup 'aa111bb2222'
+    end
 
     it "#new_node_in_cm should return the expected Nokogiri element" do
-      basic_setup 'aa111bb2222'
       @item.load_content_metadata
       n = @item.new_node_in_cm 'foo'
       n.to_s.should == '<foo/>'
@@ -68,31 +68,27 @@ describe Dor::Assembly::ContentMetadata do
     end
 
     it "#path_to_object should return nil when no content folder is not found" do
-      basic_setup 'aa111bb2222'
       @item.root_dir = 'foo/bar'
       @item.druid = DruidTools::Druid.new 'xx999yy8888'
       @item.path_to_object.should be nil
     end
 
     it "#path_to_object should return the expected string when the new druid folder is found" do
-      basic_setup 'aa111bb2222'
       @item.root_dir = TMP_ROOT_DIR
-      @item.druid = DruidTools::Druid.new('xx999yy8888',@item.root_dir)
-      FileUtils.mkdir_p @item.druid.path()
+      @item.druid = DruidTools::Druid.new 'xx999yy8888', @item.root_dir
+      FileUtils.mkdir_p @item.druid.path
       @item.path_to_object.should == 'tmp/test_input/xx/999/yy/8888/xx999yy8888'
-      FileUtils.rm_rf @item.druid.path()
+      FileUtils.rm_rf @item.druid.path
     end
 
     it "#path_to_object should return the expected string when the new druid folder is not found, but the older druid style folder is found" do
-      basic_setup 'aa111bb2222'
       @item.root_dir = TMP_ROOT_DIR
-      path=Assembly::Utils.get_staging_path('xx999yy8888',@item.root_dir)
-      @item.druid = DruidTools::Druid.new('xx999yy8888',@item.root_dir)
+      @item.druid = DruidTools::Druid.new 'xx999yy8888', @item.root_dir
+      path = @item.old_druid_tree_path(@item.root_dir)
       FileUtils.mkdir_p path
       @item.path_to_object.should == 'tmp/test_input/xx/999/yy/8888'
       FileUtils.rm_rf path
     end
-
   end
 
   describe "Methods returning <file> nodes and filenode-Image tuples" do

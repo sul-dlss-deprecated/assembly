@@ -21,12 +21,12 @@ module Dor::Assembly
 
     # new style path, e.g. aa/111/bb/2222/aa111bb2222
     def druid_tree_path(root_dir)
-      DruidTools::Druid.new(@druid.id,root_dir).path()
+      DruidTools::Druid.new(@druid.id, root_dir).path
     end
 
     # old style path, e.g. aa/111/bb/2222
     def old_druid_tree_path(root_dir)
-      Assembly::Utils.get_staging_path(@druid.id,root_dir)
+      File.dirname druid_tree_path(root_dir)
     end
 
     # returns the location of a content file, which can be in the old location if not found in the new location, e.g.  aa/111/bb/2222/aa111bb2222/content or  aa/111/bb/2222/
