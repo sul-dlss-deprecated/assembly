@@ -51,3 +51,7 @@ def setup_assembly_item(druid,obj_type)
   end
   Dor::Assembly::Item.stub(:new).and_return(@assembly_item)
 end
+
+def kdu_missing?
+  `which kdu_compress`.empty?
+end
