@@ -25,7 +25,6 @@ describe Dor::Assembly::Jp2able do
   end
 
   describe '#create_jp2s' do
-
     before(:each) do
       clone_test_input TMP_ROOT_DIR
     end
@@ -44,7 +43,7 @@ describe Dor::Assembly::Jp2able do
       jp2s.none? { |j| File.file? j }.should == true
 
       # We now have jp2s since all resource types = image
-      @item.create_jp2s
+      create_jp2s
       files = get_filenames(@item)
       @item.file_nodes.size.should == 6
       count_file_types(files,'.tif').should == 3
@@ -64,7 +63,7 @@ describe Dor::Assembly::Jp2able do
       count_file_types(bef_files,'.tif').should == 5
       count_file_types(bef_files,'.jp2').should == 1
 
-      @item.create_jp2s
+      create_jp2s
       # we now have two extra jps, only for the resource nodes that had type=image or page specified, but not for the others
       @item.file_nodes.size.should == 12
       aft_files = get_filenames(@item)
@@ -91,7 +90,7 @@ describe Dor::Assembly::Jp2able do
       count_file_types(bef_files,'.tif').should == 3
       count_file_types(bef_files,'.jp2').should == 0
 
-      @item.create_jp2s
+      create_jp2s
       # we now have three jps
       @item.file_nodes.size.should == 6
       aft_files = get_filenames(@item)
@@ -129,7 +128,7 @@ describe Dor::Assembly::Jp2able do
 
       File.exists?(copy_jp2).should == true
 
-      @item.create_jp2s
+      create_jp2s
       # we now have only one extra jp2, only for the resource nodes that had type=image or page specified, since one was not created because it was already there
       @item.file_nodes.size.should == 11
       aft_files = get_filenames(@item)
@@ -165,7 +164,7 @@ describe Dor::Assembly::Jp2able do
 
       File.exists?(copy_jp2).should == true
 
-      @item.create_jp2s
+      create_jp2s
 
       @item.file_nodes.size.should == 11
       aft_files = get_filenames(@item)
@@ -194,7 +193,7 @@ describe Dor::Assembly::Jp2able do
       count_file_types(bef_files,'.tif').should == 5
       count_file_types(bef_files,'.jp2').should == 1
 
-      @item.create_jp2s
+      create_jp2s
 
       # we now have three extra jp2, one for each tif that didn't have a matching dpg style jp2
       # even if the jp2 does not exist in the original content metadata, if a matching one is found, a derivative won't be created
@@ -222,7 +221,7 @@ describe Dor::Assembly::Jp2able do
       count_file_types(bef_files,'.tif').should == 5
       count_file_types(bef_files,'.jp2').should == 1
 
-      @item.create_jp2s
+      create_jp2s
 
       @item.file_nodes.size.should == 11
       aft_files = get_filenames(@item)
@@ -256,6 +255,12 @@ describe Dor::Assembly::Jp2able do
       @item.cm.should be_equivalent_to exp_xml
     end
 
+  end
+
+  def create_jp2s
+    skip 'Missing kdu_compress utility' if kdu_missing?
+
+    @item.create_jp2s
   end
 
 end
