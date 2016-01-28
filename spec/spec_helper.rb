@@ -36,20 +36,20 @@ end
 
 def setup_work_item(druid)
   @work_item=double("work_item")
-  @work_item.stub('druid').and_return(druid)
+  allow(@work_item).to receive('druid').and_return(druid)
 end
 
 def setup_assembly_item(druid,obj_type)
   @assembly_item=double("assembly_item")
-  @assembly_item.stub('druid').and_return(druid)
+  allow(@assembly_item).to receive('druid').and_return(druid)
   if obj_type==:item
-    @assembly_item.stub(:object_type).and_return('item')
-    @assembly_item.stub(:is_item?).and_return(true)
+    allow(@assembly_item).to receive(:object_type).and_return('item')
+    allow(@assembly_item).to receive(:is_item?).and_return(true)
   else
-    @assembly_item.stub(:object_type).and_return(obj_type.to_s)
-    @assembly_item.stub(:is_item?).and_return(false)
+    allow(@assembly_item).to receive(:object_type).and_return(obj_type.to_s)
+    allow(@assembly_item).to receive(:is_item?).and_return(false)
   end
-  Dor::Assembly::Item.stub(:new).and_return(@assembly_item)
+  allow(Dor::Assembly::Item).to receive(:new).and_return(@assembly_item)
 end
 
 def kdu_missing?

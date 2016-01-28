@@ -41,7 +41,7 @@ describe Dor::Assembly::Checksumable do
 
     it "should be able to initialize our testing object" do
       basic_setup('aa111bb2222')
-      @item.should be_a_kind_of ChecksumableItem
+      expect(@item).to be_a_kind_of ChecksumableItem
     end
 
   end
@@ -54,9 +54,9 @@ describe Dor::Assembly::Checksumable do
       setup_tmp_handle
 
       @item.load_content_metadata
-      all_cs_nodes.size.should == 5
+      expect(all_cs_nodes.size).to eq(5)
       @item.compute_checksums
-      all_cs_nodes.size.should == 8
+      expect(all_cs_nodes.size).to eq(8)
 
       @exp_checksums = {
         "image111.tif" => {
@@ -78,7 +78,7 @@ describe Dor::Assembly::Checksumable do
         file_name = fnode['id']
         cnodes    = fnode.xpath './checksum'
         checksums = Hash[ cnodes.map { |cn| [cn['type'], cn.content] } ]
-        checksums.should == @exp_checksums[file_name]
+        expect(checksums).to eq(@exp_checksums[file_name])
       end
     end
 
@@ -88,9 +88,9 @@ describe Dor::Assembly::Checksumable do
       setup_tmp_handle
 
       @item.load_content_metadata
-      all_cs_nodes.size.should == 4
+      expect(all_cs_nodes.size).to eq(4)
       @item.compute_checksums
-      all_cs_nodes.size.should == 7
+      expect(all_cs_nodes.size).to eq(7)
 
       @exp_checksums = {
         "image111.tif" => {
@@ -112,7 +112,7 @@ describe Dor::Assembly::Checksumable do
         file_name = fnode['id']
         cnodes    = fnode.xpath './checksum'
         checksums = Hash[ cnodes.map { |cn| [cn['type'], cn.content] } ]
-        checksums.should == @exp_checksums[file_name]
+        expect(checksums).to eq(@exp_checksums[file_name])
       end
     end
 
@@ -124,13 +124,13 @@ describe Dor::Assembly::Checksumable do
       @item.load_content_metadata
 
       all_file_nodes[0].xpath('checksum[@type="md5"]')[0].content='42616f9E6C1B7E7B7A71B4FA0C5Ef794'  # change the md5 hash in the first file node to be all caps
-      all_cs_nodes.size.should == 5
+      expect(all_cs_nodes.size).to eq(5)
 
       # now check that it was re-computed and still succeeds
-      lambda { @item.compute_checksums }.should_not raise_error
+      expect { @item.compute_checksums }.not_to raise_error
 
       # this was the first file node it got to, so no new checksums were added
-      all_cs_nodes.size.should == 8
+      expect(all_cs_nodes.size).to eq(8)
 
     end
 
@@ -142,14 +142,14 @@ describe Dor::Assembly::Checksumable do
       @item.load_content_metadata
 
       all_file_nodes[0].xpath('checksum[@type="md5"]')[0].content='flimflam'  # change the md5 hash in the first file node
-      all_cs_nodes.size.should == 5
+      expect(all_cs_nodes.size).to eq(5)
 
       # now check that it was re-computed and failed
       exp_msg = /^Checksums disagree: type="md5", file="image111.tif"./
-      lambda { @item.compute_checksums }.should raise_error RuntimeError, exp_msg
+      expect { @item.compute_checksums }.to raise_error RuntimeError, exp_msg
 
       # this was the first file node it got to, so no new checksums were added before it failed
-      all_cs_nodes.size.should == 5
+      expect(all_cs_nodes.size).to eq(5)
 
     end
 
@@ -161,14 +161,14 @@ describe Dor::Assembly::Checksumable do
       @item.load_content_metadata
 
       all_file_nodes[0].xpath('checksum[@type="md5"]')[0].content='flimflam'  # change the md5 hash in the first file node
-      all_cs_nodes.size.should == 4
+      expect(all_cs_nodes.size).to eq(4)
 
       # now check that it was re-computed and failed
       exp_msg = /^Checksums disagree: type="md5", file="image111.tif"./
-      lambda { @item.compute_checksums }.should raise_error RuntimeError, exp_msg
+      expect { @item.compute_checksums }.to raise_error RuntimeError, exp_msg
 
       # this was the first file node it got to, so no new checksums were added before it failed
-      all_cs_nodes.size.should == 4
+      expect(all_cs_nodes.size).to eq(4)
 
     end
 
@@ -180,14 +180,14 @@ describe Dor::Assembly::Checksumable do
       @item.load_content_metadata
       all_file_nodes[1].xpath('checksum[@type="sha1"]')[0].content='crapola'  # change the md5 hash in the first file node
 
-      all_cs_nodes.size.should == 5
+      expect(all_cs_nodes.size).to eq(5)
 
       # now check that it was re-computed and failed
       exp_msg = /^Checksums disagree: type="sha1", file="image112.tif"./
-      lambda { @item.compute_checksums }.should raise_error RuntimeError, exp_msg
+      expect { @item.compute_checksums }.to raise_error RuntimeError, exp_msg
 
       # at this point it added a sha1 checksum to the first file node already
-      all_cs_nodes.size.should == 6
+      expect(all_cs_nodes.size).to eq(6)
 
     end
 
@@ -199,20 +199,20 @@ describe Dor::Assembly::Checksumable do
       @item.load_content_metadata
 
       # start out with 5 checksum nodes
-      all_cs_nodes.size.should == 5
+      expect(all_cs_nodes.size).to eq(5)
 
       # keep the correct first md5 checksum for the first file, but add a bogous one too
       @item.add_checksum_node @item.cm.xpath('//file').first, 'md5','junk'
 
       # we now have six checksum nodes
-      all_cs_nodes.size.should == 6
+      expect(all_cs_nodes.size).to eq(6)
 
       # now check that it was re-computed and failed, even though the first still matches
       exp_msg = /^Checksums disagree: type="md5", file="image111.tif"./
-      lambda { @item.compute_checksums }.should raise_error RuntimeError, exp_msg
+      expect { @item.compute_checksums }.to raise_error RuntimeError, exp_msg
 
       # this was the first file node it got to, so no new checksums were added before it failed
-      all_cs_nodes.size.should == 6
+      expect(all_cs_nodes.size).to eq(6)
 
     end
 
@@ -224,12 +224,12 @@ describe Dor::Assembly::Checksumable do
     it "should correctly add checksum nodes as children of the parent_node" do
       basic_setup('aa111bb2222')
 
-      all_cs_nodes.size.should == 0
+      expect(all_cs_nodes.size).to eq(0)
       @item.add_checksum_node @parent_file_node, 'md5',@fake_checksum_data[:md5]
       @item.add_checksum_node @parent_file_node, 'sha1',@fake_checksum_data[:sha1]
-      all_cs_nodes.size.should == 2
+      expect(all_cs_nodes.size).to eq(2)
       h = Hash[ all_cs_nodes.map { |n| [ n['type'].to_sym, n.content ] } ]
-      h.should == @fake_checksum_data
+      expect(h).to eq(@fake_checksum_data)
     end
 
   end

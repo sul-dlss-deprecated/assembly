@@ -20,7 +20,7 @@ gem 'slop'
 group :test do
   gem 'equivalent-xml'
   gem 'yard'
-  gem "rspec", "~> 2.6"
+  gem 'rspec', '~> 3.4'
 end
 
 group :deployment do
