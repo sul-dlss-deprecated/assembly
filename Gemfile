@@ -26,7 +26,7 @@ end
 group :deployment do
   gem "capistrano", '~> 3'
   gem 'capistrano-bundler'
-  gem "lyberteam-capistrano-devel", '~> 3'
+  gem "dlss-capistrano", '~> 3'
   gem 'capistrano-rvm'
 end
 
