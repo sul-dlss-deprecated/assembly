@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
-gem "lyber-core", "~> 3", ">= 3.2.2"
-gem "addressable", "2.3.5" # specs won't run with 2.3.6
+gem "lyber-core", "~> 4.0"
 gem "assembly-objectfile", ">=1.6.6"
 gem "assembly-image", ">=1.6.6"
 gem "rest-client", '>=1.8'
