@@ -48,3 +48,4 @@ Dor::Config.configure do
 end
 
 REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"
+#REDIS_TIMEOUT = '5' # seconds
