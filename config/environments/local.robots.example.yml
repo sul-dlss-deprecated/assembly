@@ -40,17 +40,17 @@
 #      - dor_accessionWF_technical-metadata: A: 5
 #
 
-sul-robots1-dev:
+host1:
   - dor_assemblyWF_jp2-create
 
-sul-robots2-dev:
+host2:
   - dor_assemblyWF_jp2-create
 
-sul-robots3-dev:
+host3:
   - dor_assemblyWF_checksum-compute
 
-sul-robots4-dev:
+host4:
   - dor_assemblyWF_exif-collect
 
-sul-robots5-dev:
+host5:
   - dor_assemblyWF_accessioning-initiate
