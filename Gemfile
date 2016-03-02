@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "lyber-core", "~> 4.0", ">= 4.0.2"
+gem "lyber-core", "~> 4.0", ">= 4.0.3"
 gem "assembly-objectfile", ">=1.6.6"
 gem "assembly-image", ">=1.6.6"
 gem "rest-client", '>=1.8'
