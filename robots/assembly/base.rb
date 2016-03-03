@@ -4,6 +4,10 @@ module Robots
       class Base
         include LyberCore::Robot
 
+        def workflow_service
+          Dor::Config.workflow.client
+        end
+
         protected
 
         def with_item(druid, items_only: Dor::Config.configure.assembly.items_only, &block)
