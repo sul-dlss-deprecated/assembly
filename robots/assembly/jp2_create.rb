@@ -1,20 +1,16 @@
+require_relative './base'
+
 module Robots
   module DorRepo
     module Assembly
 
-      class Jp2Create
-        include LyberCore::Robot
-
+      class Jp2Create < Robots::DorRepo::Assembly::Base
         def initialize(opts = {})
           super('dor', 'assemblyWF', 'jp2-create', opts)
         end
 
         def perform(druid)
-          ai = Dor::Assembly::Item.new :druid => druid
-          if (Dor::Config.configure.assembly.items_only && !ai.is_item?)
-            Robots::DorRepo::Assembly::Jp2Create.logger.warn("Skipping JP2-create for #{druid} since it is not an item")
-          else
-            ai.load_content_metadata
+          with_item(druid) do |ai|
             ai.create_jp2s
           end
         end

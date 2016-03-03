@@ -1,21 +1,16 @@
+require_relative './base'
+
 module Robots
   module DorRepo
     module Assembly
 
-      class ExifCollect
-
-        include LyberCore::Robot
-
+      class ExifCollect < Robots::DorRepo::Assembly::Base
         def initialize(opts = {})
           super('dor', 'assemblyWF', 'exif-collect', opts)
         end
 
         def perform(druid)
-          ai = Dor::Assembly::Item.new :druid => druid
-          if (Dor::Config.configure.assembly.items_only && !ai.is_item?)
-             Robots::DorRepo::Assembly::ExifCollect.logger.warn("Skipping exif-collect for #{druid} since it is not an item")
-          else
-            ai.load_content_metadata
+          with_item(druid) do |ai|
             ai.collect_exif_info
           end
         end
