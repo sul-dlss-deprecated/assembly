@@ -4,6 +4,10 @@
 
 Uses ruby `1.9.3` in production, but testing against `2.2.x`.  Legacy CI in Jenkins.
 
+# Documentation
+
+Check the [Wiki](https://github.com/sul-dlss/robot-master/wiki) in the robot-master repo.
+
 ## Dependencies
 
 Refer to dependencies for jp2 creation in the `assembly-image` gem.
