@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear!
+
 environment = (ENV['ROBOT_ENVIRONMENT'] ||= 'development')
 bootfile    = File.expand_path(File.dirname(__FILE__) + '/../config/boot')
 
@@ -6,6 +9,17 @@ require 'tempfile'
 require 'equivalent-xml'
 require 'equivalent-xml/rspec_matchers'
 
+RSpec.configure do |conf|
+  conf.order = 'random'
+end
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+])
+SimpleCov.start do
+  add_filter 'spec/'
+end
 tmp_output_dir = File.join(ROBOT_ROOT, 'tmp')
 FileUtils.mkdir_p tmp_output_dir
 

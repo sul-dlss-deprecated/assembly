@@ -22,6 +22,8 @@ group :test do
   gem 'equivalent-xml'
   gem 'yard'
   gem 'rspec', '~> 3.4'
+  gem 'coveralls', require: false
+  gem 'simplecov'
 end
 
 group :deployment do
