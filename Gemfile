@@ -24,6 +24,7 @@ group :test do
   gem 'rspec', '~> 3.4'
   gem 'coveralls', require: false
   gem 'simplecov'
+  gem 'fakeweb'
 end
 
 group :deployment do

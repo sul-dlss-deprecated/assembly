@@ -8,10 +8,7 @@ require bootfile
 require 'tempfile'
 require 'equivalent-xml'
 require 'equivalent-xml/rspec_matchers'
-
-RSpec.configure do |conf|
-  conf.order = 'random'
-end
+require 'fakeweb'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::HTMLFormatter,

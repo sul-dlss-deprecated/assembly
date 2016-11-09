@@ -6,7 +6,7 @@ module Dor::Assembly
     include Dor::Assembly::ContentMetadata
 
     def initiate_accessioning
-      Robots::DorRepo::Assembly::AccessioningInitiate.logger.warn("Inititate accessiong for #{@druid.id}")
+      Robots::DorRepo::Assembly::AccessioningInitiate.logger.warn("Inititate accessioning for #{@druid.id}")
       initialize_workspace
       initialize_apo_workflow
     end

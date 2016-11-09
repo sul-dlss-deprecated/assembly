@@ -9,11 +9,9 @@ describe Dor::Assembly::ContentMetadata do
 
   def basic_setup(dru, root_dir = nil)
     root_dir           = root_dir || Dor::Config.assembly.root_dir
-    cm_file_name       = Dor::Config.assembly.cm_file_name
     @item              = ContentMetadataItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
-    @item.cm_file_name = @item.metadata_file cm_file_name
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
   end
 
@@ -26,6 +24,25 @@ describe Dor::Assembly::ContentMetadata do
     end
   end
 
+  describe "#exists methods" do
+    it "should indicate if contentMetadata exists" do
+      basic_setup 'aa111bb2222'
+      expect(@item.content_metadata_exists?).to be_truthy
+    end
+    it "should indicate if contentMetadata exists" do
+      basic_setup 'aa111bb3333'
+      expect(@item.content_metadata_exists?).to be_falsey
+    end
+    it "should indicate if stub contentMetadata exists" do
+      basic_setup 'aa111bb2222'
+      expect(@item.stub_content_metadata_exists?).to be_falsey
+    end
+    it "should indicate if contentMetadata exists" do
+      basic_setup 'aa111bb3333'
+      expect(@item.stub_content_metadata_exists?).to be_truthy
+    end
+  end
+  
   describe "#persist_content_metadata" do
 
     before :each do

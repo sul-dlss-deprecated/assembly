@@ -15,12 +15,12 @@ module Dor::Assembly
       @druid = params[:druid]
       @druid        = DruidTools::Druid.new(@druid) unless @druid.class == DruidTools::Druid
       root_dir_config = Dor::Config.assembly.root_dir
-      @root_dir = root_dir_config.class == String ? [root_dir_config] : root_dir_config  # this allows us to accept either a string or an array of strings as an root dir configuration
+      @root_dir = root_dir_config.class == String ? [root_dir_config] : root_dir_config  # this allows us to accept either a string or an array of strings as a root dir configuration
       check_for_path
     end
 
     def object
-      @fobj ||= Dor::Item.find(@druid.druid)
+      @fobj ||= Dor.find(@druid.druid)
     end
 
     def check_for_path
@@ -33,7 +33,7 @@ module Dor::Assembly
     end
 
     def is_item?
-      object_type.strip == 'item'
+      object_type.downcase.strip == 'item'
     end
 
   end

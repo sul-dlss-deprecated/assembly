@@ -1,4 +1,5 @@
 require 'spec_helper'
+FakeWeb.allow_net_connect = false
 
 class AccessionableItem
   include Dor::Assembly::Accessionable
@@ -24,17 +25,15 @@ describe Dor::Assembly::Accessionable do
 
     it 'should be runnable using stubs for external calls for an item type object' do
       allow(@item).to receive(:object_type).and_return('item')
-      expect(@item).to receive(:initialize_workspace)
-      expect(@item).to receive(:initialize_apo_workflow)
-      allow(RestClient).to receive(:post) # don't actually make the RestClient calls, just assume they work
+      FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/initialize_workspace", :body => "ok", :status => ["200"])
+      FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/apo_workflows/accessionWF", :body => "ok", :status => ["200"])
       @item.initiate_accessioning
     end
 
     it 'should be runnable using stubs for external calls for a collection type object' do
       allow(@item).to receive(:object_type).and_return('collection')
-      expect(@item).to receive(:initialize_workspace)
-      expect(@item).to receive(:initialize_apo_workflow)
-      allow(RestClient).to receive(:post) # don't actually make the RestClient calls, just assume they work
+      FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/initialize_workspace", :body => "ok", :status => ["200"])
+      FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/apo_workflows/accessionWF", :body => "ok", :status => ["200"])
       @item.initiate_accessioning
     end
 
