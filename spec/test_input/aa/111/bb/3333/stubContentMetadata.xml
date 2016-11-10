@@ -1,2 +1,16 @@
 <?xml version="1.0"?>
-<contentMetadata objectId="aa111bb23333"/>
+<content type="simple_image">
+   <resource>
+      <label>Optional label</label>
+      <file name="page1.tif"/>
+      <file name="page1.txt" publish="true" preserve="true" shelve="true"/>
+   </resource>
+   <resource>
+      <label>optional page 2 label</label>
+      <file name="page2.tif"/>
+      <file name="some_filename.txt"/> 
+   </resource>
+   <resource>
+      <file name="whole_book.pdf"/>
+   </resource>
+</content>

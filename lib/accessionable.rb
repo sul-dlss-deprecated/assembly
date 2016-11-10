@@ -9,6 +9,7 @@ module Dor::Assembly
       Robots::DorRepo::Assembly::AccessioningInitiate.logger.warn("Inititate accessioning for #{@druid.id}")
       initialize_workspace
       initialize_apo_workflow
+      true
     end
 
     def initialize_workspace

@@ -18,12 +18,39 @@ describe Dor::Assembly::ContentMetadata do
   describe "#load_content_metadata" do
     it "should load a Nokogiri doc in @cm" do
       basic_setup 'aa111bb2222'
-      @item.cm = nil
       @item.load_content_metadata
       expect(@item.cm).to be_kind_of Nokogiri::XML::Document
     end
+    it "should raise an exception if no contentMetadata file is present" do
+      basic_setup 'aa111bb3333'
+      expect{@item.load_content_metadata}.to raise_error(StandardError)
+    end
   end
 
+  describe "#load_stub_content_metadata" do
+    it "should load a Nokogiri doc in @stub_cm" do
+      basic_setup 'aa111bb3333'
+      @item.load_stub_content_metadata
+      expect(@item.stub_cm).to be_kind_of Nokogiri::XML::Document
+    end
+    it "should raise an exception if no stub contentMetadata file is present" do
+      basic_setup 'aa111bb2222'
+      expect{@item.load_stub_content_metadata}.to raise_error(StandardError)
+    end
+  end
+  
+  describe "#create_content_metadata" do
+    it "should create content metadata from stub content metadata" do
+      basic_setup 'aa111bb3333'
+      result = @item.create_content_metadata
+      expect(result).to be_equivalent_to '<contentMetadata/>'
+    end
+    it "should raise an exception if stub content metadata is missing" do
+      basic_setup 'aa111bb2222'
+      expect{@item.create_content_metadata}.to raise_error(StandardError)
+    end
+  end
+  
   describe "#exists methods" do
     it "should indicate if contentMetadata exists" do
       basic_setup 'aa111bb2222'

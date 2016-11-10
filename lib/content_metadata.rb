@@ -5,6 +5,7 @@ module Dor::Assembly
 
     attr_accessor(
       :cm,
+      :stub_cm,
       :cm_file_name,
       :stub_cm_file_name,
       :cm_handle,
@@ -32,10 +33,16 @@ module Dor::Assembly
     
     def load_content_metadata
       # Loads content metadata XML into a Nokogiri document.
-      raise "Content metadata file #{Dor::Config.assembly.cm_file_name} not found for #{druid.id} in any of the root directories: #{@root_dir.join(',')}" unless File.exists? cm_file_name
+      raise "Content metadata file #{Dor::Config.assembly.cm_file_name} not found for #{druid.id} in any of the root directories: #{@root_dir.join(',')}" unless content_metadata_exists?
       @cm = Nokogiri.XML(File.open cm_file_name) { |conf| conf.default_xml.noblanks }
     end
 
+    def load_stub_content_metadata
+      # Loads stub content metadata XML into a Nokogiri document.
+      raise "Stub content metadata file #{Dor::Config.assembly.stub_cm_file_name} not found for #{druid.id} in any of the root directories: #{@root_dir.join(',')}" unless stub_content_metadata_exists?
+      @stub_cm = Nokogiri.XML(File.open stub_cm_file_name) { |conf| conf.default_xml.noblanks }
+    end
+    
     def persist_content_metadata
       # Writes content metadata XML to the content metadata file or
       # to @cm_handle (the latter is used for testing purposes).
@@ -68,7 +75,10 @@ module Dor::Assembly
         
     def create_content_metadata
       # uses the assembly-objectfile gem to create content metadata using the stub contentMetadata provided
-      # TODO load the stub content metadata, parse and use gem to create
+      load_stub_content_metadata
+
+      # TODO parse stub content metadata and use gem to create
+      
       xml='<contentMetadata/>'
       @cm = Nokogiri.XML(xml)
     end
