@@ -437,7 +437,7 @@ DEPENDENCIES
   druid-tools
   equivalent-xml
   fakeweb
-  lyber-core (~> 4.0, >= 4.0.3)
+  lyber-core (~> 4.0, >= 4.1.0)
   mini_exiftool (>= 1.6, < 3)
   nokogiri
   pry-debugger (~> 0.2.2)

@@ -27,6 +27,8 @@ describe Dor::Assembly::Accessionable do
       allow(@item).to receive(:object_type).and_return('item')
       FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/initialize_workspace", :body => "ok", :status => ["200"])
       FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/apo_workflows/accessionWF", :body => "ok", :status => ["200"])
+      expect(@item).to receive(:initialize_workspace).once
+      expect(@item).to receive(:initialize_apo_workflow).once
       @item.initiate_accessioning
     end
 
@@ -34,6 +36,8 @@ describe Dor::Assembly::Accessionable do
       allow(@item).to receive(:object_type).and_return('collection')
       FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/initialize_workspace", :body => "ok", :status => ["200"])
       FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/apo_workflows/accessionWF", :body => "ok", :status => ["200"])
+      expect(@item).to receive(:initialize_workspace).once
+      expect(@item).to receive(:initialize_apo_workflow).once
       @item.initiate_accessioning
     end
 

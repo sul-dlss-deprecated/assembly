@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "lyber-core", "~> 4.0", ">= 4.0.3"
+gem "lyber-core", "~> 4.0", ">= 4.1.0"
 gem "assembly-objectfile", ">=1.6.6"
 gem "assembly-image", ">=1.6.9"
 gem 'activesupport', '< 5'

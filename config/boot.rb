@@ -31,6 +31,7 @@ require 'assembly/accessioning_initiate'
 require 'assembly/checksum_compute'
 require 'assembly/exif_collect'
 require 'assembly/jp2_create'
+require 'assembly/content_metadata_create'
 require 'assembly'
 
 # Require the project and environment.
