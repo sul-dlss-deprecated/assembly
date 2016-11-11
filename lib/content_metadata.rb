@@ -75,18 +75,28 @@ module Dor::Assembly
       # Returns a list of filenode pairs (file node and associated ObjectFile object), optionally restricted to specific resource content types if specified
       file_nodes(resource_type).map { |fn| [ fn, Assembly::ObjectFile.new(content_file(fn['id'])) ] }
     end
+    
+    def create_basic_content_metadata
+      raise "Content metadata file #{Dor::Config.assembly.cm_file_name} exists already" if content_metadata_exists?
+
+      # get a list of files in content folder recursively
+      files = Dir["#{path_to_content_folder}/**/*"].reject {|file| File.directory? file}
+      cm_resources = files.map { |file| Assembly::ObjectFile.new(file) }
+       
+      # uses the assembly-objectfile gem to create basic content metadata using a simple list of files found in the content folder
+      xml = Assembly::ContentMetadata.create_content_metadata(druid: @druid.druid, style: :file, objects: cm_resources, bundle: :filename)    
+      @cm = Nokogiri.XML(xml)      
+      return xml 
+    end
         
-    def create_content_metadata
+    def convert_stub_content_metadata
       # uses the assembly-objectfile gem to create content metadata using the stub contentMetadata provided
       load_stub_content_metadata
 
-      cm_resources = [] # build up the array of arrays of files bundled into resources from the stub content metadata that will be passed to the gem
-      resources.each do |resource| # loop over all resources from the stub content metadata
-        cm_files = [] # this will be the array of files in that resource
-        resource_files(resource).each do |file| # loop over the files in this resource
-          cm_files << Assembly::ObjectFile.new(File.join(path_to_object,filename(file)), file_attributes: file_attributes(file), label: resource_label(resource))
+      cm_resources = resources.map do |resource| # loop over all resources from the stub content metadata
+        resource_files(resource).map do |file| # loop over the files in this resource
+          Assembly::ObjectFile.new(File.join(path_to_object,filename(file)), file_attributes: file_attributes(file), label: resource_label(resource))
         end
-        cm_resources << cm_files # add the resource array to the array of resources
       end
       
       xml = Assembly::ContentMetadata.create_content_metadata(druid: @druid.druid, style: gem_content_metadata_style, objects: cm_resources, bundle: :prebundled, add_file_attributes: true)    

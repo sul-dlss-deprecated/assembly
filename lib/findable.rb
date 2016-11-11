@@ -40,14 +40,23 @@ module Dor::Assembly
       File.exists?(path_to_metadata_file(filename)) ? path_to_metadata_file(filename) : old_path_to_file(filename)
     end
 
-    # new style path to a content file, e.g.  aa/111/bb/2222/aa111bb2222/content
+    # new style path to a content folder, e.g.  aa/111/bb/2222/aa111bb2222/content
+    def path_to_content_folder
+      File.join path_to_object, "content"
+    end
+    
+    # new style path to a content file, e.g.  aa/111/bb/2222/aa111bb2222/content/some_file.txt
     def path_to_content_file(file_name)
-      File.join path_to_object, "content", file_name
+      File.join path_to_content_folder, file_name
     end
 
-    # new style path to a metadata file, e.g.  aa/111/bb/2222/aa111bb2222/metadata
+    # new style path to a metadata folder, e.g.  aa/111/bb/2222/aa111bb2222/metadata
+    def path_to_metadata_folder
+      File.join path_to_object, "metadata"
+    end
+    # new style path to a metadata file, e.g.  aa/111/bb/2222/aa111bb2222/metadata/some_file.txt
     def path_to_metadata_file(file_name)
-      File.join path_to_object, "metadata", file_name
+      File.join path_to_metadata_folder, file_name
     end
 
     # old style path to a file, without subfolder e.g.  aa/111/bb/2222/

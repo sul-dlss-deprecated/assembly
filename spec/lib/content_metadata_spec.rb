@@ -39,11 +39,45 @@ describe Dor::Assembly::ContentMetadata do
     end
   end
   
-  describe "#create_content_metadata" do
+  describe "#create_basic_content_metadata" do
+    it "should create basic content metadata from a list of files" do
+      basic_setup 'aa111bb4444'
+      expect(@item.cm).to be_nil
+      result = @item.create_basic_content_metadata
+      expect(result).to be_equivalent_to <<-END
+        <contentMetadata objectId="druid:aa111bb4444" type="file">
+          <resource id="aa111bb4444_1" sequence="1" type="file">
+            <label>File 1</label>
+            <file id="page1.tif"/>
+            <file id="page1.txt"/>
+          </resource>
+          <resource id="aa111bb4444_2" sequence="2" type="file">
+            <label>File 2</label>
+            <file id="page2.tif"/>
+          </resource>
+          <resource id="aa111bb4444_3" sequence="3" type="file">
+            <label>File 3</label>
+            <file id="some_filename.txt"/>
+          </resource>
+          <resource id="aa111bb4444_4" sequence="4" type="file">
+            <label>File 4</label>
+            <file id="subfolder/whole_book.pdf"/>
+          </resource>
+        </contentMetadata>
+      END
+      expect(@item.cm).to be_kind_of Nokogiri::XML::Document
+    end
+    it "should raise an exception if content metadata already exists" do
+      basic_setup 'aa111bb2222'
+      expect{@item.create_basic_content_metadata}.to raise_error(StandardError)
+    end
+  end
+  
+  describe "#convert_stub_content_metadata" do
     it "should create content metadata from stub content metadata" do
       basic_setup 'aa111bb3333'
       expect(@item.cm).to be_nil
-      result = @item.create_content_metadata
+      result = @item.convert_stub_content_metadata
       expect(result).to be_equivalent_to <<-END
         <contentMetadata objectId="druid:aa111bb3333" type="book">
           <resource id="aa111bb3333_1" sequence="1" type="page">
@@ -66,7 +100,7 @@ describe Dor::Assembly::ContentMetadata do
     end
     it "should raise an exception if stub content metadata is missing" do
       basic_setup 'aa111bb2222'
-      expect{@item.create_content_metadata}.to raise_error(StandardError)
+      expect{@item.convert_stub_content_metadata}.to raise_error(StandardError)
     end
   end
   
