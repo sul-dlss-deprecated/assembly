@@ -1,8 +1,11 @@
 require 'assembly-objectfile'
+require 'stub_content_metadata_parser'
 
 module Dor::Assembly
   module ContentMetadata
 
+    include StubContentMetadataParser
+    
     attr_accessor(
       :cm,
       :stub_cm,
@@ -77,8 +80,11 @@ module Dor::Assembly
       # uses the assembly-objectfile gem to create content metadata using the stub contentMetadata provided
       load_stub_content_metadata
 
+      
       # TODO parse stub content metadata and use gem to create
       
+      # stub_object_type
+            
       xml='<contentMetadata/>'
       @cm = Nokogiri.XML(xml)
     end

@@ -3,7 +3,7 @@
    <resource>
       <label>Optional label</label>
       <file name="page1.tif"/>
-      <file name="page1.txt" publish="true" preserve="true" shelve="true"/>
+      <file name="page1.txt" publish="true" preserve="false" shelve="true"/>
    </resource>
    <resource>
       <label>optional page 2 label</label>
