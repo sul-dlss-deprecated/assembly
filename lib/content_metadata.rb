@@ -80,13 +80,18 @@ module Dor::Assembly
       # uses the assembly-objectfile gem to create content metadata using the stub contentMetadata provided
       load_stub_content_metadata
 
+      cm_resources = [] # build up the array of arrays of files bundled into resources from the stub content metadata that will be passed to the gem
+      resources.each do |resource| # loop over all resources from the stub content metadata
+        cm_files = [] # this will be the array of files in that resource
+        resource_files(resource).each do |file| # loop over the files in this resource
+          cm_files << Assembly::ObjectFile.new(File.join(path_to_object,filename(file)), file_attributes: file_attributes(file), label: resource_label(resource))
+        end
+        cm_resources << cm_files # add the resource array to the array of resources
+      end
       
-      # TODO parse stub content metadata and use gem to create
-      
-      # stub_object_type
-            
-      xml='<contentMetadata/>'
+      xml = Assembly::ContentMetadata.create_content_metadata(druid: @druid.druid, style: gem_content_metadata_style, objects: cm_resources, bundle: :prebundled, add_file_attributes: true)    
       @cm = Nokogiri.XML(xml)
+      return xml      
     end
 
   end

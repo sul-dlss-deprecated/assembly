@@ -4,7 +4,8 @@ module Dor::Assembly
     # actual path to object, found by iterating through all possible root paths and looking first for the new druid tree path, then for the old druid path
     #  return nil if not found anywhere
     def path_to_object
-      path=nil
+      return @path_to_object unless @path_to_object.nil?
+      path = nil
       Array(@root_dir).each do |root_dir|
         new_path=druid_tree_path(root_dir)
         old_path=old_druid_tree_path(root_dir)
@@ -16,7 +17,7 @@ module Dor::Assembly
           break
         end
       end
-      return path
+      @path_to_object = path
     end
 
     # new style path, e.g. aa/111/bb/2222/aa111bb2222

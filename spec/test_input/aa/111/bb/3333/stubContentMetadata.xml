@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<content type="simple_image">
+<content type="book">
    <resource>
       <label>Optional label</label>
       <file name="page1.tif"/>
-      <file name="page1.txt" publish="true" preserve="false" shelve="true"/>
+      <file name="page1.txt" publish="no" preserve="no" shelve="no"/>
    </resource>
    <resource>
       <label>optional page 2 label</label>

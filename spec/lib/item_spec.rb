@@ -13,6 +13,13 @@ describe Dor::Assembly::Item do
       expect(@item.druid.id).to eq(@dru)
     end
 
+    it "should provide access to the object from dor" do
+      @item = Dor::Assembly::Item.new :druid => "druid:aa111bb2222"
+      dor_item=double("dor_item")
+      allow(Dor).to receive(:find).and_return(dor_item)
+      expect(@item.object).to eq(dor_item)
+    end
+    
     it "should raise an error if the object folder cannot be found" do
       @dru         = 'xx111yy2222'
       @druid       = DruidTools::Druid.new @dru

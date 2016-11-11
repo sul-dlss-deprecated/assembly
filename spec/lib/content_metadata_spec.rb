@@ -40,11 +40,29 @@ describe Dor::Assembly::ContentMetadata do
   end
   
   describe "#create_content_metadata" do
-    xit "should create content metadata from stub content metadata" do
+    it "should create content metadata from stub content metadata" do
       basic_setup 'aa111bb3333'
+      expect(@item.cm).to be_nil
       result = @item.create_content_metadata
-      # TODO test actual expected output XML
-      expect(result).to be_equivalent_to '<contentMetadata/>'
+      expect(result).to be_equivalent_to <<-END
+        <contentMetadata objectId="druid:aa111bb3333" type="book">
+          <resource id="aa111bb3333_1" sequence="1" type="page">
+            <label>Optional label</label>
+            <file id="page1.tif" preserve="yes" publish="no" shelve="no"/>
+            <file id="page1.txt" preserve="no" publish="no" shelve="no"/>
+          </resource>
+          <resource id="aa111bb3333_2" sequence="2" type="page">
+            <label>optional page 2 label</label>
+            <file id="page2.tif" preserve="yes" publish="no" shelve="no"/>
+            <file id="some_filename.txt" preserve="yes" publish="yes" shelve="yes"/>
+          </resource>
+          <resource id="aa111bb3333_3" sequence="3" type="object">
+            <label>Object 1</label>
+            <file id="whole_book.pdf" preserve="yes" publish="yes" shelve="yes"/>
+          </resource>
+        </contentMetadata>
+      END
+      expect(@item.cm).to be_kind_of Nokogiri::XML::Document
     end
     it "should raise an exception if stub content metadata is missing" do
       basic_setup 'aa111bb2222'
@@ -75,8 +93,9 @@ describe Dor::Assembly::ContentMetadata do
     it "should parse a stub content metadata file" do
       basic_setup 'aa111bb3333'
       @item.load_stub_content_metadata
-      expect(@item.stub_object_type).to eq('simple_image')
-      resources = @item.stub_resources
+      expect(@item.stub_object_type).to eq('book')
+      expect(@item.gem_content_metadata_style).to eq(:simple_book)
+      resources = @item.resources
       expect(resources.size).to eq(3)
       expected_labels = ['Optional label', 'optional page 2 label', '']
       resources.each_with_index { |r,i| expect(@item.resource_label(r)).to eq(expected_labels[i]) }
@@ -92,12 +111,12 @@ describe Dor::Assembly::ContentMetadata do
       resource_files2.each_with_index { |rf,i| expect(@item.filename(rf)).to eq(expected_filenames[i]) }
       expected_filenames = ['whole_book.pdf']
       resource_files3.each_with_index { |rf,i| expect(@item.filename(rf)).to eq(expected_filenames[i]) }
-      expected_directives = [{}, {preserve: 'false', publish: 'true', shelve: 'true'}]
-      resource_files1.each_with_index { |rf,i| expect(@item.directives(rf)).to eq(expected_directives[i]) }
-      expected_directives = [{}, {}]
-      resource_files2.each_with_index { |rf,i| expect(@item.directives(rf)).to eq(expected_directives[i]) }
-      expected_directives = [{}]
-      resource_files3.each_with_index { |rf,i| expect(@item.directives(rf)).to eq(expected_directives[i]) }
+      expected_attributes = [nil, {preserve: 'no', publish: 'no', shelve: 'no'}]
+      resource_files1.each_with_index { |rf,i| expect(@item.file_attributes(rf)).to eq(expected_attributes[i]) }
+      expected_attributes = [nil, nil]
+      resource_files2.each_with_index { |rf,i| expect(@item.file_attributes(rf)).to eq(expected_attributes[i]) }
+      expected_attributes = [nil]
+      resource_files3.each_with_index { |rf,i| expect(@item.file_attributes(rf)).to eq(expected_attributes[i]) }
     end
   end
   
