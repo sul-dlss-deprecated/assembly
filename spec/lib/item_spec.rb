@@ -19,7 +19,7 @@ describe Dor::Assembly::Item do
       allow(Dor).to receive(:find).and_return(dor_item)
       expect(@item.object).to eq(dor_item)
     end
-    
+
     it "should raise an error if the object folder cannot be found" do
       @dru         = 'xx111yy2222'
       @druid       = DruidTools::Druid.new @dru
@@ -38,7 +38,7 @@ describe Dor::Assembly::Item do
       allow(@item).to receive(:object).and_return(dor_item)
       expect(@item.object_type).to eq('item')
     end
-    
+
     it "should return is_item? as true for object type == item" do
       @dru         = 'aa111bb2222'
       @item = Dor::Assembly::Item.new :druid => @dru

@@ -38,7 +38,7 @@ describe Dor::Assembly::ContentMetadata do
       expect{@item.load_stub_content_metadata}.to raise_error(StandardError)
     end
   end
-  
+
   describe "#create_basic_content_metadata" do
     it "should create basic content metadata from a list of files" do
       basic_setup 'aa111bb4444'
@@ -72,7 +72,7 @@ describe Dor::Assembly::ContentMetadata do
       expect{@item.create_basic_content_metadata}.to raise_error(StandardError)
     end
   end
-  
+
   describe "#convert_stub_content_metadata" do
     it "should create content metadata from stub content metadata" do
       basic_setup 'aa111bb3333'
@@ -103,7 +103,7 @@ describe Dor::Assembly::ContentMetadata do
       expect{@item.convert_stub_content_metadata}.to raise_error(StandardError)
     end
   end
-  
+
   describe "#exists methods" do
     it "should indicate if contentMetadata exists" do
       basic_setup 'aa111bb2222'
@@ -122,7 +122,7 @@ describe Dor::Assembly::ContentMetadata do
       expect(@item.stub_content_metadata_exists?).to be_truthy
     end
   end
-  
+
   describe "#stub_content_metadata_parser" do
     it "should parse a stub content metadata file" do
       basic_setup 'aa111bb3333'
@@ -153,7 +153,7 @@ describe Dor::Assembly::ContentMetadata do
       resource_files3.each_with_index { |rf,i| expect(@item.file_attributes(rf)).to eq(expected_attributes[i]) }
     end
   end
-  
+
   describe "#persist_content_metadata" do
 
     before :each do

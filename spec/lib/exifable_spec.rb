@@ -23,7 +23,6 @@ describe Dor::Assembly::Exifable do
   end
 
   def run_persist_xml_test
-
     # Content metadata before.
     @item.load_content_metadata
     bef = noko_doc @item.cm.to_xml
@@ -194,7 +193,7 @@ describe Dor::Assembly::Exifable do
         expect(file_node.attributes['size'].nil?).to eq(true)
         expect(file_node.attributes['mimetype'].nil?).to eq(true)
         # the first file node as the publish/preserve/attributes already set, the others do not
-        expected = (file_node == bef_file_nodes.first)? false : true
+        expected = file_node == bef_file_nodes.first ? false : true
         expect(file_node.attributes['publish'].nil?).to eq(expected)
         expect(file_node.attributes['preserve'].nil?).to eq(expected)
         expect(file_node.attributes['shelve'].nil?).to eq(expected)

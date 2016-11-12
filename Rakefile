@@ -2,6 +2,8 @@ require 'rake'
 require 'rake/testtask'
 require 'resque/tasks'
 require 'robot-controller/tasks'
+require 'rubocop/rake_task'
+RuboCop::RakeTask.new
 
 Dir.glob('lib/tasks/*.rake').each { |r| import r }
 
@@ -16,7 +18,7 @@ begin
 rescue LoadError
 end
 
-task :default => :spec
+task :default => [:spec, :rubocop]
 
 task :environment do
   require_relative 'config/boot'

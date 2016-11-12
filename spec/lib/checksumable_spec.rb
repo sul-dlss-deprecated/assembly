@@ -216,7 +216,6 @@ describe Dor::Assembly::Checksumable do
 
     end
 
-
   end
 
   describe "#add_checksum_nodes" do

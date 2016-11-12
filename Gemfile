@@ -27,6 +27,10 @@ group :test do
   gem 'fakeweb'
 end
 
+group :development, :test do
+  gem 'rubocop'
+end
+
 group :deployment do
   gem "capistrano", '~> 3'
   gem 'capistrano-bundler'

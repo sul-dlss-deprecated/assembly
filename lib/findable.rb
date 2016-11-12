@@ -1,6 +1,5 @@
 module Dor::Assembly
   module Findable
-
     # actual path to object, found by iterating through all possible root paths and looking first for the new druid tree path, then for the old druid path
     #  return nil if not found anywhere
     def path_to_object
@@ -44,7 +43,7 @@ module Dor::Assembly
     def path_to_content_folder
       File.join path_to_object, "content"
     end
-    
+
     # new style path to a content file, e.g.  aa/111/bb/2222/aa111bb2222/content/some_file.txt
     def path_to_content_file(file_name)
       File.join path_to_content_folder, file_name
@@ -54,6 +53,7 @@ module Dor::Assembly
     def path_to_metadata_folder
       File.join path_to_object, "metadata"
     end
+
     # new style path to a metadata file, e.g.  aa/111/bb/2222/aa111bb2222/metadata/some_file.txt
     def path_to_metadata_file(file_name)
       File.join path_to_metadata_folder, file_name
@@ -63,6 +63,5 @@ module Dor::Assembly
     def old_path_to_file(file_name)
       File.join path_to_object, file_name
     end
-
   end
 end
