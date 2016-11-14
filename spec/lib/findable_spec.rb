@@ -28,24 +28,32 @@ describe Dor::Assembly::Findable do
     @item = Dor::Assembly::Item.new :druid => 'druid:aa111bb2222'
     exp_cm_file = "#{@root_dir1}/aa/111/bb/2222/#{@cm_file_name}"
     expect(@item.cm_file_name).to eq(exp_cm_file)
+    expect(@item.content_metadata_exists?).to be_truthy
+    expect(@item.stub_content_metadata_exists?).to be_falsey
   end
 
   it "should find the path to the content metadata file in the new location in the first possible root directory" do
     @item = Dor::Assembly::Item.new :druid => 'druid:gg111bb2222'
     exp_cm_file = "#{@root_dir1}/gg/111/bb/2222/gg111bb2222/metadata/#{@cm_file_name}"
     expect(@item.cm_file_name).to eq(exp_cm_file)
+    expect(@item.content_metadata_exists?).to be_truthy
+    expect(@item.stub_content_metadata_exists?).to be_falsey
   end
 
   it "should find the path to the content metadata file when in the second possible root directory" do
     @item = Dor::Assembly::Item.new :druid => 'druid:aa222cc3333'
     exp_cm_file = "#{@root_dir2}/aa/222/cc/3333/#{@cm_file_name}"
     expect(@item.cm_file_name).to eq(exp_cm_file)
+    expect(@item.content_metadata_exists?).to be_truthy
+    expect(@item.stub_content_metadata_exists?).to be_truthy
   end
 
   it "should find the path to the content metadata file when in the second possible root directory" do
     @item = Dor::Assembly::Item.new :druid => 'druid:gg222cc3333'
     exp_cm_file = "#{@root_dir2}/gg/222/cc/3333/gg222cc3333/metadata/#{@cm_file_name}"
     expect(@item.cm_file_name).to eq(exp_cm_file)
+    expect(@item.content_metadata_exists?).to be_truthy
+    expect(@item.stub_content_metadata_exists?).to be_falsey
   end
 
   it "should throw an exception when the object folder is found but the content metadata file is not found" do

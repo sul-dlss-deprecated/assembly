@@ -79,8 +79,8 @@ module Dor::Assembly
     def create_basic_content_metadata
       raise "Content metadata file #{Dor::Config.assembly.cm_file_name} exists already" if content_metadata_exists?
 
-      # get a list of files in content folder recursively
-      files = Dir["#{path_to_content_folder}/**/*"].reject {|file| File.directory? file}
+      # get a list of files in content folder recursively and sort them
+      files = Dir["#{path_to_content_folder}/**/*"].reject {|file| File.directory? file}.sort
       cm_resources = files.map { |file| Assembly::ObjectFile.new(file) }
 
       # uses the assembly-objectfile gem to create basic content metadata using a simple list of files found in the content folder
@@ -106,4 +106,3 @@ module Dor::Assembly
 
   end
 end
-
