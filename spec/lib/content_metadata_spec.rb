@@ -124,6 +124,21 @@ describe Dor::Assembly::ContentMetadata do
   end
 
   describe "#stub_content_metadata_parser" do
+    it "should map content metadata types to the gem correctly" do
+      basic_setup 'aa111bb3333'
+      ['flipbook (r-l)','book','a book (l-r)'].each do |content_type|
+        allow(@item).to receive(:stub_object_type).and_return(content_type)
+        expect(@item.gem_content_metadata_style).to eq(:simple_book)
+      end
+      allow(@item).to receive(:stub_object_type).and_return('image')
+      expect(@item.gem_content_metadata_style).to eq(:simple_image)
+      allow(@item).to receive(:stub_object_type).and_return('maps')
+      expect(@item.gem_content_metadata_style).to eq(:map)
+      %w(file bogus).each do |content_type|
+        allow(@item).to receive(:stub_object_type).and_return(content_type)
+        expect(@item.gem_content_metadata_style).to eq(:file)
+      end
+    end
     it "should parse a stub content metadata file" do
       basic_setup 'aa111bb3333'
       @item.load_stub_content_metadata
