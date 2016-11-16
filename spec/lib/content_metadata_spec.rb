@@ -40,9 +40,11 @@ describe Dor::Assembly::ContentMetadata do
   end
 
   describe "#create_basic_content_metadata" do
-    it "should create basic content metadata from a list of files" do
+    it "should create basic content metadata from a list of files in the new folder style" do
       basic_setup 'aa111bb4444'
+      @item.path_to_object
       expect(@item.cm).to be_nil
+      expect(@item.folder_style).to eq(:new)
       result = @item.create_basic_content_metadata
       expect(result).to be_equivalent_to <<-END
         <contentMetadata objectId="druid:aa111bb4444" type="file">
@@ -62,6 +64,26 @@ describe Dor::Assembly::ContentMetadata do
           <resource id="aa111bb4444_4" sequence="4" type="file">
             <label>File 4</label>
             <file id="subfolder/whole_book.pdf"/>
+          </resource>
+        </contentMetadata>
+      END
+      expect(@item.cm).to be_kind_of Nokogiri::XML::Document
+    end
+    it "should create basic content metadata from a list of files in the old folder style" do
+      basic_setup 'aa111bb5555'
+      @item.path_to_object
+      expect(@item.cm).to be_nil
+      expect(@item.folder_style).to eq(:old)
+      result = @item.create_basic_content_metadata
+      expect(result).to be_equivalent_to <<-END
+        <contentMetadata objectId="druid:aa111bb5555" type="file">
+          <resource id="aa111bb5555_1" sequence="1" type="file">
+            <label>File 1</label>
+            <file id="test1.txt"/>
+          </resource>
+          <resource id="aa111bb5555_2" sequence="2" type="file">
+            <label>File 2</label>
+            <file id="test2.txt"/>
           </resource>
         </contentMetadata>
       END

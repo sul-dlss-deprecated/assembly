@@ -99,7 +99,7 @@ module Dor::Assembly
 
       cm_resources = resources.map do |resource| # loop over all resources from the stub content metadata
         resource_files(resource).map do |file| # loop over the files in this resource
-          Assembly::ObjectFile.new(File.join(path_to_object,filename(file)), file_attributes: file_attributes(file), label: resource_label(resource))
+          Assembly::ObjectFile.new(File.join(path_to_content_folder,filename(file)), file_attributes: file_attributes(file), label: resource_label(resource))
         end
       end
 

@@ -45,7 +45,7 @@ module Dor::Assembly
 
     # new style path to a content folder, e.g.  aa/111/bb/2222/aa111bb2222/content
     def path_to_content_folder
-      File.join path_to_object, "content"
+      @folder_style == :old ? path_to_object : File.join(path_to_object, "content")
     end
 
     # new style path to a content file, e.g.  aa/111/bb/2222/aa111bb2222/content/some_file.txt
@@ -55,7 +55,7 @@ module Dor::Assembly
 
     # new style path to a metadata folder, e.g.  aa/111/bb/2222/aa111bb2222/metadata
     def path_to_metadata_folder
-      File.join path_to_object, "metadata"
+      @folder_style == :old ? path_to_object : File.join(path_to_object, "metadata")
     end
 
     # new style path to a metadata file, e.g.  aa/111/bb/2222/aa111bb2222/metadata/some_file.txt
