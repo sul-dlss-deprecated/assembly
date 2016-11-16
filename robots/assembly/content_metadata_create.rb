@@ -16,11 +16,12 @@ module Robots
             return LyberCore::Robot::ReturnState.new(status: :skipped, note: "#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist")
           end
 
-          if ai.stub_content_metadata_exists? && !ai.content_metadata_exists? # stub exists but not regular content metadata, create it from the stub
-            ai.convert_stub_content_metadata
-          else # if we get this far, we do not have stub or regular content metadata, so create basic content metadata
-            ai.create_basic_content_metadata
+          if ai.content_metadata_exists? # regular content metadata exists -- do not recreate it
+            return LyberCore::Robot::ReturnState.new(status: :skipped, note: "#{Dor::Config.assembly.cm_file_name} exists")
           end
+
+          # if stub exists, create metadata from the stub, else create basic content metadata
+          ai.stub_content_metadata_exists? ? ai.convert_stub_content_metadata : ai.create_basic_content_metadata
           ai.persist_content_metadata
           LyberCore::Robot::ReturnState.COMPLETED
         end # end perform

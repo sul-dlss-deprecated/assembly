@@ -30,7 +30,19 @@ describe Robots::DorRepo::Assembly::ContentMetadataCreate do
     expect(result.note).to eq("#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist")
   end
 
-  it "should create basic content metadata if stub contentMetadata does not exist" do
+  it "should not create any content metadata if contentMetadata already exists" do
+    setup_assembly_item(@druid,:item)
+    allow(@assembly_item).to receive(:stub_content_metadata_exists?).and_return(false)
+    allow(@assembly_item).to receive(:content_metadata_exists?).and_return(true)
+    expect(@assembly_item).not_to receive(:convert_stub_content_metadata)
+    expect(@assembly_item).not_to receive(:create_basic_content_metadata)
+    expect(@assembly_item).not_to receive(:persist_content_metadata)
+    result = @r.perform(@work_item)
+    expect(result.status).to eq('skipped')
+    expect(result.note).to eq("#{Dor::Config.assembly.cm_file_name} exists")
+  end
+
+  it "should create basic content metadata if stub contentMetadata does not exist and neither does regular contentMetadata" do
     setup_assembly_item(@druid,:item)
     allow(@assembly_item).to receive(:stub_content_metadata_exists?).and_return(false)
     allow(@assembly_item).to receive(:content_metadata_exists?).and_return(false)
