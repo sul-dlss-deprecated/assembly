@@ -17,6 +17,7 @@ gem 'pry-stack_explorer'
 gem 'robot-controller', '~> 2.0'
 gem 'slop'
 gem 'bluepill', git: 'https://github.com/bluepill-rb/bluepill.git'
+gem 'rubocop'
 
 group :test do
   gem 'equivalent-xml'
@@ -25,10 +26,6 @@ group :test do
   gem 'coveralls', require: false
   gem 'simplecov'
   gem 'fakeweb'
-end
-
-group :development, :test do
-  gem 'rubocop'
 end
 
 group :deployment do
