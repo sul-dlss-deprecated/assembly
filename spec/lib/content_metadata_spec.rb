@@ -214,6 +214,7 @@ describe Dor::Assembly::ContentMetadata do
       @item.root_dir = 'foo/bar'
       @item.druid = DruidTools::Druid.new 'xx999yy8888'
       expect(@item.path_to_object).to be nil
+      expect(@item.folder_style).to be nil
     end
 
     it "#path_to_object should return the expected string when the new druid folder is found" do
@@ -221,6 +222,7 @@ describe Dor::Assembly::ContentMetadata do
       @item.druid = DruidTools::Druid.new 'xx999yy8888', @item.root_dir
       FileUtils.mkdir_p @item.druid.path
       expect(@item.path_to_object).to eq('tmp/test_input/xx/999/yy/8888/xx999yy8888')
+      expect(@item.folder_style).to eq(:new)
       FileUtils.rm_rf @item.druid.path
     end
 
@@ -230,6 +232,7 @@ describe Dor::Assembly::ContentMetadata do
       path = @item.old_druid_tree_path(@item.root_dir)
       FileUtils.mkdir_p path
       expect(@item.path_to_object).to eq('tmp/test_input/xx/999/yy/8888')
+      expect(@item.folder_style).to eq(:old)
       FileUtils.rm_rf path
     end
   end

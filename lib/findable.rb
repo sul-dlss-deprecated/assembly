@@ -1,5 +1,7 @@
 module Dor::Assembly
   module Findable
+    attr_reader :folder_style
+
     # actual path to object, found by iterating through all possible root paths and looking first for the new druid tree path, then for the old druid path
     #  return nil if not found anywhere
     def path_to_object
@@ -10,9 +12,11 @@ module Dor::Assembly
         old_path=old_druid_tree_path(root_dir)
         if File.directory? new_path
           path = new_path
+          @folder_style = :new
           break
         elsif File.directory? old_path
           path = old_path
+          @folder_style = :old
           break
         end
       end

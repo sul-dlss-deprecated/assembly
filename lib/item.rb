@@ -24,7 +24,7 @@ module Dor::Assembly
     end
 
     def check_for_path
-      raise "Path to object #{@druid.id} not found in any of the root directories: #{@root_dir.join(',')}" if path_to_object == nil
+      raise "Path to object #{@druid.id} not found in any of the root directories: #{@root_dir.join(',')}" if path_to_object.nil?
     end
 
     def object_type
