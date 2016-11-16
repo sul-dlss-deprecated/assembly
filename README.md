@@ -1,8 +1,8 @@
-[<img src="https://travis-ci.org/sul-dlss/assembly.png"/>](http://travis-ci.org/sul-dlss/assembly) | [![Dependency Status](https://gemnasium.com/sul-dlss/assembly.svg)](https://gemnasium.com/sul-dlss/assembly) | [![Coverage Status](https://coveralls.io/repos/github/sul-dlss/assembly/badge.svg?branch=master)](https://coveralls.io/github/sul-dlss/assembly?branch=master)
+[<img src="https://travis-ci.org/sul-dlss/assembly.png"/>](http://travis-ci.org/sul-dlss/assembly) | [![Dependency Status](https://gemnasium.com/sul-dlss/assembly.svg)](https://gemnasium.com/sul-dlss/assembly) | [![Coverage Status](https://coveralls.io/repos/sul-dlss/assembly/badge.svg?branch=master&service=github)](https://coveralls.io/github/sul-dlss/assembly?branch=master)
 
 # Assembly Robot Suite
 
-Uses ruby `1.9.3` in production, but testing against `2.2.x`.  Legacy CI in Jenkins.
+Uses ruby `1.9.3` in production, but testing against `2.2.x`.
 
 # Documentation
 
@@ -72,4 +72,3 @@ Typically, a robot does some work and then adds more information to the
 - Compute and compare checksums.
 - Compute image attributes.
 - Initiate the common-accessioning workflow.
-
