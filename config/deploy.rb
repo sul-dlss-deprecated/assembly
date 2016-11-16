@@ -1,4 +1,4 @@
-lock '3.4.0'
+lock '>=3.4'
 
 set :application, 'assembly'
 set :repo_url, 'https://github.com/sul-dlss/assembly'

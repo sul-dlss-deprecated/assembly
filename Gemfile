@@ -3,11 +3,12 @@ source 'https://rubygems.org'
 gem "lyber-core", "~> 4.0", ">= 4.0.3"
 gem "assembly-objectfile", ">=1.6.6"
 gem "assembly-image", ">=1.6.9"
+gem 'activesupport', '< 5'
 gem "rest-client", '>=1.8'
 gem "rake"
 gem "druid-tools"
 gem "mini_exiftool", ">= 1.6", "< 3"
-gem "dor-services", "~> 5.5", ">= 5.5.3"
+gem "dor-services", "~> 5.11", ">= 5.5.3"
 gem "nokogiri"
 gem 'resque'
 gem "pry-debugger", '~> 0.2.2', :platform => :ruby_19
