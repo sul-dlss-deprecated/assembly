@@ -14,11 +14,11 @@ describe Dor::Assembly::Exifable do
 
   def basic_setup(dru, root_dir = nil)
     root_dir           = root_dir || Dor::Config.assembly.root_dir
-    cm_file_name       = Dor::Config.assembly.cm_file_name
     @item              = ExifableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
-    @item.cm_file_name = @item.metadata_file cm_file_name
+    @item.path_to_object  # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
+    # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
   end
 

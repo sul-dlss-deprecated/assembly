@@ -10,9 +10,11 @@ describe Dor::Assembly::ContentMetadata do
   def basic_setup(dru, root_dir = nil)
     root_dir           = root_dir || Dor::Config.assembly.root_dir
     @item              = ContentMetadataItem.new
-    @item.druid        = DruidTools::Druid.new dru
+    @item.druid        = DruidTools::Druid.new dru, root_dir
     @item.root_dir     = root_dir
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
+    @item.path_to_object # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
+    # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
   end
 
   describe "#load_content_metadata" do
@@ -221,11 +223,8 @@ describe Dor::Assembly::ContentMetadata do
   end
 
   describe "Helper methods" do
-    before :each do
-      basic_setup 'aa111bb2222'
-    end
-
     it "#new_node_in_cm should return the expected Nokogiri element" do
+      basic_setup 'aa111bb2222'
       @item.load_content_metadata
       n = @item.new_node_in_cm 'foo'
       expect(n.to_s).to eq('<foo/>')
@@ -233,29 +232,34 @@ describe Dor::Assembly::ContentMetadata do
     end
 
     it "#path_to_object should return nil when no content folder is not found" do
-      @item.root_dir = 'foo/bar'
+      basic_setup 'aa111bb2222', 'foo/bar'
       @item.druid = DruidTools::Druid.new 'xx999yy8888'
       expect(@item.path_to_object).to be nil
       expect(@item.folder_style).to be nil
     end
+  end
+
+  describe "#path_to_object" do
+
+    before :each do
+      basic_setup 'xx999yy8888', TMP_ROOT_DIR
+    end
+
+    after :each do
+      FileUtils.rm_rf TMP_ROOT_DIR
+    end
 
     it "#path_to_object should return the expected string when the new druid folder is found" do
-      @item.root_dir = TMP_ROOT_DIR
-      @item.druid = DruidTools::Druid.new 'xx999yy8888', @item.root_dir
       FileUtils.mkdir_p @item.druid.path
       expect(@item.path_to_object).to eq('tmp/test_input/xx/999/yy/8888/xx999yy8888')
       expect(@item.folder_style).to eq(:new)
-      FileUtils.rm_rf @item.druid.path
     end
 
     it "#path_to_object should return the expected string when the new druid folder is not found, but the older druid style folder is found" do
-      @item.root_dir = TMP_ROOT_DIR
-      @item.druid = DruidTools::Druid.new 'xx999yy8888', @item.root_dir
       path = @item.old_druid_tree_path(@item.root_dir)
       FileUtils.mkdir_p path
       expect(@item.path_to_object).to eq('tmp/test_input/xx/999/yy/8888')
       expect(@item.folder_style).to eq(:old)
-      FileUtils.rm_rf path
     end
   end
 

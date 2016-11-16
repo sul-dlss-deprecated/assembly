@@ -33,39 +33,24 @@ module Dor::Assembly
       File.dirname druid_tree_path(root_dir)
     end
 
-    # returns the location of a content file, which can be in the old location if not found in the new location, e.g.  aa/111/bb/2222/aa111bb2222/content or  aa/111/bb/2222/
-    def content_file(filename)
-      File.exists?(path_to_content_file(filename)) ? path_to_content_file(filename) : old_path_to_file(filename)
-    end
-
-    # returns the location of a metadata file, which can be in the old location if not found in the new location, e.g.  aa/111/bb/2222/aa111bb2222/metadata or  aa/111/bb/2222/
-    def metadata_file(filename)
-      File.exists?(path_to_metadata_file(filename)) ? path_to_metadata_file(filename) : old_path_to_file(filename)
-    end
-
-    # new style path to a content folder, e.g.  aa/111/bb/2222/aa111bb2222/content
+    # path to a content folder, defaults to new (aa/111/bb/2222/aa111bb2222/content), but could also be old style (aa/111/bb/2222)
     def path_to_content_folder
       @folder_style == :old ? path_to_object : File.join(path_to_object, "content")
     end
 
-    # new style path to a content file, e.g.  aa/111/bb/2222/aa111bb2222/content/some_file.txt
-    def path_to_content_file(file_name)
-      File.join path_to_content_folder, file_name
+    # path to a content file, e.g.  either aa/111/bb/2222/aa111bb2222/content/some_file.txt or  aa/111/bb/2222/some_file.txt
+    def path_to_content_file(filename)
+      File.join path_to_content_folder, filename
     end
 
-    # new style path to a metadata folder, e.g.  aa/111/bb/2222/aa111bb2222/metadata
+    # path to a metadata folder, defaults to new (aa/111/bb/2222/aa111bb2222/metadata), but could also be old style (aa/111/bb/2222)
     def path_to_metadata_folder
       @folder_style == :old ? path_to_object : File.join(path_to_object, "metadata")
     end
 
-    # new style path to a metadata file, e.g.  aa/111/bb/2222/aa111bb2222/metadata/some_file.txt
-    def path_to_metadata_file(file_name)
-      File.join path_to_metadata_folder, file_name
-    end
-
-    # old style path to a file, without subfolder e.g.  aa/111/bb/2222/
-    def old_path_to_file(file_name)
-      File.join path_to_object, file_name
+    # path to a content file, e.g.  either aa/111/bb/2222/aa111bb2222/metadata/some_file.xml or  aa/111/bb/2222/some_file.xml
+    def path_to_metadata_file(filename)
+      File.join path_to_metadata_folder, filename
     end
   end
 end

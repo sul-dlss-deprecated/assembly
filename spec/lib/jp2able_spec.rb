@@ -14,6 +14,8 @@ describe Dor::Assembly::Jp2able do
     @item              = Jp2ableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
+    @item.path_to_object  # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
+    # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
   end
 
@@ -31,10 +33,9 @@ describe Dor::Assembly::Jp2able do
 
     it 'should not create and jp2 files when resource type is not specified' do
       basic_setup 'aa111bb2222', TMP_ROOT_DIR
-      @item.cm_file_name = @item.metadata_file(@cm_file_name)
 
       @item.load_content_metadata
-      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      tifs = @item.file_nodes.map { |fn| @item.path_to_content_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
 
       # Only tifs should exist.
@@ -52,9 +53,8 @@ describe Dor::Assembly::Jp2able do
 
     it 'should create jp2 files only for resource type image or page' do
       basic_setup 'ff222cc3333', TMP_ROOT_DIR
-      @item.cm_file_name = @item.metadata_file(@cm_file_name)
       @item.load_content_metadata
-      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      tifs = @item.file_nodes.map { |fn| @item.path_to_content_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
       bef_files = get_filenames(@item)
 
@@ -81,9 +81,9 @@ describe Dor::Assembly::Jp2able do
 
     it 'should create jp2 files only for resource type image or page in new location' do
       basic_setup 'gg111bb2222', TMP_ROOT_DIR
-      @item.cm_file_name = @item.metadata_file(@cm_file_name)
+      @item.cm_file_name = @item.path_to_metadata_file(@cm_file_name)
       @item.load_content_metadata
-      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      tifs = @item.file_nodes.map { |fn| @item.path_to_content_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
       bef_files = get_filenames(@item)
 
@@ -111,7 +111,6 @@ describe Dor::Assembly::Jp2able do
       Dor::Config.assembly.overwrite_jp2 = false
 
       basic_setup 'ff222cc3333', TMP_ROOT_DIR
-      @item.cm_file_name = @item.metadata_file(@cm_file_name)
 
       # copy an existing jp2
       source_jp2=File.join TMP_ROOT_DIR, 'ff/222/cc/3333','image111.jp2'
@@ -119,7 +118,7 @@ describe Dor::Assembly::Jp2able do
       system "cp #{source_jp2} #{copy_jp2}"
 
       @item.load_content_metadata
-      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      tifs = @item.file_nodes.map { |fn| @item.path_to_content_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
       bef_files = get_filenames(@item)
 
@@ -147,7 +146,6 @@ describe Dor::Assembly::Jp2able do
       Dor::Config.assembly.overwrite_jp2 = true
 
       basic_setup 'ff222cc3333', TMP_ROOT_DIR
-      @item.cm_file_name = @item.metadata_file(@cm_file_name)
 
       # copy an existing jp2
       source_jp2=File.join TMP_ROOT_DIR, 'ff/222/cc/3333','image111.jp2'
@@ -155,7 +153,7 @@ describe Dor::Assembly::Jp2able do
       system "cp #{source_jp2} #{copy_jp2}"
 
       @item.load_content_metadata
-      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      tifs = @item.file_nodes.map { |fn| @item.path_to_content_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
       bef_files = get_filenames(@item)
 
@@ -183,10 +181,9 @@ describe Dor::Assembly::Jp2able do
       Dor::Config.assembly.overwrite_dpg_jp2 = false
 
       basic_setup 'hh222cc3333', TMP_ROOT_DIR
-      @item.cm_file_name = @item.metadata_file(@cm_file_name)
 
       @item.load_content_metadata
-      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      tifs = @item.file_nodes.map { |fn| @item.path_to_content_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
       bef_files = get_filenames(@item)
 
@@ -211,10 +208,9 @@ describe Dor::Assembly::Jp2able do
       Dor::Config.assembly.overwrite_dpg_jp2 = true
 
       basic_setup 'hh222cc3333', TMP_ROOT_DIR
-      @item.cm_file_name = @item.metadata_file(@cm_file_name)
 
       @item.load_content_metadata
-      tifs = @item.file_nodes.map { |fn| @item.content_file fn['id'] }
+      tifs = @item.file_nodes.map { |fn| @item.path_to_content_file fn['id'] }
       jp2s = tifs.map { |t| t.sub /\.tif$/, '.jp2' }
       bef_files = get_filenames(@item)
 
@@ -238,7 +234,7 @@ describe Dor::Assembly::Jp2able do
 
     it 'should add a <file> node to XML if the resource type is not specified' do
       basic_setup 'aa111bb2222', TMP_ROOT_DIR
-      @item.cm_file_name = @item.metadata_file(@cm_file_name)
+      @item.cm_file_name = @item.path_to_metadata_file(@cm_file_name)
 
       exp_xml = <<-END.gsub(/^ {8}/, '')
         <?xml version="1.0"?>

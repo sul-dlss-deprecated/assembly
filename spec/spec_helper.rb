@@ -29,7 +29,7 @@ def noko_doc(x)
 end
 
 def get_filenames(item)
-  item.file_nodes.map { |fn| item.content_file fn['id'] }
+  item.file_nodes.map { |fn| item.path_to_content_file fn['id'] }
 end
 
 def count_file_types(files,extension)

@@ -12,14 +12,13 @@ describe Dor::Assembly::Checksumable do
     root_dir           = root_dir || Dor::Config.assembly.root_dir
     dummy_xml    = '<contentMetadata><file></file></contentMetadata>'
     root_dir     = Dor::Config.assembly.root_dir
-    cm_file_name = Dor::Config.assembly.cm_file_name
 
     @item              = ChecksumableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
     @item.cm           = Nokogiri::XML dummy_xml
-    @item.cm_file_name = @item.metadata_file cm_file_name
-
+    @item.path_to_object  # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
+    # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
     @fake_checksum_data = { :md5 => "a123", :sha1 => "567c" }
     @parent_file_node   = @item.cm.xpath('//file').first
   end
