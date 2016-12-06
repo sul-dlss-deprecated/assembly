@@ -81,6 +81,8 @@ module Dor::Assembly
     def create_basic_content_metadata
       raise "Content metadata file #{Dor::Config.assembly.cm_file_name} exists already" if content_metadata_exists?
 
+      logger.info("Creating basic content metadata for #{druid.id}")
+
       # get a list of files in content folder recursively and sort them
       files = Dir["#{path_to_content_folder}/**/*"].reject {|file| File.directory? file}.sort
       cm_resources = files.map { |file| Assembly::ObjectFile.new(file) }
@@ -94,6 +96,8 @@ module Dor::Assembly
     def convert_stub_content_metadata
       # uses the assembly-objectfile gem to create content metadata using the stub contentMetadata provided
       load_stub_content_metadata
+
+      logger.info("Creating content metadata from stub for #{druid.id}")
 
       cm_resources = resources.map do |resource| # loop over all resources from the stub content metadata
         resource_files(resource).map do |file| # loop over the files in this resource

@@ -44,12 +44,14 @@ end
 
 def setup_work_item(druid)
   @work_item=double("work_item")
-  allow(@work_item).to receive('druid').and_return(druid)
+  allow(@work_item).to receive('druid').and_return(DruidTools::Druid.new(druid))
+  allow(@work_item).to receive('id').and_return(druid)
 end
 
 def setup_assembly_item(druid,obj_type)
   @assembly_item=double("assembly_item")
-  allow(@assembly_item).to receive('druid').and_return(druid)
+  allow(@assembly_item).to receive('druid').and_return(DruidTools::Druid.new(druid))
+  allow(@assembly_item).to receive('id').and_return(druid)
   if obj_type==:item
     allow(@assembly_item).to receive(:object_type).and_return('item')
     allow(@assembly_item).to receive(:is_item?).and_return(true)
@@ -62,4 +64,16 @@ end
 
 def kdu_missing?
   `which kdu_compress`.empty?
+end
+
+class TestableItem
+  include Dor::Assembly::Accessionable
+  include Dor::Assembly::ContentMetadata
+  include Dor::Assembly::Findable
+  include Dor::Assembly::Exifable
+  include Dor::Assembly::Checksumable
+  include Dor::Assembly::Jp2able
+  def logger
+    ROBOT_LOG
+  end
 end

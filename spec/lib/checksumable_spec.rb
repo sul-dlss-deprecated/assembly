@@ -1,11 +1,5 @@
 require 'spec_helper'
 
-class ChecksumableItem
-  include Dor::Assembly::Checksumable
-  include Dor::Assembly::ContentMetadata
-  include Dor::Assembly::Findable
-end
-
 describe Dor::Assembly::Checksumable do
 
   def basic_setup(dru, root_dir = nil)
@@ -13,7 +7,7 @@ describe Dor::Assembly::Checksumable do
     dummy_xml    = '<contentMetadata><file></file></contentMetadata>'
     root_dir     = Dor::Config.assembly.root_dir
 
-    @item              = ChecksumableItem.new
+    @item              = TestableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
     @item.cm           = Nokogiri::XML dummy_xml
@@ -40,7 +34,7 @@ describe Dor::Assembly::Checksumable do
 
     it "should be able to initialize our testing object" do
       basic_setup('aa111bb2222')
-      expect(@item).to be_a_kind_of ChecksumableItem
+      expect(@item).to be_a_kind_of TestableItem
     end
 
   end

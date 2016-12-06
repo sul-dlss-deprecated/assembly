@@ -5,7 +5,7 @@ module Dor::Assembly
 
     def compute_checksums
 
-      Robots::DorRepo::Assembly::ChecksumCompute.logger.warn("Computing checksums for #{druid}")
+      logger.info("Computing checksums for #{druid.id}")
 
       # Get the object we'll use to compute checksums.
 

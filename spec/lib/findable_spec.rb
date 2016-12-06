@@ -1,9 +1,5 @@
 require 'spec_helper'
 
-class ExifableItem
-  include Dor::Assembly::Findable
-end
-
 describe Dor::Assembly::Findable do
 
   before :each do
@@ -13,13 +9,13 @@ describe Dor::Assembly::Findable do
   end
 
   it "should compute the new druid tree path without checking for existence" do
-    @item = ExifableItem.new
+    @item = TestableItem.new
     @item.druid = DruidTools::Druid.new 'druid:xx111yy2222'
     expect(@item.druid_tree_path(@root_dir1)).to eq("#{@root_dir1}/xx/111/yy/2222/xx111yy2222")
   end
 
   it "should compute the old druid tree path without checking for existence" do
-    @item = ExifableItem.new
+    @item = TestableItem.new
     @item.druid = DruidTools::Druid.new 'druid:xx111yy2222'
     expect(@item.old_druid_tree_path(@root_dir2)).to eq("#{@root_dir2}/xx/111/yy/2222")
   end

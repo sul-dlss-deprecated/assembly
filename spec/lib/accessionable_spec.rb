@@ -1,23 +1,17 @@
 require 'spec_helper'
 FakeWeb.allow_net_connect = false
 
-class AccessionableItem
-  include Dor::Assembly::Accessionable
-  include Dor::Assembly::ContentMetadata
-  include Dor::Assembly::Findable
-end
-
 describe Dor::Assembly::Accessionable do
 
   before :each do
-    @item              = AccessionableItem.new
+    @item              = TestableItem.new
     @item.druid        = DruidTools::Druid.new 'aa111bb2222'
     @item.root_dir     = Dor::Config.assembly.root_dir
   end
 
   describe '#AccessionableItem' do
     it 'should be able to initialize our testing object' do
-      expect(@item).to be_a_kind_of AccessionableItem
+      expect(@item).to be_a_kind_of TestableItem
     end
   end
 

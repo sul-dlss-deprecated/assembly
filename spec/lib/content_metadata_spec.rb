@@ -1,15 +1,10 @@
 require 'spec_helper'
 
-class ContentMetadataItem
-  include Dor::Assembly::ContentMetadata
-  include Dor::Assembly::Findable
-end
-
 describe Dor::Assembly::ContentMetadata do
 
   def basic_setup(dru, root_dir = nil)
     root_dir           = root_dir || Dor::Config.assembly.root_dir
-    @item              = ContentMetadataItem.new
+    @item              = TestableItem.new
     @item.druid        = DruidTools::Druid.new dru, root_dir
     @item.root_dir     = root_dir
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
