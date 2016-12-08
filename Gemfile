@@ -16,6 +16,7 @@ gem 'pry-rescue'
 gem 'pry-stack_explorer'
 gem 'robot-controller', '~> 2.0'
 gem 'slop'
+gem 'bluepill', git: 'https://github.com/bluepill-rb/bluepill.git'
 
 group :test do
   gem 'equivalent-xml'
