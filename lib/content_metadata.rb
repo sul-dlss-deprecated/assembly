@@ -16,6 +16,24 @@ module Dor::Assembly
       :root_dir
     )
 
+    # generate the content metadata for this object based on some logic of whether stub or regular content metadata already exists
+    def create_content_metadata
+      return LyberCore::Robot::ReturnState.new(status: :skipped, note: 'object is not an item') unless is_item? # not an item, skip
+
+      if stub_content_metadata_exists? && content_metadata_exists? # both stub and regular content metadata exist -- this is an ambiguous situation and generates an error
+        raise "#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist"
+      end
+
+      if content_metadata_exists? # regular content metadata exists -- do not recreate it
+        return LyberCore::Robot::ReturnState.new(status: :skipped, note: "#{Dor::Config.assembly.cm_file_name} exists")
+      end
+
+      # if stub exists, create metadata from the stub, else create basic content metadata
+      stub_content_metadata_exists? ? convert_stub_content_metadata : create_basic_content_metadata
+      persist_content_metadata
+      LyberCore::Robot::ReturnState.COMPLETED
+    end
+
     # return the location to store or load the contentMetadata.xml file (could be in either the new or old location)
     def cm_file_name
       @cm_file_name ||= path_to_metadata_file(Dor::Config.assembly.cm_file_name)
