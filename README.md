@@ -2,7 +2,7 @@
 
 # Assembly Robot Suite
 
-Uses ruby `1.9.3` in production, but testing against `2.2.x`.  Legacy CI in Jenkins.
+Uses ruby `1.9.3` in production, but testing against `2.2.x`.
 
 # Documentation
 
@@ -72,4 +72,3 @@ Typically, a robot does some work and then adds more information to the
 - Compute and compare checksums.
 - Compute image attributes.
 - Initiate the common-accessioning workflow.
-

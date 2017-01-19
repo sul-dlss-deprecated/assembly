@@ -1,11 +1,5 @@
 require 'spec_helper'
 
-class ExifableItem
-  include Dor::Assembly::Exifable
-  include Dor::Assembly::ContentMetadata
-  include Dor::Assembly::Findable
-end
-
 describe Dor::Assembly::Exifable do
 
   before :each do
@@ -14,16 +8,15 @@ describe Dor::Assembly::Exifable do
 
   def basic_setup(dru, root_dir = nil)
     root_dir           = root_dir || Dor::Config.assembly.root_dir
-    cm_file_name       = Dor::Config.assembly.cm_file_name
-    @item              = ExifableItem.new
+    @item              = TestableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
-    @item.cm_file_name = @item.metadata_file cm_file_name
+    @item.path_to_object  # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
+    # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
   end
 
   def run_persist_xml_test
-
     # Content metadata before.
     @item.load_content_metadata
     bef = noko_doc @item.cm.to_xml
@@ -72,7 +65,7 @@ describe Dor::Assembly::Exifable do
 
   describe '#ExifableItem' do
     it 'should be able to initialize our testing object' do
-      expect(@item).to be_a_kind_of ExifableItem
+      expect(@item).to be_a_kind_of TestableItem
     end
   end
 
@@ -194,7 +187,7 @@ describe Dor::Assembly::Exifable do
         expect(file_node.attributes['size'].nil?).to eq(true)
         expect(file_node.attributes['mimetype'].nil?).to eq(true)
         # the first file node as the publish/preserve/attributes already set, the others do not
-        expected = (file_node == bef_file_nodes.first)? false : true
+        expected = file_node == bef_file_nodes.first ? false : true
         expect(file_node.attributes['publish'].nil?).to eq(expected)
         expect(file_node.attributes['preserve'].nil?).to eq(expected)
         expect(file_node.attributes['shelve'].nil?).to eq(expected)

@@ -22,7 +22,7 @@ module Robots
           ai = item(druid)
 
           if items_only && !ai.is_item?
-            logger.warn("Skipping #{@step_name} for #{druid} since it is not an item")
+            logger.info("Skipping #{@step_name} for #{druid.id} since it is not an item")
           else
             ai.load_content_metadata
             yield ai

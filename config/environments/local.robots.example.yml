@@ -42,15 +42,14 @@
 
 host1:
   - dor_assemblyWF_jp2-create
+  - dor_assemblyWF_checksum-compute
+  - dor_assemblyWF_content-metadata-create
+  - dor_assemblyWF_exif-collect
+  - dor_assemblyWF_accessioning-initiate
 
 host2:
   - dor_assemblyWF_jp2-create
-
-host3:
   - dor_assemblyWF_checksum-compute
-
-host4:
+  - dor_assemblyWF_content-metadata-create
   - dor_assemblyWF_exif-collect
-
-host5:
   - dor_assemblyWF_accessioning-initiate

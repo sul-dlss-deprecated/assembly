@@ -5,7 +5,7 @@ module Dor::Assembly
 
     def collect_exif_info
 
-      Robots::DorRepo::Assembly::ExifCollect.logger.warn("Collecting exif info for #{druid}")
+      logger.info("Collecting exif info for #{druid.id}")
 
       fnode_tuples.each do |fn, obj|
 
@@ -16,7 +16,7 @@ module Dor::Assembly
         case obj.object_type
 
           when :image # when the object file type is an image
-            fn.add_child(image_data_xml(obj.exif)) if fn.css('imageData').size == 0
+            fn.add_child(image_data_xml(obj.exif)) if fn.css('imageData').empty?
 
           else #all other object file types will force resource type to not be an image
             set_node_type fn.parent,'file' # set the resource type to 'file' if it's not currently defined

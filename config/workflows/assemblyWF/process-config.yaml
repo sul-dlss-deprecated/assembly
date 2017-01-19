@@ -1,5 +1,10 @@
-jp2-create:
+content-metadata-create:
     prerequisite: start-assembly
+    batch_limit:  1000
+    error_limit:  10
+
+jp2-create:
+    prerequisite: content-metadata-create
     batch_limit:  1000
     error_limit:  10
 
