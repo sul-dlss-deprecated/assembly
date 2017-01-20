@@ -5,7 +5,7 @@ module Dor::Assembly
 
     def compute_checksums
 
-      logger.info("Computing checksums for #{druid.id}")
+      LyberCore::Log.info("Computing checksums for #{druid.id}")
 
       # Get the object we'll use to compute checksums.
 

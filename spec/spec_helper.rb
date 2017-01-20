@@ -73,7 +73,4 @@ class TestableItem
   include Dor::Assembly::Exifable
   include Dor::Assembly::Checksumable
   include Dor::Assembly::Jp2able
-  def logger
-    ROBOT_LOG
-  end
 end
