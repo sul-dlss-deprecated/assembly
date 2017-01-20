@@ -5,7 +5,7 @@ module Dor::Assembly
 
     def collect_exif_info
 
-      logger.info("Collecting exif info for #{druid.id}")
+      LyberCore::Log.info("Collecting exif info for #{druid.id}")
 
       fnode_tuples.each do |fn, obj|
 
