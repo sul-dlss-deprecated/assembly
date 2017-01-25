@@ -1,5 +1,4 @@
 require 'spec_helper'
-FakeWeb.allow_net_connect = false
 
 describe Dor::Assembly::Accessionable do
 
