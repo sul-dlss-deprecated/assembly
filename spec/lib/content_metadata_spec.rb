@@ -89,6 +89,15 @@ describe Dor::Assembly::ContentMetadata do
   end
 
   describe "#create_basic_content_metadata" do
+    it "should not create basic content metadata if no files are present" do
+      basic_setup 'aa111bb6666'
+      @item.path_to_object
+      expect(@item.cm).to be_nil
+      expect(@item.folder_style).to eq(:new)
+      result = @item.create_basic_content_metadata
+      expect(result).to be_nil
+    end
+
     it "should create basic content metadata from a list of files in the new folder style" do
       basic_setup 'aa111bb4444'
       @item.path_to_object
@@ -247,7 +256,12 @@ describe Dor::Assembly::ContentMetadata do
       @tmp_dir           = 'tmp'
       @dummy_xml_content = "<xml><foobar /></xml>\n"
       @item.load_content_metadata
+      @tf = File.join @tmp_dir, 'out.xml'
       allow(@item.cm).to receive(:to_xml).and_return @dummy_xml_content
+    end
+
+    after :each do
+      FileUtils.rm_f @tf
     end
 
     it "should write to @cm_handle, if @cm_handle is set" do
@@ -259,14 +273,19 @@ describe Dor::Assembly::ContentMetadata do
     end
 
     it "should write to @cm_file_name, if @cm_handle is not set" do
-      tf = File.join @tmp_dir, 'out.xml'
-      FileUtils.rm_f tf
-      expect(File.exists?(tf)).to eq(false)
-      @item.cm_file_name = tf
+      expect(File.exists?(@tf)).to eq(false)
+      @item.cm_file_name = @tf
       @item.persist_content_metadata
-      expect(File.read(tf)).to eq(@dummy_xml_content)
+      expect(File.read(@tf)).to eq(@dummy_xml_content)
     end
 
+    it "should not write a file if the contentMetadata is blank" do
+      expect(File.exists?(@tf)).to eq(false)
+      @item.cm_file_name = @tf
+      allow(@item.cm).to receive(:to_xml).and_return nil
+      @item.persist_content_metadata
+      expect(File.exists?(@tf)).to eq(false)
+    end
   end
 
   describe "Helper methods" do
