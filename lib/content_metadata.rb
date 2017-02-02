@@ -72,7 +72,7 @@ module Dor::Assembly
       xml = @cm.to_xml
       if @cm_handle
         @cm_handle.puts xml
-      else
+      elsif !xml.blank?
         File.open(cm_file_name, 'w') { |f| f.puts xml }
       end
     end
@@ -103,8 +103,9 @@ module Dor::Assembly
 
       # get a list of files in content folder recursively and sort them
       files = Dir["#{path_to_content_folder}/**/*"].reject {|file| File.directory? file}.sort
-      cm_resources = files.map { |file| Assembly::ObjectFile.new(file) }
+      return nil if files.empty? # only generate contentMetadata if there are files in the content folder, else return nil
 
+      cm_resources = files.map { |file| Assembly::ObjectFile.new(file) }
       # uses the assembly-objectfile gem to create basic content metadata using a simple list of files found in the content folder
       xml = Assembly::ContentMetadata.create_content_metadata(druid: @druid.druid, style: :file, objects: cm_resources, bundle: :filename)
       @cm = Nokogiri.XML(xml)

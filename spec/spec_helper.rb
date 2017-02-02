@@ -10,6 +10,7 @@ require 'equivalent-xml'
 require 'equivalent-xml/rspec_matchers'
 require 'fakeweb'
 
+FakeWeb.allow_net_connect = %r{^https?://coveralls.io} # allow coveralls requests
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::HTMLFormatter,Coveralls::SimpleCov::Formatter])
 SimpleCov.start do
   add_filter 'spec/'
