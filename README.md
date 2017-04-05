@@ -42,7 +42,7 @@ Refer to dependencies for jp2 creation in the `assembly-image` gem.
 ## Running tests
 
 ```bash
-cp config/environments/local.example.rb config/environments/development.rb
+cp config/environments/local.rb.example config/environments/development.rb
 bundle exec rspec spec
 ```
 
