@@ -20,13 +20,17 @@ describe Dor::Assembly::Accessionable do
       allow(@item).to receive(:object_type).and_return('item')
       FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/initialize_workspace", :body => "ok", :status => ["200"])
       FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/apo_workflows/accessionWF", :body => "ok", :status => ["200"])
+      expect(@item).to receive(:initialize_workflow)
+      expect(@item).to receive(:initialize_workspace)
       expect(@item.initiate_accessioning).to be_truthy
     end
 
-    it 'should be runnable using stubs for external calls for a collection type object' do
+    it 'should be runnable using stubs for external calls for a collection type object but not initlaize workspace' do
       allow(@item).to receive(:object_type).and_return('collection')
       FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/initialize_workspace", :body => "ok", :status => ["200"])
       FakeWeb.register_uri(:post, "https://localhost/dor/v1/objects/druid:aa111bb2222/apo_workflows/accessionWF", :body => "ok", :status => ["200"])
+      expect(@item).to receive(:initialize_workflow)
+      expect(@item).to_not receive(:initialize_workspace)
       expect(@item.initiate_accessioning).to be_truthy
     end
 
