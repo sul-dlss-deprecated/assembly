@@ -7,7 +7,7 @@ gem 'dor-services', '~> 5.11', '>= 5.5.3'
 gem 'druid-tools'
 gem 'lyber-core', '~> 4.0', '>= 4.1.0'
 gem 'mini_exiftool', '>= 1.6', '< 3'
-gem 'nokogiri'
+gem 'nokogiri', '>=1.7.1'
 gem 'pry-debugger', '~> 0.2.2', :platform => :ruby_19
 gem 'pry-rescue'
 gem 'pry-stack_explorer'
