@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'assembly-image', '>=1.6.9'
 gem 'assembly-objectfile', '>=1.6.6'
-gem 'bluepill', git: 'https://github.com/bluepill-rb/bluepill.git'
+gem 'bluepill', '>=0.1.3'
 gem 'dor-services', '~> 5.11', '>= 5.5.3'
 gem 'druid-tools'
 gem 'lyber-core', '~> 4.0', '>= 4.1.0'
