@@ -20,7 +20,7 @@ describe Robots::DorRepo::Assembly::ChecksumCompute do
   it "should not compute checksums for type=set if configured that way" do
     Dor::Config.configure.assembly.items_only=true
     setup_assembly_item(@druid,:set)
-    expect(@assembly_item).to receive(:is_item?)
+    expect(@assembly_item).to receive(:is_item?).and_return(false)
     expect(@assembly_item).not_to receive(:load_content_metadata)
     expect(@assembly_item).not_to receive(:compute_checksums)
     @r.perform(@work_item)

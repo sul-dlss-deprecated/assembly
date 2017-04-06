@@ -46,7 +46,6 @@ end
 def setup_work_item(druid)
   @work_item=double("work_item")
   allow(@work_item).to receive('druid').and_return(DruidTools::Druid.new(druid))
-  allow(@work_item).to receive('id').and_return(druid)
 end
 
 def setup_assembly_item(druid,obj_type)
