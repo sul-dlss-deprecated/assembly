@@ -4,6 +4,7 @@ require 'checksumable'
 require 'exifable'
 require 'accessionable'
 require 'findable'
+require 'identifiable'
 require 'item'
 
 Dor::Config.configure do

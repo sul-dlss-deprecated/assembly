@@ -140,6 +140,7 @@ Style/ClassAndModuleChildren:
     - 'lib/findable.rb'
     - 'lib/item.rb'
     - 'lib/jp2able.rb'
+    - 'lib/identifiable.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -161,6 +162,7 @@ Style/Documentation:
     - 'lib/findable.rb'
     - 'lib/item.rb'
     - 'lib/jp2able.rb'
+    - 'lib/identifiable.rb'
     - 'robots/assembly/accessioning_initiate.rb'
     - 'robots/assembly/base.rb'
     - 'robots/assembly/checksum_compute.rb'
@@ -320,7 +322,7 @@ Style/PercentLiteralDelimiters:
 Style/PredicateName:
   Exclude:
     - 'spec/**/*'
-    - 'lib/item.rb'
+    - 'lib/identifiable.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.

@@ -8,6 +8,7 @@ module Dor::Assembly
     include Dor::Assembly::Exifable
     include Dor::Assembly::Accessionable
     include Dor::Assembly::Findable
+    include Dor::Assembly::Identifiable
 
     def initialize(params = {})
       # Takes a druid, either as a string or as a Druid object.
@@ -25,15 +26,6 @@ module Dor::Assembly
 
     def check_for_path
       raise "Path to object #{@druid.id} not found in any of the root directories: #{@root_dir.join(',')}" if path_to_object.nil?
-    end
-
-    def object_type
-      obj_type=object.identityMetadata.objectType
-      return (obj_type.nil? ? 'unknown' : obj_type.first)
-    end
-
-    def is_item?
-      object_type.downcase.strip == 'item'
     end
 
   end
