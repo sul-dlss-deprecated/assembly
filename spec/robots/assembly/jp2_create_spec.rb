@@ -4,7 +4,6 @@ describe Robots::DorRepo::Assembly::Jp2Create do
 
   before :each do
     @druid='aa222cc3333'
-    setup_work_item(@druid)
     allow(Dor::Assembly::Item).to receive(:new).and_return(@assembly_item)
     @r = Robots::DorRepo::Assembly::Jp2Create.new(:druid=>@druid)
   end
@@ -15,7 +14,7 @@ describe Robots::DorRepo::Assembly::Jp2Create do
     expect(@assembly_item).to receive(:is_item?)
     expect(@assembly_item).to receive(:load_content_metadata)
     expect(@assembly_item).to receive(:create_jp2s)
-    @r.perform(@work_item)
+    @r.perform(@assembly_item)
   end
 
   it "should not create jp2 for type=set if configured that way" do
@@ -24,7 +23,7 @@ describe Robots::DorRepo::Assembly::Jp2Create do
     expect(@assembly_item).to receive(:is_item?)
     expect(@assembly_item).not_to receive(:load_content_metadata)
     expect(@assembly_item).not_to receive(:create_jp2s)
-    @r.perform(@work_item)
+    @r.perform(@assembly_item)
   end
 
   it "should create jp2 for type=set if configured that way" do
@@ -33,7 +32,7 @@ describe Robots::DorRepo::Assembly::Jp2Create do
     expect(@assembly_item).not_to receive(:is_item?)
     expect(@assembly_item).to receive(:load_content_metadata)
     expect(@assembly_item).to receive(:create_jp2s)
-    @r.perform(@work_item)
+    @r.perform(@assembly_item)
   end
 
 
