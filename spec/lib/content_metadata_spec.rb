@@ -214,6 +214,10 @@ describe Dor::Assembly::ContentMetadata do
       expect(@item.gem_content_metadata_style).to eq(:simple_image)
       allow(@item).to receive(:stub_object_type).and_return('maps')
       expect(@item.gem_content_metadata_style).to eq(:map)
+      %w(3d 3D).each do |content_type|
+        allow(@item).to receive(:stub_object_type).and_return(content_type)
+        expect(@item.gem_content_metadata_style).to eq(:"3d")
+      end
       %w(file bogus).each do |content_type|
         allow(@item).to receive(:stub_object_type).and_return(content_type)
         expect(@item.gem_content_metadata_style).to eq(:file)
