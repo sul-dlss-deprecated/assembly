@@ -9,12 +9,12 @@ module Dor::Assembly
     attr_accessor(
       :cm,
       :stub_cm,
-      :cm_file_name,
-      :stub_cm_file_name,
       :cm_handle,
       :druid,
       :root_dir
     )
+
+    attr_writer :cm_file_name, :stub_cm_file_name
 
     # generate the content metadata for this object based on some logic of whether stub or regular content metadata already exists
     def create_content_metadata
