@@ -35,11 +35,10 @@ module StubContentMetadataParser
     file.at_xpath('@name').value
   end
 
-  def file_attributes(file)
+  # return a hash for any known file attributes defined in the stub content metadata file, these will override or add to the defaults
+  def stub_file_attributes(file)
     result = {}
-    result[:preserve] = file.at_xpath('@preserve').value unless file.at_xpath('@preserve').blank?
-    result[:publish] = file.at_xpath('@publish').value unless file.at_xpath('@publish').blank?
-    result[:shelve] = file.at_xpath('@shelve').value unless file.at_xpath('@shelve').blank?
-    result.empty? ? nil : result # return nil if no attributes are found; else return the hash
+    %w[preserve publish shelve role].each { |attribute| result[attribute.to_sym] = file.at_xpath("@#{attribute}").value unless file.at_xpath("@#{attribute}").blank? }
+    result
   end
 end

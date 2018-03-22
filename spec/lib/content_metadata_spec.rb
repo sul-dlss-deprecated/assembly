@@ -168,11 +168,11 @@ describe Dor::Assembly::ContentMetadata do
           <resource id="aa111bb3333_2" sequence="2" type="page">
             <label>optional page 2 label</label>
             <file id="page2.tif" preserve="yes" publish="no" shelve="no"/>
-            <file id="some_filename.txt" preserve="yes" publish="yes" shelve="yes"/>
+            <file id="some_filename.txt" role="transcription" preserve="yes" publish="yes" shelve="yes"/>
           </resource>
           <resource id="aa111bb3333_3" sequence="3" type="object">
             <label>Object 1</label>
-            <file id="whole_book.pdf" preserve="yes" publish="yes" shelve="yes"/>
+            <file id="whole_book.pdf" preserve="no" publish="yes" shelve="yes"/>
           </resource>
         </contentMetadata>
       END
@@ -240,12 +240,12 @@ describe Dor::Assembly::ContentMetadata do
       resource_files2.each_with_index { |rf,i| expect(@item.filename(rf)).to eq(expected_filenames[i]) }
       expected_filenames = ['whole_book.pdf']
       resource_files3.each_with_index { |rf,i| expect(@item.filename(rf)).to eq(expected_filenames[i]) }
-      expected_attributes = [nil, {preserve: 'no', publish: 'no', shelve: 'no'}]
-      resource_files1.each_with_index { |rf,i| expect(@item.file_attributes(rf)).to eq(expected_attributes[i]) }
-      expected_attributes = [nil, nil]
-      resource_files2.each_with_index { |rf,i| expect(@item.file_attributes(rf)).to eq(expected_attributes[i]) }
-      expected_attributes = [nil]
-      resource_files3.each_with_index { |rf,i| expect(@item.file_attributes(rf)).to eq(expected_attributes[i]) }
+      expected_attributes = [{}, {preserve: 'no', publish: 'no', shelve: 'no'}] # two files in first resource
+      resource_files1.each_with_index { |rf,i| expect(@item.stub_file_attributes(rf)).to eq(expected_attributes[i]) }
+      expected_attributes = [{}, {role: 'transcription'}] # two files in second resource, only second has attributes
+      resource_files2.each_with_index { |rf,i| expect(@item.stub_file_attributes(rf)).to eq(expected_attributes[i]) }
+      expected_attributes = [{preserve: 'no'}] # one file in third resource (with a single overriden attribute)
+      resource_files3.each_with_index { |rf,i| expect(@item.stub_file_attributes(rf)).to eq(expected_attributes[i]) }
     end
   end
 

@@ -42,11 +42,8 @@ module Dor::Assembly
       node['size']=file.filesize.to_s unless node['size']
 
       # add publish/preserve/shelve attributes based on mimetype, unless they already exist in content metadata (use defaults if mimetype not found in mapping)
-      file_attributes=Assembly::FILE_ATTRIBUTES[file.mimetype] || Assembly::FILE_ATTRIBUTES['default']
-
-      node['preserve']=file_attributes[:preserve] unless node['preserve']
-      node['publish']=file_attributes[:publish] unless node['publish']
-      node['shelve']=file_attributes[:shelve] unless node['shelve']
+      file_attributes = default_file_attributes(file)
+      %w[preserve publish shelve].each { |attribute| node[attribute]=file_attributes[attribute.to_sym] unless node[attribute] }
 
     end
 
