@@ -120,13 +120,23 @@ module Dor::Assembly
 
       cm_resources = resources.map do |resource| # loop over all resources from the stub content metadata
         resource_files(resource).map do |file| # loop over the files in this resource
-          Assembly::ObjectFile.new(File.join(path_to_content_folder,filename(file)), file_attributes: file_attributes(file), label: resource_label(resource))
+          obj_file = Assembly::ObjectFile.new(File.join(path_to_content_folder,filename(file)))
+          # set the default file attributes here (instead of in the create_content_metadata step in the gem below)
+          #  so they can overridden/added to by values coming from the stub content metadata
+          obj_file.file_attributes = default_file_attributes(obj_file).merge(stub_file_attributes(file))
+          obj_file.label = resource_label(resource)
+          obj_file
         end
       end
 
       xml = Assembly::ContentMetadata.create_content_metadata(druid: @druid.druid, style: gem_content_metadata_style, objects: cm_resources, bundle: :prebundled, add_file_attributes: true)
       @cm = Nokogiri.XML(xml)
       xml
+    end
+
+    # pass in an Assembly::ObjectFile object, get the default file attributes hash
+    def default_file_attributes(obj_file)
+      Assembly::FILE_ATTRIBUTES[obj_file.mimetype] || Assembly::FILE_ATTRIBUTES['default']
     end
 
   end
