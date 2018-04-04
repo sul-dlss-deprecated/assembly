@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Dor::Assembly::Exifable do
-
   before :each do
     basic_setup 'aa111bb2222'
   end
@@ -11,9 +10,9 @@ describe Dor::Assembly::Exifable do
     @item              = TestableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
-    @item.path_to_object  # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
+    @item.path_to_object # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
     # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
-    @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
+    @dummy_xml = '<contentMetadata><resource></resource></contentMetadata>'
   end
 
   def run_persist_xml_test
@@ -30,7 +29,7 @@ describe Dor::Assembly::Exifable do
     expect(aft.root['type']).to eq('image')
 
     # check that each file node does not start with size, mimetype attributes
-    bef_file_nodes=bef.xpath('//file')
+    bef_file_nodes = bef.xpath('//file')
     expect(bef_file_nodes.size).to eq(3)
     bef_file_nodes.each do |file_node|
       expect(file_node.attributes['size'].nil?).to eq(true)
@@ -38,21 +37,21 @@ describe Dor::Assembly::Exifable do
     end
 
     # check that each resource node starts out with type=image
-    bef_res_nodes=bef.xpath('//resource')
+    bef_res_nodes = bef.xpath('//resource')
     expect(bef_res_nodes.size).to eq(3)
     bef_res_nodes.each do |res_node|
       expect(res_node.attributes['type'].value).to eq('image')
     end
 
     # check that each file node now has size, mimetype
-    aft_file_nodes=aft.xpath('//file')
+    aft_file_nodes = aft.xpath('//file')
     expect(aft_file_nodes.size).to eq(3)
     expect(aft_file_nodes[0].attributes['size'].value).to eq('63468')
     expect(aft_file_nodes[1].attributes['size'].value).to eq('63472')
-    aft_file_nodes.each {|file_node| expect(file_node.attributes['mimetype'].value).to eq('image/tiff')}
+    aft_file_nodes.each { |file_node| expect(file_node.attributes['mimetype'].value).to eq('image/tiff') }
 
     # check that each resource node is still type=image
-    aft_res_nodes=aft.xpath('//resource')
+    aft_res_nodes = aft.xpath('//resource')
     expect(aft_res_nodes.size).to eq(3)
     aft_res_nodes.each do |res_node|
       expect(res_node.attributes['type'].value).to eq('image')
@@ -70,14 +69,13 @@ describe Dor::Assembly::Exifable do
   end
 
   describe 'Simple XML methods' do
-
     it '#set_node_type_as_image should add type="image" attributes correctly' do
       @item.cm = noko_doc @dummy_xml
       %w(contentMetadata resource).each do |tag|
-          node = @item.cm.xpath("//#{tag}").first
-          @item.set_node_type node,'image'
+        node = @item.cm.xpath("//#{tag}").first
+        @item.set_node_type node, 'image'
       end
-      exp = Nokogiri::XML( '<contentMetadata type="image"><resource type="image">' +
+      exp = Nokogiri::XML('<contentMetadata type="image"><resource type="image">' +
                            '</resource></contentMetadata>')
       expect(@item.cm).to be_equivalent_to exp
     end
@@ -86,11 +84,9 @@ describe Dor::Assembly::Exifable do
       exif = double 'image_width' => 55, 'image_height' => 66
       expect(@item.image_data_xml(exif)).to eq('<imageData width="55" height="66"/>')
     end
-
   end
 
   describe '#collect_exif_info' do
-
     before(:each) do
       clone_test_input TMP_ROOT_DIR
     end
@@ -122,12 +118,12 @@ describe Dor::Assembly::Exifable do
       expect(aft.root['type']).to eq('image')
 
       # check that the first resource node starts with a type="page" and the second is blank
-      bef_res_nodes=bef.xpath('//resource')
+      bef_res_nodes = bef.xpath('//resource')
       expect(bef_res_nodes.size).to eq(1)
-      expect(bef_res_nodes[0].attributes['type'].nil?).to eq(true)  # first resource type should not exist
+      expect(bef_res_nodes[0].attributes['type'].nil?).to eq(true) # first resource type should not exist
 
       # check that each file node starts with size, mimetype attributes
-      bef_file_nodes=bef.xpath('//file')
+      bef_file_nodes = bef.xpath('//file')
       expect(bef_file_nodes.size).to eq(2)
       bef_file_nodes.each do |file_node|
         expect(file_node.attributes['size'].nil?).to eq(false)
@@ -135,7 +131,7 @@ describe Dor::Assembly::Exifable do
       end
 
       # check that the file nodes still have bogus size, mimetype
-      aft_file_nodes=aft.xpath('//file')
+      aft_file_nodes = aft.xpath('//file')
       expect(aft_file_nodes.size).to eq(2)
       expect(aft_file_nodes[0].attributes['size'].value).to eq('100')
       expect(aft_file_nodes[0].attributes['mimetype'].value).to eq('crappy/mimetype')
@@ -145,14 +141,13 @@ describe Dor::Assembly::Exifable do
       expect(aft_file_nodes[1].attributes['mimetype'].value).to eq('crappy/again')
 
       # check that each resource node end with a type="file" (i.e. was not changed)
-      aft_res_nodes=aft.xpath('//resource')
+      aft_res_nodes = aft.xpath('//resource')
       expect(aft_res_nodes.size).to eq(1)
       expect(aft_res_nodes[0].attributes['type'].value).to eq('file') # first resource type should be set to file (default when not all files are images)
 
       # check for imageData nodes being present for each file node that is an image
       expect(bef.xpath('//file/imageData').size).to eq(0)
       expect(aft.xpath('//file/imageData').size).to eq(1)
-
     end
 
     it 'should not overwrite existing contentmetadata type and resource types if they exist in incoming content metadata XML file' do
@@ -172,16 +167,16 @@ describe Dor::Assembly::Exifable do
       expect(aft.root['type']).to eq('file')
 
       # check that the first resource node starts with a type="page" and the second is blank
-      bef_res_nodes=bef.xpath('//resource')
+      bef_res_nodes = bef.xpath('//resource')
       expect(bef_res_nodes.size).to eq(5)
-      expect(bef_res_nodes[0].attributes['type'].nil?).to eq(true)  # first resource type should not exist
+      expect(bef_res_nodes[0].attributes['type'].nil?).to eq(true) # first resource type should not exist
       expect(bef_res_nodes[1].attributes['type'].nil?).to eq(true) # second resource type should not exist
       expect(bef_res_nodes[2].attributes['type'].nil?).to eq(true) # third resource type should not exist
       expect(bef_res_nodes[3].attributes['type'].value).to eq('page') # fourth resource type should be set to page
       expect(bef_res_nodes[4].attributes['type'].value).to eq('image') # last resource type should be set to image
 
       # check that each file node does not start with size, mimetype attributes
-      bef_file_nodes=bef.xpath('//file')
+      bef_file_nodes = bef.xpath('//file')
       expect(bef_file_nodes.size).to eq(10)
       bef_file_nodes.each do |file_node|
         expect(file_node.attributes['size'].nil?).to eq(true)
@@ -194,7 +189,7 @@ describe Dor::Assembly::Exifable do
       end
 
       # check that the file nodes now have the correct size, mimetype
-      aft_file_nodes=aft.xpath('//file')
+      aft_file_nodes = aft.xpath('//file')
       expect(aft_file_nodes.size).to eq(10)
       expect(aft_file_nodes[0].attributes['size'].value).to eq('63468')
       expect(aft_file_nodes[0].attributes['mimetype'].value).to eq('image/tiff')
@@ -259,7 +254,7 @@ describe Dor::Assembly::Exifable do
       expect(aft_file_nodes[9].attributes['shelve'].value).to eq('no')
 
       # check that each resource node end with a type="file" (i.e. was not changed)
-      aft_res_nodes=aft.xpath('//resource')
+      aft_res_nodes = aft.xpath('//resource')
       expect(aft_res_nodes.size).to eq(5)
       expect(aft_res_nodes[0].attributes['type'].value).to eq('file') # first resource type should be set to file (which is the default if it contains no images)
       expect(aft_res_nodes[1].attributes['type'].value).to eq('file') # second resource type should be set to file (which is the default if it contains no images)
@@ -270,9 +265,6 @@ describe Dor::Assembly::Exifable do
       # check for imageData nodes being present for each file node that is an image
       expect(bef.xpath('//file/imageData').size).to eq(0)
       expect(aft.xpath('//file/imageData').size).to eq(6)
-
     end
-
   end
-
 end

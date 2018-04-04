@@ -11,7 +11,7 @@ require 'equivalent-xml/rspec_matchers'
 require 'fakeweb'
 
 FakeWeb.allow_net_connect = %r{^https?://coveralls.io} # allow coveralls requests
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::HTMLFormatter,Coveralls::SimpleCov::Formatter])
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatter])
 SimpleCov.start do
   add_filter 'spec/'
 end
@@ -21,7 +21,7 @@ FileUtils.mkdir_p tmp_output_dir
 TMP_ROOT_DIR = "tmp/test_input"
 
 # override for testing
-Dor::Config.assembly.root_dir=['spec/test_input','spec/test_input2']
+Dor::Config.assembly.root_dir = ['spec/test_input', 'spec/test_input2']
 
 include Assembly
 def noko_doc(x)
@@ -33,8 +33,8 @@ def get_filenames(item)
   item.file_nodes.map { |fn| item.path_to_content_file fn['id'] }
 end
 
-def count_file_types(files,extension)
-  files.reject {|file| File.extname(file) != extension}.size
+def count_file_types(files, extension)
+  files.reject { |file| File.extname(file) != extension }.size
 end
 
 def clone_test_input(destination)
@@ -43,11 +43,11 @@ def clone_test_input(destination)
   system "rsync -rqOlt --delete #{source}/ #{destination}/"
 end
 
-def setup_assembly_item(druid,obj_type = :item)
-  @assembly_item=TestableItem.new
+def setup_assembly_item(druid, obj_type = :item)
+  @assembly_item = TestableItem.new
   allow(@assembly_item).to receive('druid').and_return(DruidTools::Druid.new(druid))
   allow(@assembly_item).to receive('id').and_return(druid)
-  if obj_type==:item
+  if obj_type == :item
     allow(@assembly_item).to receive(:object_type).and_return('item')
     allow(@assembly_item).to receive(:is_item?).and_return(true)
   else

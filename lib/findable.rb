@@ -8,8 +8,8 @@ module Dor::Assembly
       return @path_to_object unless @path_to_object.nil?
       path = nil
       Array(@root_dir).each do |root_dir|
-        new_path=druid_tree_path(root_dir)
-        old_path=old_druid_tree_path(root_dir)
+        new_path = druid_tree_path(root_dir)
+        old_path = old_druid_tree_path(root_dir)
         if File.directory? new_path
           path = new_path
           @folder_style = :new
