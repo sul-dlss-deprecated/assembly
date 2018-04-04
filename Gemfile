@@ -25,7 +25,6 @@ group :test do
   gem 'fakeweb'
   gem 'rspec', '~> 3.4'
   gem 'simplecov'
-  gem 'yard'
 end
 
 group :deployment do

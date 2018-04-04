@@ -1,8 +1,0 @@
-lib/item.rb e4c28809b1579b16cc402cb26a6b71560b1f7525
-lib/jp2able.rb 7c5dc75a01a1b4ccf6557de3232a0bf491132cda
-lib/assembly.rb a66b79d0910f1b760d47f52860a3fe4551e2d851
-lib/findable.rb d4446bb0b8d0d6d51fe7cc49fa9c324bdd06e1fb
-lib/exifable.rb a0b054440fc0e93f42f10b720a95343c1663051c
-lib/checksumable.rb bb9a9d9214682c477254e17b60c30d131e3cca5d
-lib/accessionable.rb d9c384876a36ab6a7fb1394adcfbd286f15a2e08
-lib/content_metadata.rb 2cb517fe1c2f54ac5a6a9b159f8292f3f3f6b11c
