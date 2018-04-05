@@ -1,16 +1,15 @@
 require 'spec_helper'
 
 describe Dor::Assembly::Jp2able do
-
   def basic_setup(dru, root_dir = nil)
-    root_dir           = root_dir || Dor::Config.assembly.root_dir
-    @cm_file_name       = Dor::Config.assembly.cm_file_name
+    root_dir = root_dir || Dor::Config.assembly.root_dir
+    @cm_file_name = Dor::Config.assembly.cm_file_name
     @item              = TestableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
-    @item.path_to_object  # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
+    @item.path_to_object # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
     # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
-    @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
+    @dummy_xml = '<contentMetadata><resource></resource></contentMetadata>'
   end
 
   describe '#Jp2ableItem' do
@@ -41,8 +40,8 @@ describe Dor::Assembly::Jp2able do
       create_jp2s
       files = get_filenames(@item)
       expect(@item.file_nodes.size).to eq(6)
-      expect(count_file_types(files,'.tif')).to eq(3)
-      expect(count_file_types(files,'.jp2')).to eq(3)
+      expect(count_file_types(files, '.tif')).to eq(3)
+      expect(count_file_types(files, '.jp2')).to eq(3)
     end
 
     it 'should create jp2 files only for resource type image or page' do
@@ -54,15 +53,15 @@ describe Dor::Assembly::Jp2able do
 
       # there should be 10 file nodes in total
       expect(@item.file_nodes.size).to eq(10)
-      expect(count_file_types(bef_files,'.tif')).to eq(5)
-      expect(count_file_types(bef_files,'.jp2')).to eq(1)
+      expect(count_file_types(bef_files, '.tif')).to eq(5)
+      expect(count_file_types(bef_files, '.jp2')).to eq(1)
 
       create_jp2s
       # we now have two extra jps, only for the resource nodes that had type=image or page specified, but not for the others
       expect(@item.file_nodes.size).to eq(12)
       aft_files = get_filenames(@item)
-      expect(count_file_types(aft_files,'.tif')).to eq(5)
-      expect(count_file_types(aft_files,'.jp2')).to eq(3)
+      expect(count_file_types(aft_files, '.tif')).to eq(5)
+      expect(count_file_types(aft_files, '.jp2')).to eq(3)
 
       # Read the XML file and check the file names.
       xml = Nokogiri::XML File.read(@item.cm_file_name)
@@ -70,7 +69,6 @@ describe Dor::Assembly::Jp2able do
       expected_results = ["file111.mp3", "file111.pdf", "file111.wav", "file112.pdf", "image111.jp2",
                           "image111.tif", "image112.tif", "image113.tif", "image114.jp2", "image114.tif", "image115.jp2", "image115.tif"]
       expect(file_nodes.map { |fn| fn['id'] }.sort).to eq(expected_results)
-
     end
 
     it 'should create jp2 files only for resource type image or page in new location' do
@@ -83,32 +81,30 @@ describe Dor::Assembly::Jp2able do
 
       # there should be 3 file nodes in total
       expect(@item.file_nodes.size).to eq(3)
-      expect(count_file_types(bef_files,'.tif')).to eq(3)
-      expect(count_file_types(bef_files,'.jp2')).to eq(0)
+      expect(count_file_types(bef_files, '.tif')).to eq(3)
+      expect(count_file_types(bef_files, '.jp2')).to eq(0)
 
       create_jp2s
       # we now have three jps
       expect(@item.file_nodes.size).to eq(6)
       aft_files = get_filenames(@item)
-      expect(count_file_types(aft_files,'.tif')).to eq(3)
-      expect(count_file_types(aft_files,'.jp2')).to eq(3)
+      expect(count_file_types(aft_files, '.tif')).to eq(3)
+      expect(count_file_types(aft_files, '.jp2')).to eq(3)
 
       # Read the XML file and check the file names.
       xml = Nokogiri::XML File.read(@item.cm_file_name)
       file_nodes = xml.xpath "//resource/file"
       expect(file_nodes.map { |fn| fn['id'] }.sort).to eq(["image111.jp2", "image111.tif", "image112.jp2", "image112.tif", "sub/image113.jp2", "sub/image113.tif"])
-
     end
 
     it 'should not overwrite existing jp2s but should not fail either' do
-
       Dor::Config.assembly.overwrite_jp2 = false
 
       basic_setup 'ff222cc3333', TMP_ROOT_DIR
 
       # copy an existing jp2
-      source_jp2=File.join TMP_ROOT_DIR, 'ff/222/cc/3333','image111.jp2'
-      copy_jp2=File.join TMP_ROOT_DIR, 'ff/222/cc/3333','image115.jp2'
+      source_jp2 = File.join TMP_ROOT_DIR, 'ff/222/cc/3333', 'image111.jp2'
+      copy_jp2 = File.join TMP_ROOT_DIR, 'ff/222/cc/3333', 'image115.jp2'
       system "cp #{source_jp2} #{copy_jp2}"
 
       @item.load_content_metadata
@@ -118,8 +114,8 @@ describe Dor::Assembly::Jp2able do
 
       # there should be 10 file nodes in total
       expect(@item.file_nodes.size).to eq(10)
-      expect(count_file_types(bef_files,'.tif')).to eq(5)
-      expect(count_file_types(bef_files,'.jp2')).to eq(1)
+      expect(count_file_types(bef_files, '.tif')).to eq(5)
+      expect(count_file_types(bef_files, '.jp2')).to eq(1)
 
       expect(File.exists?(copy_jp2)).to eq(true)
 
@@ -127,23 +123,21 @@ describe Dor::Assembly::Jp2able do
       # we now have only one extra jp2, only for the resource nodes that had type=image or page specified, since one was not created because it was already there
       expect(@item.file_nodes.size).to eq(11)
       aft_files = get_filenames(@item)
-      expect(count_file_types(aft_files,'.tif')).to eq(5)
-      expect(count_file_types(aft_files,'.jp2')).to eq(2)
+      expect(count_file_types(aft_files, '.tif')).to eq(5)
+      expect(count_file_types(aft_files, '.jp2')).to eq(2)
 
       # cleanup copied jp2
       system "rm #{copy_jp2}"
-
     end
 
     it 'should overwrite existing jp2s but should not fail either' do
-
       Dor::Config.assembly.overwrite_jp2 = true
 
       basic_setup 'ff222cc3333', TMP_ROOT_DIR
 
       # copy an existing jp2
-      source_jp2=File.join TMP_ROOT_DIR, 'ff/222/cc/3333','image111.jp2'
-      copy_jp2=File.join TMP_ROOT_DIR, 'ff/222/cc/3333','image115.jp2'
+      source_jp2 = File.join TMP_ROOT_DIR, 'ff/222/cc/3333', 'image111.jp2'
+      copy_jp2 = File.join TMP_ROOT_DIR, 'ff/222/cc/3333', 'image115.jp2'
       system "cp #{source_jp2} #{copy_jp2}"
 
       @item.load_content_metadata
@@ -153,8 +147,8 @@ describe Dor::Assembly::Jp2able do
 
       # there should be 10 file nodes in total
       expect(@item.file_nodes.size).to eq(10)
-      expect(count_file_types(bef_files,'.tif')).to eq(5)
-      expect(count_file_types(bef_files,'.jp2')).to eq(1)
+      expect(count_file_types(bef_files, '.tif')).to eq(5)
+      expect(count_file_types(bef_files, '.jp2')).to eq(1)
 
       expect(File.exists?(copy_jp2)).to eq(true)
 
@@ -162,16 +156,14 @@ describe Dor::Assembly::Jp2able do
 
       expect(@item.file_nodes.size).to eq(11)
       aft_files = get_filenames(@item)
-      expect(count_file_types(aft_files,'.tif')).to eq(5)
-      expect(count_file_types(aft_files,'.jp2')).to eq(2)
+      expect(count_file_types(aft_files, '.tif')).to eq(5)
+      expect(count_file_types(aft_files, '.jp2')).to eq(2)
 
       # cleanup copied jp2
       system "rm #{copy_jp2}"
-
     end
 
     it 'should not overwrite existing jp2s when there is a DPG style jp2 already there' do
-
       Dor::Config.assembly.overwrite_dpg_jp2 = false
 
       basic_setup 'hh222cc3333', TMP_ROOT_DIR
@@ -183,22 +175,20 @@ describe Dor::Assembly::Jp2able do
 
       # there should be 6 file nodes in total to start
       expect(@item.file_nodes.size).to eq(6)
-      expect(count_file_types(bef_files,'.tif')).to eq(5)
-      expect(count_file_types(bef_files,'.jp2')).to eq(1)
+      expect(count_file_types(bef_files, '.tif')).to eq(5)
+      expect(count_file_types(bef_files, '.jp2')).to eq(1)
 
       create_jp2s
 
       # we now have three extra jp2, one for each tif that didn't have a matching dpg style jp2
       # even if the jp2 does not exist in the original content metadata, if a matching one is found, a derivative won't be created
-      expect(@item.file_nodes.size).to eq(9)  # there are 9 total nodes, 4 jp2 and 5 tif
+      expect(@item.file_nodes.size).to eq(9) # there are 9 total nodes, 4 jp2 and 5 tif
       aft_files = get_filenames(@item)
-      expect(count_file_types(aft_files,'.tif')).to eq(5)
-      expect(count_file_types(aft_files,'.jp2')).to eq(4)
-
+      expect(count_file_types(aft_files, '.tif')).to eq(5)
+      expect(count_file_types(aft_files, '.jp2')).to eq(4)
     end
 
     it 'should overwrite existing jp2s when there is a DPG style jp2 already there' do
-
       Dor::Config.assembly.overwrite_dpg_jp2 = true
 
       basic_setup 'hh222cc3333', TMP_ROOT_DIR
@@ -210,22 +200,19 @@ describe Dor::Assembly::Jp2able do
 
       # there should be 6 file nodes in total to start
       expect(@item.file_nodes.size).to eq(6)
-      expect(count_file_types(bef_files,'.tif')).to eq(5)
-      expect(count_file_types(bef_files,'.jp2')).to eq(1)
+      expect(count_file_types(bef_files, '.tif')).to eq(5)
+      expect(count_file_types(bef_files, '.jp2')).to eq(1)
 
       create_jp2s
 
       expect(@item.file_nodes.size).to eq(11)
       aft_files = get_filenames(@item)
-      expect(count_file_types(aft_files,'.tif')).to eq(5)
-      expect(count_file_types(aft_files,'.jp2')).to eq(6)
-
+      expect(count_file_types(aft_files, '.tif')).to eq(5)
+      expect(count_file_types(aft_files, '.jp2')).to eq(6)
     end
-
   end
 
   describe '#add_jp2_file_node' do
-
     it 'should add a <file> node to XML if the resource type is not specified' do
       basic_setup 'aa111bb2222', TMP_ROOT_DIR
       @item.cm_file_name = @item.path_to_metadata_file(@cm_file_name)
@@ -246,7 +233,6 @@ describe Dor::Assembly::Jp2able do
       @item.add_jp2_file_node resource_node, 'foo.tif'
       expect(@item.cm).to be_equivalent_to exp_xml
     end
-
   end
 
   def create_jp2s
@@ -254,5 +240,4 @@ describe Dor::Assembly::Jp2able do
 
     @item.create_jp2s
   end
-
 end

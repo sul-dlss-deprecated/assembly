@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe Dor::Assembly::Identifiable do
-
   it "should return the object type from identityMetadata datastream" do
     @dru = 'aa111bb2222'
     @druid = DruidTools::Druid.new @dru
-    dor_item=double('dor_item')
-    identity_metadata=double('identity_metadata')
+    dor_item = double('dor_item')
+    identity_metadata = double('identity_metadata')
     allow(identity_metadata).to receive(:objectType).and_return(['item'])
     allow(dor_item).to receive(:identityMetadata).and_return(identity_metadata)
     @item = Dor::Assembly::Item.new :druid => @dru
@@ -34,5 +33,4 @@ describe Dor::Assembly::Identifiable do
     allow(@item).to receive(:object_type).and_return('')
     expect(@item.is_item?).to be_falsey
   end
-
 end

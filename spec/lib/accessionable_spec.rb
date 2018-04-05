@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Dor::Assembly::Accessionable do
-
   before :each do
     @item              = TestableItem.new
     @item.druid        = DruidTools::Druid.new 'aa111bb2222'
@@ -17,7 +16,6 @@ describe Dor::Assembly::Accessionable do
   end
 
   describe '#initiate_accessioning' do
-
     it 'should be runnable using stubs for external calls for an item type object' do
       allow(@item).to receive(:object_type).and_return('item')
       expect(@item.initiate_accessioning).to be_truthy
@@ -29,7 +27,5 @@ describe Dor::Assembly::Accessionable do
       expect(@item).to_not receive(:initialize_workspace)
       expect(@item.initiate_accessioning).to be_truthy
     end
-
   end
-
 end

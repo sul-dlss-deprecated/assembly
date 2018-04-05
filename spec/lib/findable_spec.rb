@@ -1,11 +1,10 @@
 require 'spec_helper'
 
 describe Dor::Assembly::Findable do
-
   before :each do
-    @cm_file_name=Dor::Config.assembly.cm_file_name
-    @root_dir1=Dor::Config.assembly.root_dir[0]
-    @root_dir2=Dor::Config.assembly.root_dir[1]
+    @cm_file_name = Dor::Config.assembly.cm_file_name
+    @root_dir1 = Dor::Config.assembly.root_dir[0]
+    @root_dir2 = Dor::Config.assembly.root_dir[1]
   end
 
   it "should compute the new druid tree path without checking for existence" do
@@ -59,7 +58,6 @@ describe Dor::Assembly::Findable do
   it "should throw an exception when the object folder is found but the content metadata file is not found" do
     exp_msg = "Content metadata file contentMetadata.xml not found for hh222cc4444 in any of the root directories: spec/test_input,spec/test_input2"
     @item = Dor::Assembly::Item.new :druid => 'druid:hh222cc4444'
-    expect {@item.load_content_metadata}.to raise_error RuntimeError, exp_msg
+    expect { @item.load_content_metadata }.to raise_error RuntimeError, exp_msg
   end
-
 end

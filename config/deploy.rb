@@ -39,7 +39,6 @@ set :linked_dirs, %w(log run config/environments config/certs)
 set :honeybadger_env, fetch(:stage)
 
 namespace :deploy do
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 10 do
@@ -52,5 +51,4 @@ namespace :deploy do
   end
 
   after :publishing, :restart
-
 end

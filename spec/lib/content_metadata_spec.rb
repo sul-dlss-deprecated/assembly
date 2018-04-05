@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Dor::Assembly::ContentMetadata do
-
   def basic_setup(dru, root_dir = nil)
     root_dir           = root_dir || Dor::Config.assembly.root_dir
     @item              = TestableItem.new
@@ -72,7 +71,7 @@ describe Dor::Assembly::ContentMetadata do
     end
     it "should raise an exception if no contentMetadata file is present" do
       basic_setup 'aa111bb3333'
-      expect{@item.load_content_metadata}.to raise_error(StandardError)
+      expect{ @item.load_content_metadata }.to raise_error(StandardError)
     end
   end
 
@@ -84,7 +83,7 @@ describe Dor::Assembly::ContentMetadata do
     end
     it "should raise an exception if no stub contentMetadata file is present" do
       basic_setup 'aa111bb2222'
-      expect{@item.load_stub_content_metadata}.to raise_error(StandardError)
+      expect{ @item.load_stub_content_metadata }.to raise_error(StandardError)
     end
   end
 
@@ -149,7 +148,7 @@ describe Dor::Assembly::ContentMetadata do
     end
     it "should raise an exception if content metadata already exists" do
       basic_setup 'aa111bb2222'
-      expect{@item.create_basic_content_metadata}.to raise_error(StandardError)
+      expect{ @item.create_basic_content_metadata }.to raise_error(StandardError)
     end
   end
 
@@ -180,7 +179,7 @@ describe Dor::Assembly::ContentMetadata do
     end
     it "should raise an exception if stub content metadata is missing" do
       basic_setup 'aa111bb2222'
-      expect{@item.convert_stub_content_metadata}.to raise_error(StandardError)
+      expect{ @item.convert_stub_content_metadata }.to raise_error(StandardError)
     end
   end
 
@@ -206,7 +205,7 @@ describe Dor::Assembly::ContentMetadata do
   describe "#stub_content_metadata_parser" do
     it "should map content metadata types to the gem correctly" do
       basic_setup 'aa111bb3333'
-      ['flipbook (r-l)','book','a book (l-r)'].each do |content_type|
+      ['flipbook (r-l)', 'book', 'a book (l-r)'].each do |content_type|
         allow(@item).to receive(:stub_object_type).and_return(content_type)
         expect(@item.gem_content_metadata_style).to eq(:simple_book)
       end
@@ -227,7 +226,7 @@ describe Dor::Assembly::ContentMetadata do
       resources = @item.resources
       expect(resources.size).to eq(3)
       expected_labels = ['Optional label', 'optional page 2 label', '']
-      resources.each_with_index { |r,i| expect(@item.resource_label(r)).to eq(expected_labels[i]) }
+      resources.each_with_index { |r, i| expect(@item.resource_label(r)).to eq(expected_labels[i]) }
       resource_files1 = @item.resource_files(resources[0])
       resource_files2 = @item.resource_files(resources[1])
       resource_files3 = @item.resource_files(resources[2])
@@ -235,22 +234,21 @@ describe Dor::Assembly::ContentMetadata do
       expect(resource_files2.size).to eq(2)
       expect(resource_files3.size).to eq(1)
       expected_filenames = ['page1.tif', 'page1.txt']
-      resource_files1.each_with_index { |rf,i| expect(@item.filename(rf)).to eq(expected_filenames[i]) }
+      resource_files1.each_with_index { |rf, i| expect(@item.filename(rf)).to eq(expected_filenames[i]) }
       expected_filenames = ['page2.tif', 'some_filename.txt']
-      resource_files2.each_with_index { |rf,i| expect(@item.filename(rf)).to eq(expected_filenames[i]) }
+      resource_files2.each_with_index { |rf, i| expect(@item.filename(rf)).to eq(expected_filenames[i]) }
       expected_filenames = ['whole_book.pdf']
-      resource_files3.each_with_index { |rf,i| expect(@item.filename(rf)).to eq(expected_filenames[i]) }
-      expected_attributes = [{}, {preserve: 'no', publish: 'no', shelve: 'no'}] # two files in first resource
-      resource_files1.each_with_index { |rf,i| expect(@item.stub_file_attributes(rf)).to eq(expected_attributes[i]) }
-      expected_attributes = [{}, {role: 'transcription'}] # two files in second resource, only second has attributes
-      resource_files2.each_with_index { |rf,i| expect(@item.stub_file_attributes(rf)).to eq(expected_attributes[i]) }
-      expected_attributes = [{preserve: 'no'}] # one file in third resource (with a single overriden attribute)
-      resource_files3.each_with_index { |rf,i| expect(@item.stub_file_attributes(rf)).to eq(expected_attributes[i]) }
+      resource_files3.each_with_index { |rf, i| expect(@item.filename(rf)).to eq(expected_filenames[i]) }
+      expected_attributes = [{}, { preserve: 'no', publish: 'no', shelve: 'no' }] # two files in first resource
+      resource_files1.each_with_index { |rf, i| expect(@item.stub_file_attributes(rf)).to eq(expected_attributes[i]) }
+      expected_attributes = [{}, { role: 'transcription' }] # two files in second resource, only second has attributes
+      resource_files2.each_with_index { |rf, i| expect(@item.stub_file_attributes(rf)).to eq(expected_attributes[i]) }
+      expected_attributes = [{ preserve: 'no' }] # one file in third resource (with a single overriden attribute)
+      resource_files3.each_with_index { |rf, i| expect(@item.stub_file_attributes(rf)).to eq(expected_attributes[i]) }
     end
   end
 
   describe "#persist_content_metadata" do
-
     before :each do
       basic_setup 'aa111bb2222'
       @tmp_dir           = 'tmp'
@@ -306,7 +304,6 @@ describe Dor::Assembly::ContentMetadata do
   end
 
   describe "#path_to_object" do
-
     before :each do
       basic_setup 'xx999yy8888', TMP_ROOT_DIR
     end
@@ -330,7 +327,6 @@ describe Dor::Assembly::ContentMetadata do
   end
 
   describe "Methods returning <file> nodes and filenode-Image tuples" do
-
     it "#file_nodes should return the expected N of Nokogiri elements" do
       basic_setup 'aa111bb2222'
       @item.load_content_metadata
@@ -367,7 +363,5 @@ describe Dor::Assembly::ContentMetadata do
       expect(objs[0][1].object_type).to eq(:image) # first file is a tiff
       expect(objs[1][1].object_type).to eq(:text)  # second file is a txt
     end
-
   end
-
 end
