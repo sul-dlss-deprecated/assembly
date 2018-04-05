@@ -22,7 +22,9 @@ gem 'slop'
 group :test do
   gem 'coveralls', require: false
   gem 'equivalent-xml'
-  gem 'fakeweb'
+  # Needed to support ruby 2.4+. No version since 1.3 has been released and this
+  # appears like it might be unsupported.
+  gem 'fakeweb', git: 'https://github.com/chrisk/fakeweb.git'
   gem 'rspec', '~> 3.4'
   gem 'simplecov'
 end
