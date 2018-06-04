@@ -1,4 +1,4 @@
-[<img src="https://travis-ci.org/sul-dlss/assembly.png"/>](http://travis-ci.org/sul-dlss/assembly) | [![Dependency Status](https://gemnasium.com/sul-dlss/assembly.svg)](https://gemnasium.com/sul-dlss/assembly) | [![Coverage Status](https://coveralls.io/repos/sul-dlss/assembly/badge.svg?branch=master&service=github)](https://coveralls.io/github/sul-dlss/assembly?branch=master)
+[<img src="https://travis-ci.org/sul-dlss/assembly.png"/>](http://travis-ci.org/sul-dlss/assembly) | [![Coverage Status](https://coveralls.io/repos/sul-dlss/assembly/badge.svg?branch=master&service=github)](https://coveralls.io/github/sul-dlss/assembly?branch=master)
 
 # Assembly Robot Suite
 
