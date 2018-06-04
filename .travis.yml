@@ -3,6 +3,7 @@ notifications:
 
 rvm:
   - 2.2.4 # deployed
+  - 2.3.4
   - 2.5.1
 
 env:
