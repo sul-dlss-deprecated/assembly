@@ -9,7 +9,6 @@ gem 'honeybadger'
 gem 'lyber-core', '>=4.1.3'
 gem 'mini_exiftool', '>= 1.6', '< 3'
 gem 'nokogiri', '>=1.8.1'
-gem 'pry-debugger', '~> 0.2.2', :platform => :ruby_19
 gem 'pry-rescue'
 gem 'pry-stack_explorer'
 gem 'rake'
