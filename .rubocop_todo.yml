@@ -145,7 +145,6 @@ Style/BracesAroundHashParameters:
 # SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'lib/accessionable.rb'
     - 'lib/checksumable.rb'
     - 'lib/content_metadata.rb'
     - 'lib/exifable.rb'
@@ -172,7 +171,6 @@ Style/Documentation:
   Exclude:
     - 'spec/**/*'
     - 'test/**/*'
-    - 'lib/accessionable.rb'
     - 'lib/checksumable.rb'
     - 'lib/content_metadata.rb'
     - 'lib/exifable.rb'
