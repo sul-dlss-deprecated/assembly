@@ -347,7 +347,6 @@ DEPENDENCIES
   assembly-image (>= 1.6.9)
   assembly-objectfile (>= 1.6.6)
   awesome_print
-  bluepill (>= 0.1.3)
   capistrano (~> 3)
   capistrano-bundler
   capistrano-rvm
