@@ -1,16 +1,16 @@
 require 'coveralls'
 Coveralls.wear!
 
-environment = (ENV['ROBOT_ENVIRONMENT'] ||= 'development')
+environment = (ENV['ROBOT_ENVIRONMENT'] ||= 'local')
 bootfile    = File.expand_path(File.dirname(__FILE__) + '/../config/boot')
 
 require bootfile
 require 'tempfile'
 require 'equivalent-xml'
 require 'equivalent-xml/rspec_matchers'
-require 'fakeweb'
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: false)
 
-FakeWeb.allow_net_connect = %r{^https?://coveralls.io} # allow coveralls requests
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatter])
 SimpleCov.start do
   add_filter 'spec/'
@@ -62,7 +62,6 @@ def kdu_missing?
 end
 
 class TestableItem
-  include Dor::Assembly::Accessionable
   include Dor::Assembly::ContentMetadata
   include Dor::Assembly::Findable
   include Dor::Assembly::Identifiable

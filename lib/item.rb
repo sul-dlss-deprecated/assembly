@@ -4,7 +4,6 @@ module Dor::Assembly
     include Dor::Assembly::Jp2able
     include Dor::Assembly::Checksumable
     include Dor::Assembly::Exifable
-    include Dor::Assembly::Accessionable
     include Dor::Assembly::Findable
     include Dor::Assembly::Identifiable
 
