@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'assembly-image', '>=1.6.9'
 gem 'assembly-objectfile', '>=1.6.6'
-gem 'bluepill', '>=0.1.3'
 gem 'dor-services', '~> 6.0'
 gem 'druid-tools'
 gem 'honeybadger'
