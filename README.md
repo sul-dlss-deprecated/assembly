@@ -2,7 +2,7 @@
 
 # Assembly Robot Suite
 
-Uses ruby `1.9.3` in production, but testing against `2.2.x`.
+Uses ruby `2.3.5` in production.
 
 # Documentation
 
@@ -27,7 +27,7 @@ Refer to dependencies for jp2 creation in the `assembly-image` gem.
 - 1.4.3  don't overwrite mimetype or filesize if it already exists in content metadata
 - 1.4.4  Show more detailed error messages when computing checksums fail
 - 1.5.0  allow multiple root directories to be specified so that we can have the robots look in directories other than '/dor/assembly' to find the content
-- 1.5.1  Update service_root configuration to allow different service URLs (e.g. with or without v1) for test and production 
+- 1.5.1  Update service_root configuration to allow different service URLs (e.g. with or without v1) for test and production
 - 1.5.2  Require latest versions of assembly-image and assembly-objectfile to prevent problems that could occur with spaces in image filenames
 - 1.5.3  Don't create another JP2 if one with the same DPG basename already exists; allow overwrite settings to be configured by environment
 - 1.6.0  Only run checksum-compute, exif-collect and jp-create on object types of ITEM.  APOs and Collections will not error out even without contentMetadata.
