@@ -1,4 +1,5 @@
 require_relative './base'
+require 'dor/services/client'
 
 module Robots
   module DorRepo
@@ -19,15 +20,13 @@ module Robots
         private
 
         def initialize_workspace
-          url = "#{Dor::Config.dor.service_root}/objects/druid:#{@ai.druid.id}/initialize_workspace"
-          resp = RestClient.post url, source: @ai.path_to_object
-          LyberCore::Log.info("REST call to #{url} with response #{resp.code}")
+          Dor::Services::Client.initialize_workspace(object: @ai.druid.druid,
+                                                     source: @ai.path_to_object)
         end
 
         def initialize_workflow
-          url = "#{Dor::Config.dor.service_root}/objects/druid:#{@ai.druid.id}/apo_workflows/accessionWF"
-          resp = RestClient.post url, {}
-          LyberCore::Log.info("REST call to #{url} with response #{resp.code}")
+          Dor::Services::Client.initialize_workflow(object: @ai.druid.druid,
+                                                    wf_name: 'accessionWF')
         end
       end
     end

@@ -2,39 +2,39 @@ require 'spec_helper'
 
 RSpec.describe Robots::DorRepo::Assembly::AccessioningInitiate do
   let(:druid) { 'aa222cc3333' }
+  let(:robot) { Robots::DorRepo::Assembly::AccessioningInitiate.new(druid: druid) }
 
   before do
     allow(Dor::Assembly::Item).to receive(:new).and_return(@assembly_item)
-    @r = Robots::DorRepo::Assembly::AccessioningInitiate.new(:druid => druid)
+    allow(Dor::Services::Client).to receive(:initialize_workspace)
+    allow(Dor::Services::Client).to receive(:initialize_workflow)
   end
 
   context 'when the type is item' do
     before do
       setup_assembly_item(druid, :item)
-      stub_request(:post, "https://localhost/dor/v1/objects/druid:aa222cc3333/initialize_workspace")
-        .with(body: { "source" => nil })
-        .to_return(status: 200, body: "")
-      stub_request(:post, "https://localhost/dor/v1/objects/druid:aa222cc3333/apo_workflows/accessionWF")
-        .to_return(status: 200, body: "")
     end
 
     it "initiates accessioning" do
       expect(@assembly_item.is_item?).to be_truthy
-      @r.perform(@assembly_item)
+      robot.perform(@assembly_item)
+      expect(Dor::Services::Client).to have_received(:initialize_workspace)
+        .with(object: "druid:aa222cc3333", source: nil)
     end
   end
 
   context 'when the type is set' do
     before do
       setup_assembly_item(druid, :set)
+      expect(@assembly_item.is_item?).to be_falsey
     end
 
     context 'and items_only is the default' do
       it "initiates accessioning, but does not initialize the workspace" do
-        expect(@assembly_item.is_item?).to be_falsey
-        expect(@r).to_not receive(:initialize_workspace)
-        expect(@r).to receive(:initialize_workflow)
-        @r.perform(@assembly_item)
+        robot.perform(@assembly_item)
+        expect(Dor::Services::Client).not_to have_received(:initialize_workspace)
+        expect(Dor::Services::Client).to have_received(:initialize_workflow)
+          .with(object: "druid:aa222cc3333", wf_name: "accessionWF")
       end
     end
 
@@ -43,10 +43,10 @@ RSpec.describe Robots::DorRepo::Assembly::AccessioningInitiate do
         Dor::Config.configure.assembly.items_only = false
       end
       it "initiates accessioning, but does not initialize the workspace" do
-        expect(@assembly_item.is_item?).to be_falsey
-        expect(@r).to_not receive(:initialize_workspace)
-        expect(@r).to receive(:initialize_workflow)
-        @r.perform(@assembly_item)
+        robot.perform(@assembly_item)
+        expect(Dor::Services::Client).not_to have_received(:initialize_workspace)
+        expect(Dor::Services::Client).to have_received(:initialize_workflow)
+          .with(object: "druid:aa222cc3333", wf_name: "accessionWF")
       end
     end
 
@@ -55,10 +55,10 @@ RSpec.describe Robots::DorRepo::Assembly::AccessioningInitiate do
         Dor::Config.configure.assembly.items_only = true
       end
       it "initiates accessioning, but does not initialize the workspace" do
-        expect(@assembly_item.is_item?).to be_falsey
-        expect(@r).to_not receive(:initialize_workspace)
-        expect(@r).to receive(:initialize_workflow)
-        @r.perform(@assembly_item)
+        robot.perform(@assembly_item)
+        expect(Dor::Services::Client).not_to have_received(:initialize_workspace)
+        expect(Dor::Services::Client).to have_received(:initialize_workflow)
+          .with(object: "druid:aa222cc3333", wf_name: "accessionWF")
       end
     end
   end
