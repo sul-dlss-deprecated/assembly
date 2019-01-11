@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'assembly-objectfile'
 require 'stub_content_metadata_parser'
 
@@ -5,14 +7,7 @@ module Dor::Assembly
   module ContentMetadata
     include StubContentMetadataParser
 
-    attr_accessor(
-      :cm,
-      :stub_cm,
-      :cm_handle,
-      :druid,
-      :root_dir
-    )
-
+    attr_accessor :cm, :stub_cm, :cm_handle, :druid, :root_dir
     attr_writer :cm_file_name, :stub_cm_file_name
 
     # return the location to store or load the contentMetadata.xml file (could be in either the new or old location)
@@ -71,7 +66,7 @@ module Dor::Assembly
       xpath_query = '//resource'
       xpath_query += "[@type='#{resource_type}']" unless resource_type == ''
       xpath_query += '/file'
-      @cm.xpath xpath_query
+      cm.xpath xpath_query
     end
 
     def fnode_tuples(resource_type = '')

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # methods to help parse the stub content metadata file
 module StubContentMetadataParser
   # this maps types coming from the stub content metadata (e.g. as produced by goobi) into the contentMetadata types allowed by the Assembly::Objectfile gem for CM generation

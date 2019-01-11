@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'coveralls'
 Coveralls.wear!
 
@@ -19,7 +21,7 @@ end
 tmp_output_dir = File.join(ROBOT_ROOT, 'tmp')
 FileUtils.mkdir_p tmp_output_dir
 
-TMP_ROOT_DIR = 'tmp/test_input'.freeze
+TMP_ROOT_DIR = 'tmp/test_input'
 
 # override for testing
 Dor::Config.assembly.root_dir = ['spec/test_input', 'spec/test_input2']
