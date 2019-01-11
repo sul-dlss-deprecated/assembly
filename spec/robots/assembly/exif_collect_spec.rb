@@ -1,36 +1,54 @@
 require 'spec_helper'
 
-describe Robots::DorRepo::Assembly::ExifCollect do
-  before :each do
-    @druid = 'aa222cc3333'
-    allow(Dor::Assembly::Item).to receive(:new).and_return(@assembly_item)
-    @r = Robots::DorRepo::Assembly::ExifCollect.new(druid: @druid)
+RSpec.describe Robots::DorRepo::Assembly::ExifCollect do
+  let(:druid) { 'aa222cc3333' }
+  let(:robot) { described_class.new(druid: druid) }
+  let(:type) { 'item' }
+
+  let(:item) do
+    instance_double(Dor::Assembly::Item,
+                    is_item?: type == 'item')
   end
 
-  it 'should collect exif for type=item' do
-    Dor::Config.configure.assembly.items_only = true
-    setup_assembly_item(@druid, :item)
-    expect(@assembly_item).to receive(:is_item?)
-    expect(@assembly_item).to receive(:load_content_metadata)
-    expect(@assembly_item).to receive(:collect_exif_info)
-    @r.perform(@assembly_item)
+  before do
+    allow(Dor::Assembly::Item).to receive(:new).and_return(item)
   end
 
-  it 'should not collect exif for type=set if configured that way' do
-    Dor::Config.configure.assembly.items_only = true
-    setup_assembly_item(@druid, :set)
-    expect(@assembly_item).to receive(:is_item?)
-    expect(@assembly_item).not_to receive(:load_content_metadata)
-    expect(@assembly_item).not_to receive(:collect_exif_info)
-    @r.perform(@assembly_item)
+  subject(:result) { robot.perform(druid) }
+
+  context "when it's an item" do
+    it 'collects exif' do
+      Dor::Config.configure.assembly.items_only = true
+      expect(item).to receive(:load_content_metadata)
+      expect(item).to receive(:collect_exif_info)
+      result
+    end
   end
 
-  it 'should collect exif for type=set if configured that way' do
-    Dor::Config.configure.assembly.items_only = false
-    setup_assembly_item(@druid, :set)
-    expect(@assembly_item).not_to receive(:is_item?)
-    expect(@assembly_item).to receive(:load_content_metadata)
-    expect(@assembly_item).to receive(:collect_exif_info)
-    @r.perform(@assembly_item)
+  context "when it's a set" do
+    let(:type) { 'set' }
+    before do
+      Dor::Config.configure.assembly.items_only = items_only
+    end
+    context 'and configured for items_only' do
+      let(:items_only) { true }
+
+      it 'does not collect exif' do
+        Dor::Config.configure.assembly.items_only = true
+        expect(item).not_to receive(:load_content_metadata)
+        expect(item).not_to receive(:collect_exif_info)
+        result
+      end
+    end
+
+    context 'and not configured for items_only' do
+      let(:items_only) { false }
+
+      it 'collects exif' do
+        expect(item).to receive(:load_content_metadata)
+        expect(item).to receive(:collect_exif_info)
+        result
+      end
+    end
   end
 end

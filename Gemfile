@@ -19,6 +19,7 @@ gem 'rubocop', '~> 0.61.0' # avoid code churn due to rubocop upgrades
 gem 'slop'
 
 group :test do
+  gem 'byebug'
   gem 'coveralls', require: false
   gem 'equivalent-xml'
   gem 'rspec', '~> 3.4'
