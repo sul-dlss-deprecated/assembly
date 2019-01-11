@@ -1,21 +1,21 @@
 require 'spec_helper'
 
-describe Dor::Assembly::Findable do
-  before :each do
+RSpec.describe Dor::Assembly::Findable do
+  before do
     @cm_file_name = Dor::Config.assembly.cm_file_name
     @root_dir1 = Dor::Config.assembly.root_dir[0]
     @root_dir2 = Dor::Config.assembly.root_dir[1]
   end
 
-  it "should compute the new druid tree path without checking for existence" do
-    @item = TestableItem.new
-    @item.druid = DruidTools::Druid.new 'druid:xx111yy2222'
+  it "computes the new druid tree path without checking for existence" do
+    allow_any_instance_of(Dor::Assembly::Item).to receive(:check_for_path)
+    @item = Dor::Assembly::Item.new(druid: 'xx111yy2222')
     expect(@item.druid_tree_path(@root_dir1)).to eq("#{@root_dir1}/xx/111/yy/2222/xx111yy2222")
   end
 
-  it "should compute the old druid tree path without checking for existence" do
-    @item = TestableItem.new
-    @item.druid = DruidTools::Druid.new 'druid:xx111yy2222'
+  it "compute the old druid tree path without checking for existence" do
+    allow_any_instance_of(Dor::Assembly::Item).to receive(:check_for_path)
+    @item = Dor::Assembly::Item.new(druid: 'xx111yy2222')
     expect(@item.old_druid_tree_path(@root_dir2)).to eq("#{@root_dir2}/xx/111/yy/2222")
   end
 

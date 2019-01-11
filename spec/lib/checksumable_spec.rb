@@ -1,15 +1,10 @@
 require 'spec_helper'
 
-describe Dor::Assembly::Checksumable do
-  def basic_setup(dru, root_dir = nil)
-    root_dir = root_dir || Dor::Config.assembly.root_dir
-    dummy_xml    = '<contentMetadata><file></file></contentMetadata>'
-    root_dir     = Dor::Config.assembly.root_dir
-
-    @item              = TestableItem.new
-    @item.druid        = DruidTools::Druid.new dru
+RSpec.describe Dor::Assembly::Checksumable do
+  def basic_setup(dru, root_dir = Dor::Config.assembly.root_dir)
+    @item              = Dor::Assembly::Item.new(druid: dru)
     @item.root_dir     = root_dir
-    @item.cm           = Nokogiri::XML dummy_xml
+    @item.cm           = Nokogiri::XML '<contentMetadata><file></file></contentMetadata>'
     @item.path_to_object # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
     # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
     @fake_checksum_data = { :md5 => "a123", :sha1 => "567c" }
@@ -32,7 +27,7 @@ describe Dor::Assembly::Checksumable do
   describe "#ChecksumableItem" do
     it "should be able to initialize our testing object" do
       basic_setup('aa111bb2222')
-      expect(@item).to be_a_kind_of TestableItem
+      expect(@item).to be_a_kind_of Dor::Assembly::Item
     end
   end
 

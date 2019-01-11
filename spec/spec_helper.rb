@@ -44,7 +44,7 @@ def clone_test_input(destination)
 end
 
 def setup_assembly_item(druid, obj_type = :item)
-  @assembly_item = TestableItem.new
+  @assembly_item = Dor::Assembly::Item.new(druid: druid)
   allow(@assembly_item).to receive('druid').and_return(DruidTools::Druid.new(druid))
   allow(@assembly_item).to receive('id').and_return(druid)
   if obj_type == :item
@@ -59,13 +59,4 @@ end
 
 def kdu_missing?
   `which kdu_compress`.empty?
-end
-
-class TestableItem
-  include Dor::Assembly::ContentMetadata
-  include Dor::Assembly::Findable
-  include Dor::Assembly::Identifiable
-  include Dor::Assembly::Exifable
-  include Dor::Assembly::Checksumable
-  include Dor::Assembly::Jp2able
 end

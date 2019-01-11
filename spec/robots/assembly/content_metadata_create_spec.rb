@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Robots::DorRepo::Assembly::ContentMetadataCreate do
-  before :each do
+RSpec.describe Robots::DorRepo::Assembly::ContentMetadataCreate do
+  before do
     @druid = 'aa111bb2222'
     @r = Robots::DorRepo::Assembly::ContentMetadataCreate.new(:druid => @druid)
   end

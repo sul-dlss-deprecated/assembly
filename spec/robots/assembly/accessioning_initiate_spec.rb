@@ -5,7 +5,6 @@ RSpec.describe Robots::DorRepo::Assembly::AccessioningInitiate do
   let(:robot) { Robots::DorRepo::Assembly::AccessioningInitiate.new(druid: druid) }
 
   before do
-    allow(Dor::Assembly::Item).to receive(:new).and_return(@assembly_item)
     allow(Dor::Services::Client).to receive(:initialize_workspace)
     allow(Dor::Services::Client).to receive(:initialize_workflow)
   end
@@ -19,7 +18,7 @@ RSpec.describe Robots::DorRepo::Assembly::AccessioningInitiate do
       expect(@assembly_item.is_item?).to be_truthy
       robot.perform(@assembly_item)
       expect(Dor::Services::Client).to have_received(:initialize_workspace)
-        .with(object: "druid:aa222cc3333", source: nil)
+        .with(object: "druid:aa222cc3333", source: "spec/test_input2/aa/222/cc/3333")
     end
   end
 

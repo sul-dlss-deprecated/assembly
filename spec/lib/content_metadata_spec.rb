@@ -1,10 +1,9 @@
 require 'spec_helper'
 
-describe Dor::Assembly::ContentMetadata do
+RSpec.describe Dor::Assembly::ContentMetadata do
   def basic_setup(dru, root_dir = nil)
     root_dir           = root_dir || Dor::Config.assembly.root_dir
-    @item              = TestableItem.new
-    @item.druid        = DruidTools::Druid.new dru, root_dir
+    @item              = Dor::Assembly::Item.new(druid: dru)
     @item.root_dir     = root_dir
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
     @item.path_to_object # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
@@ -296,6 +295,7 @@ describe Dor::Assembly::ContentMetadata do
     end
 
     it "#path_to_object should return nil when no content folder is not found" do
+      allow_any_instance_of(Dor::Assembly::Item).to receive(:check_for_path)
       basic_setup 'aa111bb2222', 'foo/bar'
       @item.druid = DruidTools::Druid.new 'xx999yy8888'
       expect(@item.path_to_object).to be nil
@@ -304,21 +304,23 @@ describe Dor::Assembly::ContentMetadata do
   end
 
   describe "#path_to_object" do
-    before :each do
+    before do
+      allow_any_instance_of(Dor::Assembly::Item).to receive(:check_for_path)
       basic_setup 'xx999yy8888', TMP_ROOT_DIR
+      @item.druid = DruidTools::Druid.new 'xx999yy8888', TMP_ROOT_DIR
     end
 
-    after :each do
+    after do
       FileUtils.rm_rf TMP_ROOT_DIR
     end
 
-    it "#path_to_object should return the expected string when the new druid folder is found" do
+    it "returns the expected string when the new druid folder is found" do
       FileUtils.mkdir_p @item.druid.path
       expect(@item.path_to_object).to eq('tmp/test_input/xx/999/yy/8888/xx999yy8888')
       expect(@item.folder_style).to eq(:new)
     end
 
-    it "#path_to_object should return the expected string when the new druid folder is not found, but the older druid style folder is found" do
+    it "returns the expected string when the new druid folder is not found, but the older druid style folder is found" do
       path = @item.old_druid_tree_path(@item.root_dir)
       FileUtils.mkdir_p path
       expect(@item.path_to_object).to eq('tmp/test_input/xx/999/yy/8888')
