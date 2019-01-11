@@ -8,6 +8,10 @@ Layout/SpaceBeforeBlockBraces:
 Layout/EmptyLineBetweenDefs:
   AllowAdjacentOneLineDefs: true
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
   Max: 200

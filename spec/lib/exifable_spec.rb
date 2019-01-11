@@ -1,14 +1,12 @@
 require 'spec_helper'
 
-describe Dor::Assembly::Exifable do
-  before :each do
+RSpec.describe Dor::Assembly::Exifable do
+  before do
     basic_setup 'aa111bb2222'
   end
 
-  def basic_setup(dru, root_dir = nil)
-    root_dir           = root_dir || Dor::Config.assembly.root_dir
-    @item              = TestableItem.new
-    @item.druid        = DruidTools::Druid.new dru
+  def basic_setup(dru, root_dir = Dor::Config.assembly.root_dir)
+    @item              = Dor::Assembly::Item.new(druid: dru)
     @item.root_dir     = root_dir
     @item.path_to_object # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
     # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
@@ -64,7 +62,7 @@ describe Dor::Assembly::Exifable do
 
   describe '#ExifableItem' do
     it 'should be able to initialize our testing object' do
-      expect(@item).to be_a_kind_of TestableItem
+      expect(@item).to be_a_kind_of Dor::Assembly::Item
     end
   end
 
@@ -87,7 +85,7 @@ describe Dor::Assembly::Exifable do
   end
 
   describe '#collect_exif_info' do
-    before(:each) do
+    before do
       clone_test_input TMP_ROOT_DIR
     end
 
