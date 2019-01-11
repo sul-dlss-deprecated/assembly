@@ -1,7 +1,5 @@
 module Dor::Assembly
   module Jp2able
-    include Dor::Assembly::ContentMetadata
-
     def create_jp2s
       LyberCore::Log.info("Creating JP2s for #{druid.id}")
 

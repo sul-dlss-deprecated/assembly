@@ -1,7 +1,5 @@
 module Dor::Assembly
   module Exifable
-    include Dor::Assembly::ContentMetadata
-
     def collect_exif_info
       LyberCore::Log.info("Collecting exif info for #{druid.id}")
 
