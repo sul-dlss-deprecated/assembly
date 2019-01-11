@@ -15,7 +15,7 @@ gem 'rake'
 gem 'resque'
 gem 'rest-client', '>=1.8'
 gem 'robot-controller', '~> 2.0'
-gem 'rubocop', '~>0.54.0' # avoid code churn due to rubocop upgrades
+gem 'rubocop', '~> 0.61.0' # avoid code churn due to rubocop upgrades
 gem 'slop'
 
 group :test do

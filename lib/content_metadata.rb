@@ -56,12 +56,14 @@ module Dor::Assembly
     def load_content_metadata
       # Loads content metadata XML into a Nokogiri document.
       raise "Content metadata file #{Dor::Config.assembly.cm_file_name} not found for #{druid.id} in any of the root directories: #{@root_dir.join(',')}" unless content_metadata_exists?
+
       @cm = Nokogiri.XML(File.open(cm_file_name)) { |conf| conf.default_xml.noblanks }
     end
 
     def load_stub_content_metadata
       # Loads stub content metadata XML into a Nokogiri document.
       raise "Stub content metadata file #{Dor::Config.assembly.stub_cm_file_name} not found for #{druid.id} in any of the root directories: #{@root_dir.join(',')}" unless stub_content_metadata_exists?
+
       @stub_cm = Nokogiri.XML(File.open(stub_cm_file_name)) { |conf| conf.default_xml.noblanks }
     end
 

@@ -43,16 +43,16 @@ RSpec.describe Dor::Assembly::Checksumable do
 
       @exp_checksums = {
         "image111.tif" => {
-          "md5"  => '42616f9e6c1b7e7b7a71b4fa0c5ef794',
+          "md5" => '42616f9e6c1b7e7b7a71b4fa0c5ef794',
           "sha1" => '77795223379bdb0ded2bd5b8a63adc07fb1c3484',
         },
         "image112.tif" => {
-          "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
+          "md5" => 'ac440802bd590ce0899dafecc5a5ab1b',
           "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
           "foo" => "FOO", "bar" => "BAR",
         },
         "sub/image113.tif" => {
-          "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
+          "md5" => 'ac440802bd590ce0899dafecc5a5ab1b',
           "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
         },
       }
@@ -60,7 +60,7 @@ RSpec.describe Dor::Assembly::Checksumable do
       all_file_nodes.each do |fnode|
         file_name = fnode['id']
         cnodes    = fnode.xpath './checksum'
-        checksums = Hash[ cnodes.map { |cn| [cn['type'], cn.content] } ]
+        checksums = Hash[cnodes.map { |cn| [cn['type'], cn.content] }]
         expect(checksums).to eq(@exp_checksums[file_name])
       end
     end
@@ -76,16 +76,16 @@ RSpec.describe Dor::Assembly::Checksumable do
 
       @exp_checksums = {
         "image111.tif" => {
-          "md5"  => '42616f9e6c1b7e7b7a71b4fa0c5ef794',
+          "md5" => '42616f9e6c1b7e7b7a71b4fa0c5ef794',
           "sha1" => '77795223379bdb0ded2bd5b8a63adc07fb1c3484',
         },
         "image112.tif" => {
-          "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
+          "md5" => 'ac440802bd590ce0899dafecc5a5ab1b',
           "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
           "bar" => "BAR",
         },
         "sub/image113.tif" => {
-          "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
+          "md5" => 'ac440802bd590ce0899dafecc5a5ab1b',
           "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
         },
       }
@@ -93,7 +93,7 @@ RSpec.describe Dor::Assembly::Checksumable do
       all_file_nodes.each do |fnode|
         file_name = fnode['id']
         cnodes    = fnode.xpath './checksum'
-        checksums = Hash[ cnodes.map { |cn| [cn['type'], cn.content] } ]
+        checksums = Hash[cnodes.map { |cn| [cn['type'], cn.content] }]
         expect(checksums).to eq(@exp_checksums[file_name])
       end
     end
@@ -197,7 +197,7 @@ RSpec.describe Dor::Assembly::Checksumable do
       @item.add_checksum_node @parent_file_node, 'md5', @fake_checksum_data[:md5]
       @item.add_checksum_node @parent_file_node, 'sha1', @fake_checksum_data[:sha1]
       expect(all_cs_nodes.size).to eq(2)
-      h = Hash[ all_cs_nodes.map { |n| [n['type'].to_sym, n.content] } ]
+      h = Hash[all_cs_nodes.map { |n| [n['type'].to_sym, n.content] }]
       expect(h).to eq(@fake_checksum_data)
     end
   end

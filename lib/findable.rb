@@ -6,6 +6,7 @@ module Dor::Assembly
     #  return nil if not found anywhere
     def path_to_object
       return @path_to_object unless @path_to_object.nil?
+
       path = nil
       Array(@root_dir).each do |root_dir|
         new_path = druid_tree_path(root_dir)

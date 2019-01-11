@@ -148,6 +148,7 @@ GEM
       concurrent-ruby (~> 1.0)
     interception (0.5)
     iso-639 (0.2.8)
+    jaro_winkler (1.5.2)
     json (2.1.0)
     link_header (0.0.8)
     lyber-core (4.1.5)
@@ -269,13 +270,14 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
-    rubocop (0.54.0)
+    rubocop (0.61.1)
+      jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.5)
+      parser (>= 2.5, != 2.5.1.1)
       powerpack (~> 0.1)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (~> 1.0, >= 1.0.1)
+      unicode-display_width (~> 1.4.0)
     ruby-cache (0.3.0)
     ruby-progressbar (1.10.0)
     rubydora (2.1.0)
@@ -368,10 +370,10 @@ DEPENDENCIES
   rest-client (>= 1.8)
   robot-controller (~> 2.0)
   rspec (~> 3.4)
-  rubocop (~> 0.54.0)
+  rubocop (~> 0.61.0)
   simplecov
   slop
   webmock
 
 BUNDLED WITH
-   1.17.2
+   1.17.3
