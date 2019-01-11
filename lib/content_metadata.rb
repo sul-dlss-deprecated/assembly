@@ -19,13 +19,11 @@ module Dor::Assembly
     def create_content_metadata
       return LyberCore::Robot::ReturnState.new(status: :skipped, note: 'object is not an item') unless is_item? # not an item, skip
 
-      if stub_content_metadata_exists? && content_metadata_exists? # both stub and regular content metadata exist -- this is an ambiguous situation and generates an error
-        raise "#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist"
-      end
+      # both stub and regular content metadata exist -- this is an ambiguous situation and generates an error
+      raise "#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist" if stub_content_metadata_exists? && content_metadata_exists?
 
-      if content_metadata_exists? # regular content metadata exists -- do not recreate it
-        return LyberCore::Robot::ReturnState.new(status: :skipped, note: "#{Dor::Config.assembly.cm_file_name} exists")
-      end
+      # regular content metadata exists -- do not recreate it
+      return LyberCore::Robot::ReturnState.new(status: :skipped, note: "#{Dor::Config.assembly.cm_file_name} exists") if content_metadata_exists?
 
       # if stub exists, create metadata from the stub, else create basic content metadata
       stub_content_metadata_exists? ? convert_stub_content_metadata : create_basic_content_metadata
@@ -86,9 +84,9 @@ module Dor::Assembly
 
     def file_nodes(resource_type = '')
       # Returns all Nokogiri <file> nodes from content metadata, optionally restricted to specific resource content types if specified
-      xpath_query = "//resource"
+      xpath_query = '//resource'
       xpath_query += "[@type='#{resource_type}']" unless resource_type == ''
-      xpath_query += "/file"
+      xpath_query += '/file'
       @cm.xpath xpath_query
     end
 

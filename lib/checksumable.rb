@@ -11,7 +11,7 @@ module Dor::Assembly
         obj = Assembly::ObjectFile.new(path_to_content_file(fn['id']))
 
         # compute checksums
-        checksums = { :md5 => obj.md5, :sha1 => obj.sha1 }
+        checksums = { md5: obj.md5, sha1: obj.sha1 }
 
         # find any existing checksum nodes
         md5_nodes = fn.xpath('checksum[@type="md5"]')
@@ -19,12 +19,12 @@ module Dor::Assembly
 
         # if we have any existing checksum nodes, compare them all against the checksums we just computed, and raise an error if any fail
         if !md5_nodes.empty?
-          raise %Q<Checksums disagree: type="md5", file="#{fn['id']}", computed="#{checksums[:md5]}, provided="#{md5_nodes.first}".> unless checksums_equal?(md5_nodes, checksums[:md5])
+          raise %(Checksums disagree: type="md5", file="#{fn['id']}", computed="#{checksums[:md5]}, provided="#{md5_nodes.first}".) unless checksums_equal?(md5_nodes, checksums[:md5])
         else
           add_checksum_node fn, 'md5', checksums[:md5]
         end
         if !sha1_nodes.empty?
-          raise %Q<Checksums disagree: type="sha1", file="#{fn['id']}", computed="#{checksums[:sha1]}", provided="#{sha1_nodes.first}".> unless checksums_equal?(sha1_nodes, checksums[:sha1])
+          raise %(Checksums disagree: type="sha1", file="#{fn['id']}", computed="#{checksums[:sha1]}", provided="#{sha1_nodes.first}".) unless checksums_equal?(sha1_nodes, checksums[:sha1])
         else
           add_checksum_node fn, 'sha1', checksums[:sha1]
         end
@@ -38,7 +38,7 @@ module Dor::Assembly
     def checksums_equal?(existing_checksum_nodes, computed_checksum)
       match = true
       existing_checksum_nodes.each { |checksum| match = false if checksum.content.downcase != computed_checksum.downcase }
-      return match
+      match
     end
 
     def add_checksum_node(parent_node, checksum_type, checksum)

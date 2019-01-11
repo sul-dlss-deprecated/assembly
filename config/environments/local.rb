@@ -1,4 +1,4 @@
-CERT_DIR = File.join(File.dirname(__FILE__), "..", "certs")
+CERT_DIR = File.join(File.dirname(__FILE__), '..', 'certs')
 
 Dor::Config.configure do
   fedora do
@@ -6,8 +6,8 @@ Dor::Config.configure do
   end
 
   ssl do
-    cert_file File.join(CERT_DIR, "local.crt")
-    key_file  File.join(CERT_DIR, "local.key")
+    cert_file File.join(CERT_DIR, 'local.crt')
+    key_file  File.join(CERT_DIR, 'local.key')
     key_pass  ''
   end
 
@@ -47,4 +47,4 @@ Dor::Config.configure do
   end
 end
 
-REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"
+REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}".freeze

@@ -9,9 +9,7 @@ module Robots
         end
 
         def perform(druid)
-          with_item(druid) do |ai|
-            ai.create_jp2s
-          end
+          with_item(druid, &:create_jp2s)
         end
       end
     end

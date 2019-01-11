@@ -18,7 +18,7 @@ end
 tmp_output_dir = File.join(ROBOT_ROOT, 'tmp')
 FileUtils.mkdir_p tmp_output_dir
 
-TMP_ROOT_DIR = "tmp/test_input"
+TMP_ROOT_DIR = 'tmp/test_input'.freeze
 
 # override for testing
 Dor::Config.assembly.root_dir = ['spec/test_input', 'spec/test_input2']
@@ -34,7 +34,7 @@ def get_filenames(item)
 end
 
 def count_file_types(files, extension)
-  files.reject { |file| File.extname(file) != extension }.size
+  files.select { |file| File.extname(file) == extension }.size
 end
 
 def clone_test_input(destination)
