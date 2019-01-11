@@ -10,6 +10,8 @@ ROBOT_ROOT  = File.expand_path(File.dirname(__FILE__) + '/..')
   $LOAD_PATH.unshift File.join(ROBOT_ROOT, d)
 end
 
+require 'honeybadger'
+
 # Set up the robot logger.
 require 'logger'
 ROBOT_LOG       = Logger.new(File.join(ROBOT_ROOT, "log/#{environment}.log"))
