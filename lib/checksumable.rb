@@ -1,7 +1,5 @@
 module Dor::Assembly
   module Checksumable
-    include Dor::Assembly::ContentMetadata
-
     def compute_checksums
       LyberCore::Log.info("Computing checksums for #{druid.id}")
 
