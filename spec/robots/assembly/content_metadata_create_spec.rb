@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Robots::DorRepo::Assembly::ContentMetadataCreate do
   let(:druid) { 'aa111bb2222' }
-  let(:robot) { Robots::DorRepo::Assembly::ContentMetadataCreate.new(druid: druid) }
+  let(:robot) { described_class.new(druid: druid) }
   let(:type) { 'item' }
 
   let(:item) do
@@ -25,7 +25,7 @@ RSpec.describe Robots::DorRepo::Assembly::ContentMetadataCreate do
     let(:content_metadata) { false }
     let(:stub_content_metadata) { false }
 
-    it "does not create content metadata" do
+    it 'does not create content metadata' do
       expect(item).not_to receive(:convert_stub_content_metadata)
       expect(item).not_to receive(:create_basic_content_metadata)
       expect(item).not_to receive(:persist_content_metadata)
@@ -38,7 +38,7 @@ RSpec.describe Robots::DorRepo::Assembly::ContentMetadataCreate do
     let(:content_metadata) { true }
     let(:stub_content_metadata) { true }
 
-    it "raises an error and does not create content metadata" do
+    it 'raises an error and does not create content metadata' do
       expect(item).not_to receive(:convert_stub_content_metadata)
       expect(item).not_to receive(:create_basic_content_metadata)
       expect(item).not_to receive(:persist_content_metadata)
@@ -51,7 +51,7 @@ RSpec.describe Robots::DorRepo::Assembly::ContentMetadataCreate do
     let(:content_metadata) { true }
     let(:stub_content_metadata) { false }
 
-    it "does not create any content metadata" do
+    it 'does not create any content metadata' do
       expect(item).not_to receive(:convert_stub_content_metadata)
       expect(item).not_to receive(:create_basic_content_metadata)
       expect(item).not_to receive(:persist_content_metadata)
@@ -60,11 +60,11 @@ RSpec.describe Robots::DorRepo::Assembly::ContentMetadataCreate do
     end
   end
 
-  context "if stub contentMetadata does not exist and neither does regular contentMetadata" do
+  context 'if stub contentMetadata does not exist and neither does regular contentMetadata' do
     let(:content_metadata) { false }
     let(:stub_content_metadata) { false }
 
-    it "creates basic content metadata" do
+    it 'creates basic content metadata' do
       expect(item).not_to receive(:convert_stub_content_metadata)
       expect(item).to receive(:create_basic_content_metadata).once
       expect(item).to receive(:persist_content_metadata).once
@@ -72,11 +72,11 @@ RSpec.describe Robots::DorRepo::Assembly::ContentMetadataCreate do
     end
   end
 
-  context "if stub contentMetadata exists regular contentMetadata does not" do
+  context 'if stub contentMetadata exists regular contentMetadata does not' do
     let(:content_metadata) { false }
     let(:stub_content_metadata) { true }
 
-    it "converts stub content metadata" do
+    it 'converts stub content metadata' do
       expect(item).to receive(:convert_stub_content_metadata).once
       expect(item).to receive(:persist_content_metadata).once
       expect(result.status).to eq('completed')

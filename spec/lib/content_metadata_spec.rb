@@ -10,8 +10,8 @@ RSpec.describe Dor::Assembly::ContentMetadata do
     # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
   end
 
-  describe "#load_content_metadata" do
-    it "should load a Nokogiri doc in @cm" do
+  describe '#load_content_metadata' do
+    it 'should load a Nokogiri doc in @cm' do
       basic_setup 'aa111bb2222'
       @item.load_content_metadata
       expect(@item.cm).to be_kind_of Nokogiri::XML::Document

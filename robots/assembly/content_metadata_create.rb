@@ -14,13 +14,11 @@ module Robots
           obj =  item(druid)
           return LyberCore::Robot::ReturnState.new(status: :skipped, note: 'object is not an item') unless obj.is_item? # not an item, skip
 
-          if obj.stub_content_metadata_exists? && obj.content_metadata_exists? # both stub and regular content metadata exist -- this is an ambiguous situation and generates an error
-            raise "#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist"
-          end
+          # both stub and regular content metadata exist -- this is an ambiguous situation and generates an error
+          raise "#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist" if obj.stub_content_metadata_exists? && obj.content_metadata_exists?
 
-          if obj.content_metadata_exists? # regular content metadata exists -- do not recreate it
-            return LyberCore::Robot::ReturnState.new(status: :skipped, note: "#{Dor::Config.assembly.cm_file_name} exists")
-          end
+          # regular content metadata exists -- do not recreate it
+          return LyberCore::Robot::ReturnState.new(status: :skipped, note: "#{Dor::Config.assembly.cm_file_name} exists") if obj.content_metadata_exists?
 
           # if stub exists, create metadata from the stub, else create basic content metadata
           obj.stub_content_metadata_exists? ? obj.convert_stub_content_metadata : obj.create_basic_content_metadata
