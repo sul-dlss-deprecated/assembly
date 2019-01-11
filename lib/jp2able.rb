@@ -1,18 +1,19 @@
-module Dor::Assembly
-  module Jp2able
-    include Dor::Assembly::ContentMetadata
+module Dor
+  module Assembly
+    module Jp2able
+      include Dor::Assembly::ContentMetadata
 
-    def create_jp2s
-      LyberCore::Log.info("Creating JP2s for #{druid.id}")
+      def create_jp2s
+        LyberCore::Log.info("Creating JP2s for #{druid.id}")
 
-      # For each supported image type that is part of specific resource types, generate a jp2 derivative
-      # and modify content metadata XML to reflect the new file.
-      jp2able_fnode_tuples = []
-      # grab all the file node tuples for each valid resource type that we want to generate derivates for
-      Dor::Config.assembly.jp2_resource_types.each { |resource_type| jp2able_fnode_tuples += fnode_tuples(resource_type) }
+        # For each supported image type that is part of specific resource types, generate a jp2 derivative
+        # and modify content metadata XML to reflect the new file.
+        jp2able_fnode_tuples = []
+        # grab all the file node tuples for each valid resource type that we want to generate derivates for
+        Dor::Config.assembly.jp2_resource_types.each { |resource_type| jp2able_fnode_tuples += fnode_tuples(resource_type) }
 
-      jp2able_fnode_tuples.each do |fn, obj|
-        if obj.jp2able?
+        jp2able_fnode_tuples.each do |fn, obj|
+          next unless obj.jp2able?
           img = Assembly::Image.new(obj.path) # create a new image object from the object file so we can generate a jp2
 
           # check to see if there is another JP2 that exists with the same DPG basename
@@ -26,22 +27,22 @@ module Dor::Assembly
             LyberCore::Log.warn(message)
           else
             tmp_folder = Dor::Config.assembly.tmp_folder || '/tmp'
-            jp2       = img.create_jp2(:overwrite => Dor::Config.assembly.overwrite_jp2, :tmp_folder => tmp_folder)
+            jp2       = img.create_jp2(overwrite: Dor::Config.assembly.overwrite_jp2, tmp_folder: tmp_folder)
             # generate new filename for jp2 file node in content metadata by replacing filename in base file node with new jp2 filename
             file_name = fn['id'].gsub(File.basename(img.path), File.basename(jp2.path))
             add_jp2_file_node fn.parent, file_name
           end
         end
+
+        # Save the modified XML.
+        persist_content_metadata
       end
 
-      # Save the modified XML.
-      persist_content_metadata
-    end
-
-    def add_jp2_file_node(parent_node, file_name)
-      # Adds a file node representing the new jp2 file.
-      f = %Q(<file id="#{file_name}" />)
-      parent_node.add_child f
+      def add_jp2_file_node(parent_node, file_name)
+        # Adds a file node representing the new jp2 file.
+        f = %(<file id="#{file_name}" />)
+        parent_node.add_child f
+      end
     end
   end
 end

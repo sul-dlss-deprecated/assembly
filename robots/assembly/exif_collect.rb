@@ -9,9 +9,7 @@ module Robots
         end
 
         def perform(druid)
-          with_item(druid) do |ai|
-            ai.collect_exif_info
-          end
+          with_item(druid, &:collect_exif_info)
         end
       end
     end

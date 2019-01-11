@@ -9,9 +9,7 @@ module Robots
         end
 
         def perform(druid)
-          with_item(druid) do |ai|
-            ai.compute_checksums
-          end
+          with_item(druid, &:compute_checksums)
         end
       end
     end

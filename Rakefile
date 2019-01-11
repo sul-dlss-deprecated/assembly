@@ -9,7 +9,7 @@ Dir.glob('lib/tasks/*.rake').each { |r| import r }
 
 desc 'Get application version'
 task :app_version do
-  puts File.read(File.expand_path('../VERSION', __FILE__)).match('[\w\.]+')[0]
+  puts File.read(File.expand_path('VERSION', __dir__)).match('[\w\.]+')[0]
 end
 
 begin
@@ -18,7 +18,7 @@ begin
 rescue LoadError
 end
 
-task :default => [:spec, :rubocop]
+task default: %i[spec rubocop]
 
 task :environment do
   require_relative 'config/boot'

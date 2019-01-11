@@ -22,7 +22,7 @@ module Robots
         end
 
         def item(druid)
-          Dor::Assembly::Item.new :druid => druid
+          Dor::Assembly::Item.new druid: druid
         end
       end
     end

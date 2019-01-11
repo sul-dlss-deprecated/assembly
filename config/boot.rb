@@ -3,10 +3,10 @@ require 'bundler/setup'
 
 # Environment and robot root directory.
 environment = ENV['ROBOT_ENVIRONMENT'] ||= 'development'
-ROBOT_ROOT  = File.expand_path(File.dirname(__FILE__) + "/..")
+ROBOT_ROOT  = File.expand_path(File.dirname(__FILE__) + '/..')
 
 # Add subdirs to the load path.
-%w(lib robots).each do |d|
+%w[lib robots].each do |d|
   $LOAD_PATH.unshift File.join(ROBOT_ROOT, d)
 end
 
@@ -42,7 +42,7 @@ require env_file
 require 'assembly-image'
 
 require 'resque'
-REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"
+REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}".freeze
 Resque.redis = REDIS_URL
 
 require 'robot-controller'

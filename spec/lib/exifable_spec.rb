@@ -6,7 +6,7 @@ describe Dor::Assembly::Exifable do
   end
 
   def basic_setup(dru, root_dir = nil)
-    root_dir           = root_dir || Dor::Config.assembly.root_dir
+    root_dir ||= Dor::Config.assembly.root_dir
     @item              = TestableItem.new
     @item.druid        = DruidTools::Druid.new dru
     @item.root_dir     = root_dir
@@ -71,11 +71,11 @@ describe Dor::Assembly::Exifable do
   describe 'Simple XML methods' do
     it '#set_node_type_as_image should add type="image" attributes correctly' do
       @item.cm = noko_doc @dummy_xml
-      %w(contentMetadata resource).each do |tag|
+      %w[contentMetadata resource].each do |tag|
         node = @item.cm.xpath("//#{tag}").first
         @item.set_node_type node, 'image'
       end
-      exp = Nokogiri::XML('<contentMetadata type="image"><resource type="image">' +
+      exp = Nokogiri::XML('<contentMetadata type="image"><resource type="image">' \
                            '</resource></contentMetadata>')
       expect(@item.cm).to be_equivalent_to exp
     end
@@ -182,7 +182,7 @@ describe Dor::Assembly::Exifable do
         expect(file_node.attributes['size'].nil?).to eq(true)
         expect(file_node.attributes['mimetype'].nil?).to eq(true)
         # the first file node as the publish/preserve/attributes already set, the others do not
-        expected = file_node == bef_file_nodes.first ? false : true
+        expected = file_node != bef_file_nodes.first
         expect(file_node.attributes['publish'].nil?).to eq(expected)
         expect(file_node.attributes['preserve'].nil?).to eq(expected)
         expect(file_node.attributes['shelve'].nil?).to eq(expected)
