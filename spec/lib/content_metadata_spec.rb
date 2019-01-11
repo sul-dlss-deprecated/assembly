@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Dor::Assembly::ContentMetadata do
   def basic_setup(dru, root_dir = nil)
-    root_dir           = root_dir || Dor::Config.assembly.root_dir
+    root_dir ||= Dor::Config.assembly.root_dir
     @item              = Dor::Assembly::Item.new(druid: dru)
     @item.root_dir     = root_dir
     @dummy_xml         = '<contentMetadata><resource></resource></contentMetadata>'
@@ -10,12 +10,12 @@ RSpec.describe Dor::Assembly::ContentMetadata do
     # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
   end
 
-  describe "#create_content_metadata" do
+  describe '#create_content_metadata' do
     before :each do
       basic_setup 'aa111bb2222'
       allow(@item).to receive(:is_item?).and_return(true)
     end
-    it "should not create content metadata if type is not item" do
+    it 'should not create content metadata if type is not item' do
       allow(@item).to receive(:is_item?).and_return(false) # in this case, we don't want it to be an item
       expect(@item).not_to receive(:convert_stub_content_metadata)
       expect(@item).not_to receive(:create_basic_content_metadata)
@@ -24,7 +24,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       expect(result.status).to eq('skipped')
       expect(result.note).to eq('object is not an item')
     end
-    it "should raise error and not create content metadata if contentMetadata and stub content metadata both already exists" do
+    it 'should raise error and not create content metadata if contentMetadata and stub content metadata both already exists' do
       allow(@item).to receive(:stub_content_metadata_exists?).and_return(true)
       allow(@item).to receive(:content_metadata_exists?).and_return(true)
       expect(@item).not_to receive(:convert_stub_content_metadata)
@@ -33,7 +33,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       exp_msg = "#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist"
       expect { @item.create_content_metadata }.to raise_error RuntimeError, exp_msg
     end
-    it "should not create any content metadata if contentMetadata already exists" do
+    it 'should not create any content metadata if contentMetadata already exists' do
       allow(@item).to receive(:stub_content_metadata_exists?).and_return(false)
       allow(@item).to receive(:content_metadata_exists?).and_return(true)
       expect(@item).not_to receive(:convert_stub_content_metadata)
@@ -43,7 +43,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       expect(result.status).to eq('skipped')
       expect(result.note).to eq("#{Dor::Config.assembly.cm_file_name} exists")
     end
-    it "should create basic content metadata if stub contentMetadata does not exist and neither does regular contentMetadata" do
+    it 'should create basic content metadata if stub contentMetadata does not exist and neither does regular contentMetadata' do
       allow(@item).to receive(:stub_content_metadata_exists?).and_return(false)
       allow(@item).to receive(:content_metadata_exists?).and_return(false)
       expect(@item).not_to receive(:convert_stub_content_metadata)
@@ -52,7 +52,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       result = @item.create_content_metadata
       expect(result.status).to eq('completed')
     end
-    it "should convert stub content metadata if stub contentMetadata exists and regular contentMetadata does not" do
+    it 'should convert stub content metadata if stub contentMetadata exists and regular contentMetadata does not' do
       allow(@item).to receive(:stub_content_metadata_exists?).and_return(true)
       allow(@item).to receive(:content_metadata_exists?).and_return(false)
       expect(@item).to receive(:convert_stub_content_metadata).once
@@ -62,32 +62,32 @@ RSpec.describe Dor::Assembly::ContentMetadata do
     end
   end
 
-  describe "#load_content_metadata" do
-    it "should load a Nokogiri doc in @cm" do
+  describe '#load_content_metadata' do
+    it 'should load a Nokogiri doc in @cm' do
       basic_setup 'aa111bb2222'
       @item.load_content_metadata
       expect(@item.cm).to be_kind_of Nokogiri::XML::Document
     end
-    it "should raise an exception if no contentMetadata file is present" do
+    it 'should raise an exception if no contentMetadata file is present' do
       basic_setup 'aa111bb3333'
       expect{ @item.load_content_metadata }.to raise_error(StandardError)
     end
   end
 
-  describe "#load_stub_content_metadata" do
-    it "should load a Nokogiri doc in @stub_cm" do
+  describe '#load_stub_content_metadata' do
+    it 'should load a Nokogiri doc in @stub_cm' do
       basic_setup 'aa111bb3333'
       @item.load_stub_content_metadata
       expect(@item.stub_cm).to be_kind_of Nokogiri::XML::Document
     end
-    it "should raise an exception if no stub contentMetadata file is present" do
+    it 'should raise an exception if no stub contentMetadata file is present' do
       basic_setup 'aa111bb2222'
       expect{ @item.load_stub_content_metadata }.to raise_error(StandardError)
     end
   end
 
-  describe "#create_basic_content_metadata" do
-    it "should not create basic content metadata if no files are present" do
+  describe '#create_basic_content_metadata' do
+    it 'should not create basic content metadata if no files are present' do
       basic_setup 'aa111bb6666'
       @item.path_to_object
       expect(@item.cm).to be_nil
@@ -96,7 +96,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       expect(result).to be_nil
     end
 
-    it "should create basic content metadata from a list of files in the new folder style" do
+    it 'should create basic content metadata from a list of files in the new folder style' do
       basic_setup 'aa111bb4444'
       @item.path_to_object
       expect(@item.cm).to be_nil
@@ -125,7 +125,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       END
       expect(@item.cm).to be_kind_of Nokogiri::XML::Document
     end
-    it "should create basic content metadata from a list of files in the old folder style" do
+    it 'should create basic content metadata from a list of files in the old folder style' do
       basic_setup 'aa111bb5555'
       @item.path_to_object
       expect(@item.cm).to be_nil
@@ -145,14 +145,14 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       END
       expect(@item.cm).to be_kind_of Nokogiri::XML::Document
     end
-    it "should raise an exception if content metadata already exists" do
+    it 'should raise an exception if content metadata already exists' do
       basic_setup 'aa111bb2222'
       expect{ @item.create_basic_content_metadata }.to raise_error(StandardError)
     end
   end
 
-  describe "#convert_stub_content_metadata" do
-    it "should create content metadata from stub content metadata" do
+  describe '#convert_stub_content_metadata' do
+    it 'should create content metadata from stub content metadata' do
       basic_setup 'aa111bb3333'
       expect(@item.cm).to be_nil
       result = @item.convert_stub_content_metadata
@@ -176,33 +176,33 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       END
       expect(@item.cm).to be_kind_of Nokogiri::XML::Document
     end
-    it "should raise an exception if stub content metadata is missing" do
+    it 'should raise an exception if stub content metadata is missing' do
       basic_setup 'aa111bb2222'
       expect{ @item.convert_stub_content_metadata }.to raise_error(StandardError)
     end
   end
 
-  describe "#exists methods" do
-    it "should indicate if contentMetadata exists" do
+  describe '#exists methods' do
+    it 'should indicate if contentMetadata exists' do
       basic_setup 'aa111bb2222'
       expect(@item.content_metadata_exists?).to be_truthy
     end
-    it "should indicate if contentMetadata exists" do
+    it 'should indicate if contentMetadata exists' do
       basic_setup 'aa111bb3333'
       expect(@item.content_metadata_exists?).to be_falsey
     end
-    it "should indicate if stub contentMetadata exists" do
+    it 'should indicate if stub contentMetadata exists' do
       basic_setup 'aa111bb2222'
       expect(@item.stub_content_metadata_exists?).to be_falsey
     end
-    it "should indicate if contentMetadata exists" do
+    it 'should indicate if contentMetadata exists' do
       basic_setup 'aa111bb3333'
       expect(@item.stub_content_metadata_exists?).to be_truthy
     end
   end
 
-  describe "#stub_content_metadata_parser" do
-    it "should map content metadata types to the gem correctly" do
+  describe '#stub_content_metadata_parser' do
+    it 'should map content metadata types to the gem correctly' do
       basic_setup 'aa111bb3333'
       ['flipbook (r-l)', 'book', 'a book (l-r)'].each do |content_type|
         allow(@item).to receive(:stub_object_type).and_return(content_type)
@@ -212,12 +212,12 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       expect(@item.gem_content_metadata_style).to eq(:simple_image)
       allow(@item).to receive(:stub_object_type).and_return('maps')
       expect(@item.gem_content_metadata_style).to eq(:map)
-      %w(file bogus).each do |content_type|
+      %w[file bogus].each do |content_type|
         allow(@item).to receive(:stub_object_type).and_return(content_type)
         expect(@item.gem_content_metadata_style).to eq(:file)
       end
     end
-    it "should parse a stub content metadata file" do
+    it 'should parse a stub content metadata file' do
       basic_setup 'aa111bb3333'
       @item.load_stub_content_metadata
       expect(@item.stub_object_type).to eq('book')
@@ -247,7 +247,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
     end
   end
 
-  describe "#persist_content_metadata" do
+  describe '#persist_content_metadata' do
     before :each do
       basic_setup 'aa111bb2222'
       @tmp_dir           = 'tmp'
@@ -261,7 +261,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       FileUtils.rm_f @tf
     end
 
-    it "should write to @cm_handle, if @cm_handle is set" do
+    it 'should write to @cm_handle, if @cm_handle is set' do
       tf = Tempfile.new 'persist_content_metadata_', @tmp_dir
       @item.cm_handle = tf
       @item.persist_content_metadata
@@ -269,14 +269,14 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       expect(File.read(tf.path)).to eq(@dummy_xml_content)
     end
 
-    it "should write to @cm_file_name, if @cm_handle is not set" do
+    it 'should write to @cm_file_name, if @cm_handle is not set' do
       expect(File.exists?(@tf)).to eq(false)
       @item.cm_file_name = @tf
       @item.persist_content_metadata
       expect(File.read(@tf)).to eq(@dummy_xml_content)
     end
 
-    it "should not write a file if the contentMetadata is blank" do
+    it 'should not write a file if the contentMetadata is blank' do
       expect(File.exists?(@tf)).to eq(false)
       @item.cm_file_name = @tf
       allow(@item.cm).to receive(:to_xml).and_return nil
@@ -285,8 +285,8 @@ RSpec.describe Dor::Assembly::ContentMetadata do
     end
   end
 
-  describe "Helper methods" do
-    it "#new_node_in_cm should return the expected Nokogiri element" do
+  describe 'Helper methods' do
+    it '#new_node_in_cm should return the expected Nokogiri element' do
       basic_setup 'aa111bb2222'
       @item.load_content_metadata
       n = @item.new_node_in_cm 'foo'
@@ -294,7 +294,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       expect(n).to be_kind_of Nokogiri::XML::Element
     end
 
-    it "#path_to_object should return nil when no content folder is not found" do
+    it '#path_to_object should return nil when no content folder is not found' do
       allow_any_instance_of(Dor::Assembly::Item).to receive(:check_for_path)
       basic_setup 'aa111bb2222', 'foo/bar'
       @item.druid = DruidTools::Druid.new 'xx999yy8888'
@@ -303,7 +303,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
     end
   end
 
-  describe "#path_to_object" do
+  describe '#path_to_object' do
     before do
       allow_any_instance_of(Dor::Assembly::Item).to receive(:check_for_path)
       basic_setup 'xx999yy8888', TMP_ROOT_DIR
@@ -314,13 +314,13 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       FileUtils.rm_rf TMP_ROOT_DIR
     end
 
-    it "returns the expected string when the new druid folder is found" do
+    it 'returns the expected string when the new druid folder is found' do
       FileUtils.mkdir_p @item.druid.path
       expect(@item.path_to_object).to eq('tmp/test_input/xx/999/yy/8888/xx999yy8888')
       expect(@item.folder_style).to eq(:new)
     end
 
-    it "returns the expected string when the new druid folder is not found, but the older druid style folder is found" do
+    it 'returns the expected string when the new druid folder is not found, but the older druid style folder is found' do
       path = @item.old_druid_tree_path(@item.root_dir)
       FileUtils.mkdir_p path
       expect(@item.path_to_object).to eq('tmp/test_input/xx/999/yy/8888')
@@ -328,8 +328,8 @@ RSpec.describe Dor::Assembly::ContentMetadata do
     end
   end
 
-  describe "Methods returning <file> nodes and filenode-Image tuples" do
-    it "#file_nodes should return the expected N of Nokogiri elements" do
+  describe 'Methods returning <file> nodes and filenode-Image tuples' do
+    it '#file_nodes should return the expected N of Nokogiri elements' do
       basic_setup 'aa111bb2222'
       @item.load_content_metadata
       fns = @item.file_nodes
@@ -337,7 +337,7 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       fns.each { |fn| expect(fn).to be_kind_of Nokogiri::XML::Element }
     end
 
-    it "#file_nodes should return the expected N of Nokogiri elements with new content metadata location" do
+    it '#file_nodes should return the expected N of Nokogiri elements with new content metadata location' do
       basic_setup 'gg111bb2222'
       @item.load_content_metadata
       fns = @item.file_nodes
@@ -345,19 +345,19 @@ RSpec.describe Dor::Assembly::ContentMetadata do
       fns.each { |fn| expect(fn).to be_kind_of Nokogiri::XML::Element }
     end
 
-    it "#fnode_tuples should load the correct N of Node-Image pairs" do
+    it '#fnode_tuples should load the correct N of Node-Image pairs' do
       basic_setup 'aa111bb2222'
       @item.load_content_metadata
       objs = @item.fnode_tuples
       expect(objs.size).to eq(3)
-      objs.each { |file_node, obj|
+      objs.each do |file_node, obj|
         expect(file_node).to be_instance_of Nokogiri::XML::Element
         expect(obj).to be_instance_of Assembly::ObjectFile
         expect(obj.object_type).to eq(:image)
-      }
+      end
     end
 
-    it "#relevant_fnode_tuples should filter out non-approved file types" do
+    it '#relevant_fnode_tuples should filter out non-approved file types' do
       basic_setup 'cc333dd4444'
       @item.load_content_metadata
       objs = @item.fnode_tuples

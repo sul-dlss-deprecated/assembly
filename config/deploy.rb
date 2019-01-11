@@ -23,7 +23,7 @@ set :log_level, :info
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w(config/honeybadger.yml)
+set :linked_files, %w[config/honeybadger.yml]
 
 # Default value for linked_dirs is []
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
@@ -34,7 +34,7 @@ set :linked_files, %w(config/honeybadger.yml)
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-set :linked_dirs, %w(log run config/environments config/certs)
+set :linked_dirs, %w[log run config/environments config/certs]
 
 set :honeybadger_env, fetch(:stage)
 

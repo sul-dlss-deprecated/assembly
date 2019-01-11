@@ -19,13 +19,11 @@ module Dor::Assembly
     def create_content_metadata
       return LyberCore::Robot::ReturnState.new(status: :skipped, note: 'object is not an item') unless is_item? # not an item, skip
 
-      if stub_content_metadata_exists? && content_metadata_exists? # both stub and regular content metadata exist -- this is an ambiguous situation and generates an error
-        raise "#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist"
-      end
+      # both stub and regular content metadata exist -- this is an ambiguous situation and generates an error
+      raise "#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist" if stub_content_metadata_exists? && content_metadata_exists?
 
-      if content_metadata_exists? # regular content metadata exists -- do not recreate it
-        return LyberCore::Robot::ReturnState.new(status: :skipped, note: "#{Dor::Config.assembly.cm_file_name} exists")
-      end
+      # regular content metadata exists -- do not recreate it
+      return LyberCore::Robot::ReturnState.new(status: :skipped, note: "#{Dor::Config.assembly.cm_file_name} exists") if content_metadata_exists?
 
       # if stub exists, create metadata from the stub, else create basic content metadata
       stub_content_metadata_exists? ? convert_stub_content_metadata : create_basic_content_metadata
@@ -56,12 +54,14 @@ module Dor::Assembly
     def load_content_metadata
       # Loads content metadata XML into a Nokogiri document.
       raise "Content metadata file #{Dor::Config.assembly.cm_file_name} not found for #{druid.id} in any of the root directories: #{@root_dir.join(',')}" unless content_metadata_exists?
+
       @cm = Nokogiri.XML(File.open(cm_file_name)) { |conf| conf.default_xml.noblanks }
     end
 
     def load_stub_content_metadata
       # Loads stub content metadata XML into a Nokogiri document.
       raise "Stub content metadata file #{Dor::Config.assembly.stub_cm_file_name} not found for #{druid.id} in any of the root directories: #{@root_dir.join(',')}" unless stub_content_metadata_exists?
+
       @stub_cm = Nokogiri.XML(File.open(stub_cm_file_name)) { |conf| conf.default_xml.noblanks }
     end
 
@@ -84,9 +84,9 @@ module Dor::Assembly
 
     def file_nodes(resource_type = '')
       # Returns all Nokogiri <file> nodes from content metadata, optionally restricted to specific resource content types if specified
-      xpath_query = "//resource"
+      xpath_query = '//resource'
       xpath_query += "[@type='#{resource_type}']" unless resource_type == ''
-      xpath_query += "/file"
+      xpath_query += '/file'
       @cm.xpath xpath_query
     end
 

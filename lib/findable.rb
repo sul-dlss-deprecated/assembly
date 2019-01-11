@@ -6,6 +6,7 @@ module Dor::Assembly
     #  return nil if not found anywhere
     def path_to_object
       return @path_to_object unless @path_to_object.nil?
+
       path = nil
       Array(@root_dir).each do |root_dir|
         new_path = druid_tree_path(root_dir)
@@ -35,7 +36,7 @@ module Dor::Assembly
 
     # path to a content folder, defaults to new (aa/111/bb/2222/aa111bb2222/content), but could also be old style (aa/111/bb/2222)
     def path_to_content_folder
-      @folder_style == :old ? path_to_object : File.join(path_to_object, "content")
+      @folder_style == :old ? path_to_object : File.join(path_to_object, 'content')
     end
 
     # path to a content file, e.g.  either aa/111/bb/2222/aa111bb2222/content/some_file.txt or  aa/111/bb/2222/some_file.txt
@@ -45,7 +46,7 @@ module Dor::Assembly
 
     # path to a metadata folder, defaults to new (aa/111/bb/2222/aa111bb2222/metadata), but could also be old style (aa/111/bb/2222)
     def path_to_metadata_folder
-      @folder_style == :old ? path_to_object : File.join(path_to_object, "metadata")
+      @folder_style == :old ? path_to_object : File.join(path_to_object, 'metadata')
     end
 
     # path to a content file, e.g.  either aa/111/bb/2222/aa111bb2222/metadata/some_file.xml or  aa/111/bb/2222/some_file.xml

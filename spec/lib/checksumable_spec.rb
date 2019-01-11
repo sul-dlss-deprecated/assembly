@@ -7,7 +7,7 @@ RSpec.describe Dor::Assembly::Checksumable do
     @item.cm           = Nokogiri::XML '<contentMetadata><file></file></contentMetadata>'
     @item.path_to_object # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
     # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
-    @fake_checksum_data = { :md5 => "a123", :sha1 => "567c" }
+    @fake_checksum_data = { md5: 'a123', sha1: '567c' }
     @parent_file_node   = @item.cm.xpath('//file').first
   end
 
@@ -24,8 +24,8 @@ RSpec.describe Dor::Assembly::Checksumable do
     @item.cm_handle = @tmpfile
   end
 
-  describe "#ChecksumableItem" do
-    it "should be able to initialize our testing object" do
+  describe '#ChecksumableItem' do
+    it 'should be able to initialize our testing object' do
       basic_setup('aa111bb2222')
       expect(@item).to be_a_kind_of Dor::Assembly::Item
     end
@@ -42,25 +42,25 @@ RSpec.describe Dor::Assembly::Checksumable do
       expect(all_cs_nodes.size).to eq(8)
 
       @exp_checksums = {
-        "image111.tif" => {
-          "md5"  => '42616f9e6c1b7e7b7a71b4fa0c5ef794',
-          "sha1" => '77795223379bdb0ded2bd5b8a63adc07fb1c3484',
+        'image111.tif' => {
+          'md5' => '42616f9e6c1b7e7b7a71b4fa0c5ef794',
+          'sha1' => '77795223379bdb0ded2bd5b8a63adc07fb1c3484'
         },
-        "image112.tif" => {
-          "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
-          "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
-          "foo" => "FOO", "bar" => "BAR",
+        'image112.tif' => {
+          'md5' => 'ac440802bd590ce0899dafecc5a5ab1b',
+          'sha1' => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
+          'foo' => 'FOO', 'bar' => 'BAR'
         },
-        "sub/image113.tif" => {
-          "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
-          "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
-        },
+        'sub/image113.tif' => {
+          'md5' => 'ac440802bd590ce0899dafecc5a5ab1b',
+          'sha1' => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444'
+        }
       }
 
       all_file_nodes.each do |fnode|
         file_name = fnode['id']
         cnodes    = fnode.xpath './checksum'
-        checksums = Hash[ cnodes.map { |cn| [cn['type'], cn.content] } ]
+        checksums = Hash[cnodes.map { |cn| [cn['type'], cn.content] }]
         expect(checksums).to eq(@exp_checksums[file_name])
       end
     end
@@ -75,25 +75,25 @@ RSpec.describe Dor::Assembly::Checksumable do
       expect(all_cs_nodes.size).to eq(7)
 
       @exp_checksums = {
-        "image111.tif" => {
-          "md5"  => '42616f9e6c1b7e7b7a71b4fa0c5ef794',
-          "sha1" => '77795223379bdb0ded2bd5b8a63adc07fb1c3484',
+        'image111.tif' => {
+          'md5' => '42616f9e6c1b7e7b7a71b4fa0c5ef794',
+          'sha1' => '77795223379bdb0ded2bd5b8a63adc07fb1c3484'
         },
-        "image112.tif" => {
-          "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
-          "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
-          "bar" => "BAR",
+        'image112.tif' => {
+          'md5' => 'ac440802bd590ce0899dafecc5a5ab1b',
+          'sha1' => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
+          'bar' => 'BAR'
         },
-        "sub/image113.tif" => {
-          "md5"  => 'ac440802bd590ce0899dafecc5a5ab1b',
-          "sha1" => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444',
-        },
+        'sub/image113.tif' => {
+          'md5' => 'ac440802bd590ce0899dafecc5a5ab1b',
+          'sha1' => '5c9f6dc2ca4fd3329619b54a2c6f99a08c088444'
+        }
       }
 
       all_file_nodes.each do |fnode|
         file_name = fnode['id']
         cnodes    = fnode.xpath './checksum'
-        checksums = Hash[ cnodes.map { |cn| [cn['type'], cn.content] } ]
+        checksums = Hash[cnodes.map { |cn| [cn['type'], cn.content] }]
         expect(checksums).to eq(@exp_checksums[file_name])
       end
     end
@@ -189,15 +189,15 @@ RSpec.describe Dor::Assembly::Checksumable do
     end
   end
 
-  describe "#add_checksum_nodes" do
-    it "should correctly add checksum nodes as children of the parent_node" do
+  describe '#add_checksum_nodes' do
+    it 'should correctly add checksum nodes as children of the parent_node' do
       basic_setup('aa111bb2222')
 
       expect(all_cs_nodes.size).to eq(0)
       @item.add_checksum_node @parent_file_node, 'md5', @fake_checksum_data[:md5]
       @item.add_checksum_node @parent_file_node, 'sha1', @fake_checksum_data[:sha1]
       expect(all_cs_nodes.size).to eq(2)
-      h = Hash[ all_cs_nodes.map { |n| [n['type'].to_sym, n.content] } ]
+      h = Hash[all_cs_nodes.map { |n| [n['type'].to_sym, n.content] }]
       expect(h).to eq(@fake_checksum_data)
     end
   end

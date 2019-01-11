@@ -63,9 +63,9 @@ describe Dor::Assembly::Jp2able do
 
       # Read the XML file and check the file names.
       xml = Nokogiri::XML File.read(@item.cm_file_name)
-      file_nodes = xml.xpath "//resource/file"
-      expected_results = ["file111.mp3", "file111.pdf", "file111.wav", "file112.pdf", "image111.jp2",
-                          "image111.tif", "image112.tif", "image113.tif", "image114.jp2", "image114.tif", "image115.jp2", "image115.tif"]
+      file_nodes = xml.xpath '//resource/file'
+      expected_results = ['file111.mp3', 'file111.pdf', 'file111.wav', 'file112.pdf', 'image111.jp2',
+                          'image111.tif', 'image112.tif', 'image113.tif', 'image114.jp2', 'image114.tif', 'image115.jp2', 'image115.tif']
       expect(file_nodes.map { |fn| fn['id'] }.sort).to eq(expected_results)
     end
 
@@ -91,8 +91,8 @@ describe Dor::Assembly::Jp2able do
 
       # Read the XML file and check the file names.
       xml = Nokogiri::XML File.read(@item.cm_file_name)
-      file_nodes = xml.xpath "//resource/file"
-      expect(file_nodes.map { |fn| fn['id'] }.sort).to eq(["image111.jp2", "image111.tif", "image112.jp2", "image112.tif", "sub/image113.jp2", "sub/image113.tif"])
+      file_nodes = xml.xpath '//resource/file'
+      expect(file_nodes.map { |fn| fn['id'] }.sort).to eq(['image111.jp2', 'image111.tif', 'image112.jp2', 'image112.tif', 'sub/image113.jp2', 'sub/image113.tif'])
     end
 
     it 'should not overwrite existing jp2s but should not fail either' do

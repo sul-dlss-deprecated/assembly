@@ -27,7 +27,7 @@ module Dor::Assembly
     end
 
     def set_node_type(node, node_type, overwrite = false)
-      node['type'] = node_type if (node['type'].blank? || overwrite) # only set the node if it's not empty, unless we allow overwrite
+      node['type'] = node_type if node['type'].blank? || overwrite # only set the node if it's not empty, unless we allow overwrite
     end
 
     def add_data_to_file_node(node, file)
@@ -42,7 +42,7 @@ module Dor::Assembly
     def image_data_xml(exif)
       w = exif.image_width
       h = exif.image_height
-      %Q(<imageData width="#{w}" height="#{h}"/>)
+      %(<imageData width="#{w}" height="#{h}"/>)
     end
   end
 end
