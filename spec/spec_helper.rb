@@ -10,6 +10,7 @@ require 'equivalent-xml'
 require 'equivalent-xml/rspec_matchers'
 require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: false)
+require 'byebug'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatter])
 SimpleCov.start do

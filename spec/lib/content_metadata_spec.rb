@@ -10,60 +10,8 @@ RSpec.describe Dor::Assembly::ContentMetadata do
     # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
   end
 
-  describe '#create_content_metadata' do
-    before :each do
-      basic_setup 'aa111bb2222'
-      allow(@item).to receive(:is_item?).and_return(true)
-    end
-    it 'should not create content metadata if type is not item' do
-      allow(@item).to receive(:is_item?).and_return(false) # in this case, we don't want it to be an item
-      expect(@item).not_to receive(:convert_stub_content_metadata)
-      expect(@item).not_to receive(:create_basic_content_metadata)
-      expect(@item).not_to receive(:persist_content_metadata)
-      result = @item.create_content_metadata
-      expect(result.status).to eq('skipped')
-      expect(result.note).to eq('object is not an item')
-    end
-    it 'should raise error and not create content metadata if contentMetadata and stub content metadata both already exists' do
-      allow(@item).to receive(:stub_content_metadata_exists?).and_return(true)
-      allow(@item).to receive(:content_metadata_exists?).and_return(true)
-      expect(@item).not_to receive(:convert_stub_content_metadata)
-      expect(@item).not_to receive(:create_basic_content_metadata)
-      expect(@item).not_to receive(:persist_content_metadata)
-      exp_msg = "#{Dor::Config.assembly.stub_cm_file_name} and #{Dor::Config.assembly.cm_file_name} both exist"
-      expect { @item.create_content_metadata }.to raise_error RuntimeError, exp_msg
-    end
-    it 'should not create any content metadata if contentMetadata already exists' do
-      allow(@item).to receive(:stub_content_metadata_exists?).and_return(false)
-      allow(@item).to receive(:content_metadata_exists?).and_return(true)
-      expect(@item).not_to receive(:convert_stub_content_metadata)
-      expect(@item).not_to receive(:create_basic_content_metadata)
-      expect(@item).not_to receive(:persist_content_metadata)
-      result = @item.create_content_metadata
-      expect(result.status).to eq('skipped')
-      expect(result.note).to eq("#{Dor::Config.assembly.cm_file_name} exists")
-    end
-    it 'should create basic content metadata if stub contentMetadata does not exist and neither does regular contentMetadata' do
-      allow(@item).to receive(:stub_content_metadata_exists?).and_return(false)
-      allow(@item).to receive(:content_metadata_exists?).and_return(false)
-      expect(@item).not_to receive(:convert_stub_content_metadata)
-      expect(@item).to receive(:create_basic_content_metadata).once
-      expect(@item).to receive(:persist_content_metadata).once
-      result = @item.create_content_metadata
-      expect(result.status).to eq('completed')
-    end
-    it 'should convert stub content metadata if stub contentMetadata exists and regular contentMetadata does not' do
-      allow(@item).to receive(:stub_content_metadata_exists?).and_return(true)
-      allow(@item).to receive(:content_metadata_exists?).and_return(false)
-      expect(@item).to receive(:convert_stub_content_metadata).once
-      expect(@item).to receive(:persist_content_metadata).once
-      result = @item.create_content_metadata
-      expect(result.status).to eq('completed')
-    end
-  end
-
-  describe '#load_content_metadata' do
-    it 'should load a Nokogiri doc in @cm' do
+  describe "#load_content_metadata" do
+    it "should load a Nokogiri doc in @cm" do
       basic_setup 'aa111bb2222'
       @item.load_content_metadata
       expect(@item.cm).to be_kind_of Nokogiri::XML::Document
