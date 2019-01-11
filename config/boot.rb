@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rubygems'
 require 'bundler/setup'
 
@@ -42,7 +44,7 @@ require env_file
 require 'assembly-image'
 
 require 'resque'
-REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}".freeze
+REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"
 Resque.redis = REDIS_URL
 
 require 'robot-controller'

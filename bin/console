@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 # To start an irb session with gems and configuration loaded:
 # robot_root$ ./bin/console development
 
@@ -7,11 +9,9 @@ ENV['ROBOT_ENVIRONMENT'] = ARGV.first unless ARGV.first.nil?
 require File.expand_path(File.dirname(__FILE__) + '/../config/boot')
 
 silence_warnings do
-  begin
-    require 'pry'
-    IRB = Pry
-  rescue LoadError
-  end
+  require 'pry'
+  IRB = Pry
+rescue LoadError
 end
 
 IRB.start

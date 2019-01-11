@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 CERT_DIR = File.join(File.dirname(__FILE__), '..', 'certs')
 
 Dor::Config.configure do
@@ -47,4 +49,4 @@ Dor::Config.configure do
   end
 end
 
-REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}".freeze
+REDIS_URL ||= "localhost:6379/resque:#{ENV['ROBOT_ENVIRONMENT']}"

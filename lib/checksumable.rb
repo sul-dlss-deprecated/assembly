@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Dor::Assembly
   module Checksumable
     def compute_checksums

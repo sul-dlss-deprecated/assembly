@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'content_metadata'
 require 'jp2able'
 require 'checksumable'
-require 'exifable'
 require 'findable'
 require 'identifiable'
 require 'item'

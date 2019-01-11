@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Dor::Assembly
   module Jp2able
     def create_jp2s
