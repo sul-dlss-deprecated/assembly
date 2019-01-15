@@ -10,7 +10,7 @@ Check the [Wiki](https://github.com/sul-dlss/robot-master/wiki) in the robot-mas
 
 ## Dependencies
 
-Refer to dependencies for jp2 creation in the `assembly-image` gem.
+Refer to dependencies for jp2 creation in the [`assembly-image`](https://github.com/sul-dlss/assembly-image#prerequisites) gem.
 
 ## Version History
 
