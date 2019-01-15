@@ -15,24 +15,24 @@ describe Dor::Assembly::Identifiable do
     expect(@item.object_type).to eq('item')
   end
 
-  it 'should return is_item? as true for object type == item' do
+  it 'should return item? as true for object type == item' do
     @dru = 'aa111bb2222'
     @item = Dor::Assembly::Item.new druid: @dru
     allow(@item).to receive(:object_type).and_return('item')
-    expect(@item.is_item?).to be_truthy
+    expect(@item).to be_item
   end
 
-  it 'should return is_item? as false for object type == set' do
+  it 'should return item? as false for object type == set' do
     @dru = 'aa111bb2222'
     @item = Dor::Assembly::Item.new druid: @dru
     allow(@item).to receive(:object_type).and_return('set')
-    expect(@item.is_item?).to be_falsey
+    expect(@item).not_to be_item
   end
 
-  it 'should return is_item? as false for object type not known' do
+  it 'should return item? as false for object type not known' do
     @dru = 'aa111bb2222'
     @item = Dor::Assembly::Item.new druid: @dru
     allow(@item).to receive(:object_type).and_return('')
-    expect(@item.is_item?).to be_falsey
+    expect(@item).not_to be_item
   end
 end

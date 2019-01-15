@@ -9,7 +9,7 @@ RSpec.describe Robots::DorRepo::Assembly::ContentMetadataCreate do
 
   let(:item) do
     instance_double(Dor::Assembly::Item,
-                    is_item?: type == 'item',
+                    item?: type == 'item',
                     stub_content_metadata_exists?: stub_content_metadata,
                     content_metadata_exists?: content_metadata,
                     convert_stub_content_metadata: true,

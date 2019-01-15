@@ -9,7 +9,7 @@ RSpec.describe Robots::DorRepo::Assembly::ExifCollect do
 
   let(:item) do
     instance_double(Dor::Assembly::Item,
-                    is_item?: type == 'item')
+                    item?: type == 'item')
   end
 
   before do
@@ -87,7 +87,7 @@ RSpec.describe Robots::DorRepo::Assembly::ExifCollect do
 
     before do
       allow(Dor).to receive(:find).and_return(double('Fedora obj'))
-      allow(item).to receive(:is_item?).and_return(true)
+      allow(item).to receive(:item?).and_return(true)
       allow(item).to receive(:load_content_metadata)
       allow(item).to receive(:cm).and_return(Nokogiri::XML(xml))
       allow(item).to receive(:druid).and_return('foo:999')

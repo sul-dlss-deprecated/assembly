@@ -13,7 +13,6 @@ require 'equivalent-xml/rspec_matchers'
 require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: false)
 require 'byebug'
-
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatter])
 SimpleCov.start do
   add_filter 'spec/'
@@ -52,10 +51,10 @@ def setup_assembly_item(druid, obj_type = :item)
   allow(@assembly_item).to receive('id').and_return(druid)
   if obj_type == :item
     allow(@assembly_item).to receive(:object_type).and_return('item')
-    allow(@assembly_item).to receive(:is_item?).and_return(true)
+    allow(@assembly_item).to receive(:item?).and_return(true)
   else
     allow(@assembly_item).to receive(:object_type).and_return(obj_type.to_s)
-    allow(@assembly_item).to receive(:is_item?).and_return(false)
+    allow(@assembly_item).to receive(:item?).and_return(false)
   end
   allow(Dor::Assembly::Item).to receive(:new).and_return(@assembly_item)
 end

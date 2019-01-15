@@ -38,6 +38,10 @@ Dor::Config.configure do
     service_root 'https://localhost/dor/v1'
   end
 
+  dor_services do
+    url 'http://dor-services.example.edu'
+  end
+
   stacks do
     document_cache_storage_root '/purl/document_cache'
     document_cache_host 'localhost'
