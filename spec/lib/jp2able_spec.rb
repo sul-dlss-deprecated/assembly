@@ -7,8 +7,8 @@ describe Dor::Assembly::Jp2able do
     @cm_file_name = Dor::Config.assembly.cm_file_name
     @item              = Dor::Assembly::Item.new(druid: dru)
     @item.root_dir     = root_dir
-    @item.path_to_object # this will find the path to the object and set the folder_style -- it is only necessary to call this in test setup
-    # since we don't actually call the Dor::Assembly::Item initializer in tests like we do actual code (where it does get called)
+    @item.path_to_object = nil # this will allow us to override the path to the object to use the root_dir we overrode above
+    #  it is only necessary to clear this accessor in test setup since it otherwise gets set in the initializer and cached
     @dummy_xml = '<contentMetadata><resource></resource></contentMetadata>'
   end
 

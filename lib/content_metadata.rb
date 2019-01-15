@@ -7,7 +7,7 @@ module Dor::Assembly
   module ContentMetadata
     include StubContentMetadataParser
 
-    attr_accessor :cm, :stub_cm, :cm_handle, :druid, :root_dir
+    attr_accessor :cm, :stub_cm, :cm_handle, :druid, :root_dir, :path_to_object
     attr_writer :cm_file_name, :stub_cm_file_name
 
     # return the location to store or load the contentMetadata.xml file (could be in either the new or old location)
