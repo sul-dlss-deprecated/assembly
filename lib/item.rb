@@ -3,7 +3,6 @@
 module Dor::Assembly
   class Item
     include Dor::Assembly::ContentMetadata
-    include Dor::Assembly::Jp2able
     include Dor::Assembly::Checksumable
     include Dor::Assembly::Findable
     include Dor::Assembly::Identifiable

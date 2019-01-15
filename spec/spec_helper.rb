@@ -59,7 +59,3 @@ def setup_assembly_item(druid, obj_type = :item)
   end
   allow(Dor::Assembly::Item).to receive(:new).and_return(@assembly_item)
 end
-
-def kdu_missing?
-  `which kdu_compress`.empty?
-end
