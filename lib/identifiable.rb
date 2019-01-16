@@ -7,7 +7,7 @@ module Dor::Assembly
       (obj_type.nil? ? 'unknown' : obj_type.first)
     end
 
-    def is_item?
+    def item?
       object_type.downcase.strip == 'item'
     end
   end
