@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'assembly-image', '>=1.7.1'
+gem 'assembly-image', '>=1.7.2'
 gem 'assembly-objectfile', '>=1.6.6'
 gem 'dor-services', '~> 6.0'
 gem 'dor-services-client', '~> 1.0'
